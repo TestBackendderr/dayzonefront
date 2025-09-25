@@ -1,58 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { stalkersAPI } from '../../services/api';
 import './StalkerArchive.scss';
 
 const StalkerArchive = () => {
   const [searchBy, setSearchBy] = useState('callsign');
   const [searchTerm, setSearchTerm] = useState('');
+  const [stalkers, setStalkers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
-  // Моковые данные сталкеров
-  const [stalkers] = useState([
-    {
-      id: 1,
-      callsign: 'Снайпер',
-      fullName: 'Иванов Иван Иванович',
-      faceId: 'ST001',
-      note: 'Опытный сталкер, специализируется на дальних переходах',
-      photo: 'https://via.placeholder.com/200x200/ff6b6b/ffffff?text=Снайпер'
-    },
-    {
-      id: 2,
-      callsign: 'Волк',
-      fullName: 'Петров Петр Петрович',
-      faceId: 'ST002',
-      note: 'Бывший военный, знает зону как свои пять пальцев',
-      photo: 'https://via.placeholder.com/200x200/ee5a24/ffffff?text=Волк'
-    },
-    {
-      id: 3,
-      callsign: 'Тень',
-      fullName: 'Сидоров Сидор Сидорович',
-      faceId: 'ST003',
-      note: 'Мастер скрытности, работает в одиночку',
-      photo: 'https://via.placeholder.com/200x200/2c3e50/ffffff?text=Тень'
-    },
-    {
-      id: 4,
-      callsign: 'Охотник',
-      fullName: 'Козлов Козел Козлович',
-      faceId: 'ST004',
-      note: 'Специалист по артефактам, имеет связи с учеными',
-      photo: 'https://via.placeholder.com/200x200/34495e/ffffff?text=Охотник'
-    }
-  ]);
+  // Загрузка сталкеров при монтировании компонента
+  useEffect(() => {
+    loadStalkers();
+  }, []);
 
-  const filteredStalkers = stalkers.filter(stalker => {
-    if (!searchTerm) return true;
-    
-    if (searchBy === 'callsign') {
-      return stalker.callsign.toLowerCase().includes(searchTerm.toLowerCase());
-    } else if (searchBy === 'faceId') {
-      return stalker.faceId.toLowerCase().includes(searchTerm.toLowerCase());
-    } else if (searchBy === 'fullName') {
-      return stalker.fullName.toLowerCase().includes(searchTerm.toLowerCase());
+  // Загрузка сталкеров при изменении поиска
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      loadStalkers();
+    }, 500); // Задержка для поиска
+
+    return () => clearTimeout(timeoutId);
+  }, [searchBy, searchTerm]);
+
+  const loadStalkers = async () => {
+    try {
+      setLoading(true);
+      setError('');
+      const response = await stalkersAPI.getAll(searchBy, searchTerm);
+      setStalkers(response.stalkers);
+    } catch (error) {
+      setError('Ошибка загрузки сталкеров: ' + (error.response?.data?.message || error.message));
+      setStalkers([]);
+    } finally {
+      setLoading(false);
     }
-    return true;
-  });
+  };
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -63,12 +46,34 @@ const StalkerArchive = () => {
     setSearchTerm('');
   };
 
+  const handleDeleteStalker = async (id) => {
+    if (!window.confirm('Вы уверены, что хотите удалить этого сталкера?')) {
+      return;
+    }
+
+    try {
+      await stalkersAPI.delete(id);
+      // Обновляем список сталкеров
+      loadStalkers();
+      alert('Сталкер успешно удален');
+    } catch (error) {
+      alert('Ошибка удаления сталкера: ' + (error.response?.data?.message || error.message));
+    }
+  };
+
   return (
     <div className="stalker-archive">
       <div className="archive-header">
         <h2>Архив сталкеров</h2>
         <p>База данных всех зарегистрированных сталкеров зоны</p>
       </div>
+
+      {error && (
+        <div className="error-message">
+          <span className="error-icon">⚠️</span>
+          {error}
+        </div>
+      )}
 
       <div className="search-section">
         <div className="search-controls">
@@ -94,11 +99,19 @@ const StalkerArchive = () => {
       </div>
 
       <div className="stalkers-grid">
-        {filteredStalkers.length > 0 ? (
-          filteredStalkers.map(stalker => (
+        {loading ? (
+          <div className="loading-message">
+            <div className="loading-spinner">☢</div>
+            <p>Загрузка сталкеров...</p>
+          </div>
+        ) : stalkers.length > 0 ? (
+          stalkers.map(stalker => (
             <div key={stalker.id} className="stalker-card">
               <div className="stalker-photo">
-                <img src={stalker.photo} alt={stalker.callsign} />
+                <img 
+                  src={stalker.photo || 'https://via.placeholder.com/200x200/ff6b6b/ffffff?text=' + encodeURIComponent(stalker.callsign)} 
+                  alt={stalker.callsign} 
+                />
                 <div className="radiation-overlay">☢</div>
               </div>
               
@@ -111,12 +124,12 @@ const StalkerArchive = () => {
                 <div className="stalker-details">
                   <div className="detail-row">
                     <span className="detail-label">ФИО:</span>
-                    <span className="detail-value">{stalker.fullName}</span>
+                    <span className="detail-value">{stalker.full_name}</span>
                   </div>
                   
                   <div className="detail-row">
                     <span className="detail-label">ID лица:</span>
-                    <span className="detail-value face-id">{stalker.faceId}</span>
+                    <span className="detail-value face-id">{stalker.face_id}</span>
                   </div>
                   
                   {stalker.note && (
@@ -133,7 +146,10 @@ const StalkerArchive = () => {
                   <span>✏️</span>
                   Редактировать
                 </button>
-                <button className="action-btn delete-btn">
+                <button 
+                  className="action-btn delete-btn"
+                  onClick={() => handleDeleteStalker(stalker.id)}
+                >
                   <span>🗑️</span>
                   Удалить
                 </button>

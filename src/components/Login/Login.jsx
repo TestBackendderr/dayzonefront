@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { authAPI } from '../../services/api';
 import './Login.scss';
 
 const Login = () => {
@@ -9,6 +10,7 @@ const Login = () => {
     password: ''
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -16,30 +18,30 @@ const Login = () => {
       ...prev,
       [name]: value
     }));
+    // Очищаем ошибку при изменении данных
+    if (error) setError('');
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+    setError('');
 
-    // Имитация запроса к серверу
-    setTimeout(() => {
-      // Проверка простых учетных данных для демо
-      if (loginData.username === 'admin' && loginData.password === 'admin') {
-        // Сохраняем состояние входа в localStorage
-        localStorage.setItem('isAuthenticated', 'true');
-        localStorage.setItem('user', JSON.stringify({
-          username: loginData.username,
-          role: 'admin'
-        }));
-        
-        // Переходим на главную страницу
-        navigate('/');
-      } else {
-        alert('Неверный логин или пароль');
-      }
+    try {
+      const response = await authAPI.login(loginData.username, loginData.password);
+      
+      // Сохраняем токен и данные пользователя
+      localStorage.setItem('token', response.token);
+      localStorage.setItem('user', JSON.stringify(response.user));
+      localStorage.setItem('isAuthenticated', 'true');
+      
+      // Переходим на главную страницу
+      navigate('/');
+    } catch (error) {
+      setError(error.response?.data?.message || 'Ошибка входа в систему');
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   return (
@@ -97,6 +99,13 @@ const Login = () => {
               </div>
             </div>
 
+            {error && (
+              <div className="error-message">
+                <span className="error-icon">⚠️</span>
+                {error}
+              </div>
+            )}
+
             <div className="form-options">
               <label className="checkbox-wrapper">
                 <input type="checkbox" />
@@ -127,7 +136,7 @@ const Login = () => {
             <div className="demo-credentials">
               <p>Демо доступ:</p>
               <p><strong>Логин:</strong> admin</p>
-              <p><strong>Пароль:</strong> admin</p>
+              <p><strong>Пароль:</strong> admin123</p>
             </div>
           </form>
         </div>

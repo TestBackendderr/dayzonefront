@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { stalkersAPI } from '../../services/api';
 import './AddStalker.scss';
 
 const AddStalker = () => {
+  const navigate = useNavigate();
   const [stalkerData, setStalkerData] = useState({
     callsign: '',
     fullName: '',
@@ -11,6 +14,8 @@ const AddStalker = () => {
   });
 
   const [preview, setPreview] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -36,11 +41,21 @@ const AddStalker = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Добавление сталкера:', stalkerData);
-    // Здесь будет логика отправки данных
-    alert('Сталкер добавлен в базу данных!');
+    setLoading(true);
+    setError('');
+
+    try {
+      await stalkersAPI.create(stalkerData);
+      alert('Сталкер успешно добавлен в базу данных!');
+      // Переходим в архив сталкеров
+      navigate('/stalker-archive');
+    } catch (error) {
+      setError('Ошибка добавления сталкера: ' + (error.response?.data?.message || error.message));
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -49,6 +64,13 @@ const AddStalker = () => {
         <h2>Добавление нового сталкера</h2>
         <p>Заполните информацию о сталкере для внесения в базу данных</p>
       </div>
+
+      {error && (
+        <div className="error-message">
+          <span className="error-icon">⚠️</span>
+          {error}
+        </div>
+      )}
 
       <form className="stalker-form" onSubmit={handleSubmit}>
         <div className="form-group">
@@ -127,12 +149,29 @@ const AddStalker = () => {
         </div>
 
         <div className="form-actions">
-          <button type="button" className="btn-cancel">
+          <button 
+            type="button" 
+            className="btn-cancel"
+            onClick={() => navigate('/stalker-archive')}
+          >
             Отмена
           </button>
-          <button type="submit" className="btn-submit">
-            <span className="btn-icon">☢</span>
-            Добавить сталкера
+          <button 
+            type="submit" 
+            className={`btn-submit ${loading ? 'loading' : ''}`}
+            disabled={loading}
+          >
+            {loading ? (
+              <>
+                <span className="loading-spinner">☢</span>
+                Добавление...
+              </>
+            ) : (
+              <>
+                <span className="btn-icon">☢</span>
+                Добавить сталкера
+              </>
+            )}
           </button>
         </div>
       </form>

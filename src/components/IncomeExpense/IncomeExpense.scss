@@ -32,12 +32,51 @@
     border: 2px solid #ff6b6b;
     margin-bottom: 2rem;
 
-    h3 {
-      color: #ff6b6b;
-      font-size: 1.5rem;
+    .operations-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       margin-bottom: 1.5rem;
-      font-family: 'Courier New', monospace;
-      text-align: center;
+      gap: 1rem;
+
+      h3 {
+        color: #ff6b6b;
+        font-size: 1.5rem;
+        margin: 0;
+        font-family: 'Courier New', monospace;
+        text-align: center;
+      }
+
+      .week-range {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        background: rgba(44, 62, 80, 0.6);
+        border-radius: 10px;
+        border: 1px solid #ff6b6b;
+
+        .range-label {
+          color: #95a5a6;
+          font-size: 0.9rem;
+          font-family: 'Courier New', monospace;
+        }
+
+        .range-dates {
+          color: #ff6b6b;
+          font-size: 1rem;
+          font-weight: bold;
+          font-family: 'Courier New', monospace;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .week-range {
+          flex-direction: column;
+          text-align: center;
+          gap: 0.3rem;
+        }
+      }
     }
 
     .operations-list {
@@ -112,12 +151,169 @@
         }
 
         .operation-source {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          gap: 0.3rem;
+          min-width: 200px;
+
           .source-text {
             color: #bdc3c7;
             font-family: 'Courier New', monospace;
             font-size: 0.9rem;
-            max-width: 200px;
             text-align: right;
+          }
+
+          .datetime-text {
+            color: #95a5a6;
+            font-family: 'Courier New', monospace;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-align: right;
+          }
+        }
+      }
+
+      .income-expense-pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1.5rem;
+        margin-top: 2rem;
+        padding: 1.5rem;
+        background: rgba(26, 37, 47, 0.4);
+        border-radius: 15px;
+        border: 2px solid rgba(255, 107, 107, 0.3);
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+
+        .ie-page-btn {
+          padding: 1.2rem 2rem;
+          border: 2px solid #ff6b6b;
+          border-radius: 12px;
+          background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+          color: #1a252f;
+          font-family: 'Courier New', monospace;
+          font-size: 1.1rem;
+          font-weight: 700;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          position: relative;
+          overflow: hidden;
+          box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+          text-transform: uppercase;
+          letter-spacing: 1px;
+
+          &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s;
+          }
+
+          &:hover:not(:disabled) {
+            background: linear-gradient(135deg, #ff4757, #ff6b6b);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+
+            &::before {
+              left: 100%;
+            }
+          }
+
+          &:active:not(:disabled) {
+            transform: translateY(-1px) scale(1.02);
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+          }
+
+          &:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            border-color: #7f8c8d;
+            color: #7f8c8d;
+            background: linear-gradient(135deg, #7f8c8d, #95a5a6);
+            box-shadow: none;
+            transform: none;
+
+            &:hover {
+              transform: none;
+              box-shadow: none;
+            }
+          }
+        }
+
+        .ie-page-numbers {
+          display: flex;
+          gap: 0.8rem;
+          align-items: center;
+
+          .ie-page-number {
+            width: 50px;
+            height: 50px;
+            border: 2px solid #34495e;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(44, 62, 80, 0.95), rgba(52, 73, 94, 0.8));
+            color: #bdc3c7;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+
+            &::before {
+              content: '';
+              position: absolute;
+              top: 0;
+              left: -100%;
+              width: 100%;
+              height: 100%;
+              background: linear-gradient(90deg, transparent, rgba(255, 107, 107, 0.4), transparent);
+              transition: left 0.5s;
+            }
+
+            &:hover {
+              border-color: #ff6b6b;
+              background: linear-gradient(135deg, rgba(255, 107, 107, 0.2), rgba(255, 107, 107, 0.1));
+              color: #ff6b6b;
+              transform: translateY(-3px) scale(1.1);
+              box-shadow: 0 8px 20px rgba(255, 107, 107, 0.3);
+
+              &::before {
+                left: 100%;
+              }
+            }
+
+            &:active {
+              transform: translateY(-1px) scale(1.05);
+              box-shadow: 0 4px 12px rgba(255, 107, 107, 0.2);
+            }
+
+            &.ie-active {
+              border: 3px solid #ff6b6b;
+              background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+              color: #1a252f;
+              font-weight: 800;
+              font-size: 1.2rem;
+              text-shadow: 0 1px 2px rgba(255,255,255,0.4);
+              box-shadow: 0 8px 25px rgba(255, 107, 107, 0.5), 
+                          0 0 0 4px rgba(255, 107, 107, 0.2),
+                          inset 0 2px 4px rgba(255,255,255,0.3);
+              transform: translateY(-4px) scale(1.15);
+              animation: ie-pulse-glow 2s infinite;
+
+              &::before {
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+              }
+            }
           }
         }
       }
@@ -161,6 +357,30 @@
       padding: 2rem;
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
       border: 2px solid #ff6b6b;
+
+      .current-user-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        padding: 1rem;
+        background: rgba(44, 62, 80, 0.6);
+        border-radius: 10px;
+        border: 1px solid #ff6b6b;
+
+        .user-label {
+          color: #95a5a6;
+          font-size: 1rem;
+          font-family: 'Courier New', monospace;
+        }
+
+        .user-name {
+          color: #ff6b6b;
+          font-size: 1.2rem;
+          font-weight: bold;
+          font-family: 'Courier New', monospace;
+        }
+      }
 
       .form-row {
         display: grid;
@@ -307,6 +527,24 @@
   100% {
     transform: scale(1);
     opacity: 1;
+  }
+}
+
+@keyframes ie-pulse-glow {
+  0% {
+    box-shadow: 0 8px 25px rgba(255, 107, 107, 0.5), 
+                0 0 0 4px rgba(255, 107, 107, 0.2),
+                inset 0 2px 4px rgba(255,255,255,0.3);
+  }
+  50% {
+    box-shadow: 0 8px 25px rgba(255, 107, 107, 0.7), 
+                0 0 0 6px rgba(255, 107, 107, 0.3),
+                inset 0 2px 4px rgba(255,255,255,0.4);
+  }
+  100% {
+    box-shadow: 0 8px 25px rgba(255, 107, 107, 0.5), 
+                0 0 0 4px rgba(255, 107, 107, 0.2),
+                inset 0 2px 4px rgba(255,255,255,0.3);
   }
 }
 
