@@ -1,0 +1,41 @@
+.main-page {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  margin-left: 20%;
+
+  .main-page-content {
+    text-align: center;
+    background: rgba(26, 37, 47, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 3rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    border: 2px solid #ff6b6b;
+
+    h1 {
+      color: #ff6b6b;
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
+      font-family: 'Courier New', monospace;
+      font-weight: 700;
+    }
+
+    p {
+      color: #bdc3c7;
+      font-size: 1.2rem;
+      line-height: 1.6;
+      font-family: 'Courier New', monospace;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .main-page {
+    margin-left: 0;
+    padding: 1rem;
+  }
+}

@@ -1,0 +1,185 @@
+.left-side {
+  width: 20%;
+  min-height: calc(100vh - 80px);
+  background: rgba(26, 37, 47, 0.95);
+  backdrop-filter: blur(10px);
+  border-right: 2px solid #ff6b6b;
+  position: fixed;
+  left: 0;
+  top: 80px;
+  z-index: 10;
+  padding: 2rem 1rem;
+  box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
+
+  .left-side-content {
+    .stalker-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      .stalker-btn {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        font-size: 1rem;
+        text-align: left;
+        width: 100%;
+
+        .btn-icon {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          font-size: 1.2rem;
+
+          .list-icon, .plus-icon, .money-icon, .add-search-icon, .search-icon, .chart-icon {
+            font-size: 1.5rem;
+            font-weight: bold;
+          }
+
+          .radiation-icon {
+            color: #ff6b6b;
+            font-size: 1.3rem;
+            animation: pulse 2s infinite;
+          }
+        }
+
+        .btn-text {
+          flex: 1;
+          color: #333;
+        }
+
+        &.archive-btn {
+          background: linear-gradient(135deg, #2c3e50, #34495e);
+          color: #ff6b6b;
+          border: 1px solid #ff6b6b;
+
+          &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+            background: linear-gradient(135deg, #34495e, #2c3e50);
+          }
+
+          .btn-text {
+            color: #ff6b6b;
+          }
+        }
+
+        &.add-btn {
+          background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+          color: #1a252f;
+          border: 1px solid #ff6b6b;
+
+          &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.6);
+            background: linear-gradient(135deg, #ee5a24, #ff6b6b);
+          }
+
+          .btn-text {
+            color: #1a252f;
+            font-weight: 700;
+          }
+        }
+
+        &.income-expense-btn {
+          background: linear-gradient(135deg, #27ae60, #2ecc71);
+          color: #1a252f;
+          border: 1px solid #27ae60;
+
+          &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(39, 174, 96, 0.6);
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+          }
+
+          .btn-text {
+            color: #1a252f;
+            font-weight: 700;
+          }
+        }
+
+        &.add-search-btn {
+          background: linear-gradient(135deg, #8e44ad, #9b59b6);
+          color: #1a252f;
+          border: 1px solid #8e44ad;
+
+          &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(142, 68, 173, 0.6);
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+          }
+
+          .btn-text {
+            color: #1a252f;
+            font-weight: 700;
+          }
+        }
+
+        &.search-btn {
+          background: linear-gradient(135deg, #e74c3c, #c0392b);
+          color: #1a252f;
+          border: 1px solid #e74c3c;
+
+          &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.6);
+            background: linear-gradient(135deg, #c0392b, #e74c3c);
+          }
+
+          .btn-text {
+            color: #1a252f;
+            font-weight: 700;
+          }
+        }
+
+        &.finances-btn {
+          background: linear-gradient(135deg, #f39c12, #e67e22);
+          color: #1a252f;
+          border: 1px solid #f39c12;
+
+          &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(243, 156, 18, 0.6);
+            background: linear-gradient(135deg, #e67e22, #f39c12);
+          }
+
+          .btn-text {
+            color: #1a252f;
+            font-weight: 700;
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .left-side {
+    width: 100%;
+    position: relative;
+    min-height: auto;
+    border-right: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+}
