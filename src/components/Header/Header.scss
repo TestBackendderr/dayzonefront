@@ -11,7 +11,7 @@
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
 
@@ -21,6 +21,45 @@
       font-weight: 700;
       text-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
       font-family: 'Courier New', monospace;
+    }
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+
+    .user-info {
+      color: #bdc3c7;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .logout-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: rgba(231, 76, 60, 0.2);
+      color: #e74c3c;
+      border: 1px solid #e74c3c;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      font-weight: 500;
+
+      &:hover {
+        background: rgba(231, 76, 60, 0.3);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+      }
+
+      span {
+        font-size: 1rem;
+      }
     }
   }
 }
