@@ -8,8 +8,8 @@ import MainPage from './pages/MainPage/MainPage';
 import Dashboard from './components/Dashboard/Dashboard';
 import AddStalkerPage from './pages/AddStalker/index';
 import StalkerArchivePage from './pages/StalkerArchive/index';
-import AddSearchPage from './pages/AddSearch/index';
-import SearchPage from './pages/Search/index';
+import AddWantedPage from './pages/AddWanted/index';
+import WantedArchivePage from './pages/WantedArchive/index';
 import IncomeExpensePage from './pages/IncomeExpense/index';
 import FinancesPage from './pages/Finances/index';
 
@@ -51,19 +51,19 @@ function App() {
               </main>
             </ProtectedRoute>
           } />
-          <Route path="/add-search" element={
+          <Route path="/add-wanted" element={
             <ProtectedRoute>
               <Header />
               <main className="main-content">
-                <AddSearchPage />
+                <AddWantedPage />
               </main>
             </ProtectedRoute>
           } />
-          <Route path="/search" element={
+          <Route path="/wanted-archive" element={
             <ProtectedRoute>
               <Header />
               <main className="main-content">
-                <SearchPage />
+                <WantedArchivePage />
               </main>
             </ProtectedRoute>
           } />

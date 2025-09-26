@@ -136,7 +136,7 @@ const Login = () => {
             <div className="demo-credentials">
               <p>Демо доступ:</p>
               <p><strong>Логин:</strong> admin</p>
-              <p><strong>Пароль:</strong> admin123</p>
+              <p><strong>Пароль:</strong> password</p>
             </div>
           </form>
         </div>

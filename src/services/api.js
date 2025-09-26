@@ -167,4 +167,69 @@ export const financesAPI = {
   }
 };
 
+// API для розыска сталкеров
+export const wantedAPI = {
+  getAll: async (searchBy = '', searchTerm = '') => {
+    const params = {};
+    if (searchBy && searchTerm) {
+      params.searchBy = searchBy;
+      params.searchTerm = searchTerm;
+    }
+    const response = await api.get('/wanted', { params });
+    return response.data;
+  },
+  
+  getById: async (id) => {
+    const response = await api.get(`/wanted/${id}`);
+    return response.data;
+  },
+  
+  create: async (wantedData) => {
+    const formData = new FormData();
+    formData.append('callsign', wantedData.callsign);
+    formData.append('fullName', wantedData.fullName);
+    formData.append('faceId', wantedData.faceId);
+    formData.append('reward', wantedData.reward);
+    formData.append('lastSeen', wantedData.lastSeen);
+    formData.append('reason', wantedData.reason);
+    
+    if (wantedData.photo) {
+      formData.append('photo', wantedData.photo);
+    }
+    
+    const response = await api.post('/wanted', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  },
+  
+  update: async (id, wantedData) => {
+    const formData = new FormData();
+    formData.append('callsign', wantedData.callsign);
+    formData.append('fullName', wantedData.fullName);
+    formData.append('faceId', wantedData.faceId);
+    formData.append('reward', wantedData.reward);
+    formData.append('lastSeen', wantedData.lastSeen);
+    formData.append('reason', wantedData.reason);
+    
+    if (wantedData.photo) {
+      formData.append('photo', wantedData.photo);
+    }
+    
+    const response = await api.put(`/wanted/${id}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  },
+  
+  delete: async (id) => {
+    const response = await api.delete(`/wanted/${id}`);
+    return response.data;
+  }
+};
+
 export default api;

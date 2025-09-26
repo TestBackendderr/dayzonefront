@@ -21,13 +21,14 @@ const LeftSide = () => {
     navigate('/finances');
   };
 
-  const handleSearch = () => {
-    navigate('/search');
+  const handleAddWanted = () => {
+    navigate('/add-wanted');
   };
 
-  const handleAddSearch = () => {
-    navigate('/add-search');
+  const handleWantedArchive = () => {
+    navigate('/wanted-archive');
   };
+
 
   return (
     <div className="left-side">
@@ -57,20 +58,21 @@ const LeftSide = () => {
             <span className="btn-text">Приход-расход</span>
           </button>
           
-          <button className="stalker-btn add-search-btn" onClick={handleAddSearch}>
+          
+          <button className="stalker-btn add-wanted-btn" onClick={handleAddWanted}>
             <div className="btn-icon">
-              <span className="add-search-icon">⚠</span>
+              <span className="add-wanted-icon">⚠</span>
               <span className="radiation-icon">☢</span>
             </div>
-            <span className="btn-text">Добавить в розыск</span>
+            <span className="btn-text">Добавь в розыск</span>
           </button>
           
-          <button className="stalker-btn search-btn" onClick={handleSearch}>
+          <button className="stalker-btn wanted-archive-btn" onClick={handleWantedArchive}>
             <div className="btn-icon">
-              <span className="search-icon">🔍</span>
+              <span className="wanted-archive-icon">🔍</span>
               <span className="radiation-icon">☢</span>
             </div>
-            <span className="btn-text">Розыск</span>
+            <span className="btn-text">База розыска</span>
           </button>
           
           <button className="stalker-btn finances-btn" onClick={handleFinances}>
