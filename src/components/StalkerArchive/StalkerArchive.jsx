@@ -65,7 +65,7 @@ const StalkerArchive = () => {
     <div className="stalker-archive">
       <div className="archive-header">
         <h2>Архив сталкеров</h2>
-        <p>База данных всех зарегистрированных сталкеров зоны</p>
+        <p>База данных   всех зарегистрированных сталкеров зоны</p>
       </div>
 
       {error && (
@@ -109,7 +109,12 @@ const StalkerArchive = () => {
             <div key={stalker.id} className="stalker-card">
               <div className="stalker-photo">
                 <img 
-                  src={stalker.photo || 'https://via.placeholder.com/200x200/ff6b6b/ffffff?text=' + encodeURIComponent(stalker.callsign)} 
+                  src={stalker.photo ? `http://localhost:5000${stalker.photo}` : `data:image/svg+xml;charset=utf-8,${encodeURIComponent(`
+                    <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+                      <rect width="200" height="200" fill="#ff6b6b"/>
+                      <text x="100" y="100" font-family="Arial" font-size="16" fill="white" text-anchor="middle" dominant-baseline="middle">${stalker.callsign}</text>
+                    </svg>
+                  `)}`} 
                   alt={stalker.callsign} 
                 />
                 <div className="radiation-overlay">☢</div>

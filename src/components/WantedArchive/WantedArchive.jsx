@@ -111,7 +111,12 @@ const WantedArchive = () => {
             <div key={wanted.id} className="wanted-card">
               <div className="wanted-photo">
                 <img 
-                  src={wanted.photo || 'https://via.placeholder.com/200x200/ff6b6b/ffffff?text=' + encodeURIComponent(wanted.callsign)} 
+                  src={wanted.photo ? `http://localhost:5000${wanted.photo}` : `data:image/svg+xml;charset=utf-8,${encodeURIComponent(`
+                    <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+                      <rect width="200" height="200" fill="#ff6b6b"/>
+                      <text x="100" y="100" font-family="Arial" font-size="16" fill="white" text-anchor="middle" dominant-baseline="middle">${wanted.callsign}</text>
+                    </svg>
+                  `)}`} 
                   alt={wanted.callsign} 
                 />
                 <div className="radiation-overlay">☢</div>
