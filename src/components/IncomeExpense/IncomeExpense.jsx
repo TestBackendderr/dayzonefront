@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { financesAPI } from '../../services/api';
+import Modal from '../Modal/Modal';
 import './IncomeExpense.scss';
 
 const IncomeExpense = () => {
@@ -19,6 +20,7 @@ const IncomeExpense = () => {
   const [weekRange, setWeekRange] = useState({ start: null, end: null });
   const [currentPage, setCurrentPage] = useState(1);
   const operationsPerPage = 10;
+  const [modal, setModal] = useState({ isOpen: false, title: '', message: '', type: 'info' });
 
   // Загрузка операций и баланса при монтировании компонента
   useEffect(() => {
@@ -122,7 +124,7 @@ const IncomeExpense = () => {
         source: newOperation.source
       });
       
-      alert('Операция успешно добавлена!');
+      showModal('Успех', 'Операция успешно добавлена!', 'success');
       setNewOperation({
         type: '+',
         amount: '',
@@ -138,6 +140,14 @@ const IncomeExpense = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const showModal = (title, message, type = 'info') => {
+    setModal({ isOpen: true, title, message, type });
+  };
+
+  const closeModal = () => {
+    setModal({ isOpen: false, title: '', message: '', type: 'info' });
   };
 
   const toggleAddForm = () => {
@@ -354,6 +364,16 @@ const IncomeExpense = () => {
           </div>
         )}
       </div>
+
+      <Modal
+        isOpen={modal.isOpen}
+        onClose={closeModal}
+        title={modal.title}
+        message={modal.message}
+        type={modal.type}
+        onConfirm={modal.onConfirm}
+        showCancel={modal.type === 'confirm'}
+      />
     </div>
   );
 };

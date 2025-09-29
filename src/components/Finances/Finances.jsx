@@ -19,6 +19,14 @@ const Finances = () => {
     loadFinancesData();
   }, []);
 
+  // Перезагрузка данных при изменении типа истории или выбранной недели
+  useEffect(() => {
+    if (operations.length > 0) {
+      const stats = createUsersStats(operations, [], historyType, selectedWeek);
+      setUsersStats(stats);
+    }
+  }, [historyType, operations, selectedWeek]);
+
   const loadFinancesData = async () => {
     try {
       setLoading(true);
@@ -33,7 +41,7 @@ const Finances = () => {
       setOperations(operationsResponse.operations);
       
       // Создаем статистику пользователей на основе операций
-      const stats = createUsersStats(operationsResponse.operations, stalkersResponse);
+      const stats = createUsersStats(operationsResponse.operations, stalkersResponse, historyType, selectedWeek);
       setUsersStats(stats);
       
       // Создаем список доступных недель
@@ -55,11 +63,47 @@ const Finances = () => {
     }
   };
 
-  const createUsersStats = (operations, stalkers) => {
+  // Функция для получения диапазона текущей недели
+  const getCurrentWeekRange = () => {
+    const today = new Date();
+    const currentDay = today.getDay();
+    const daysFromMonday = currentDay === 0 ? 6 : currentDay - 1;
+    
+    const startOfCurrentWeek = new Date(today);
+    startOfCurrentWeek.setDate(today.getDate() - daysFromMonday);
+    startOfCurrentWeek.setHours(0, 0, 0, 0);
+    
+    const endOfCurrentWeek = new Date(startOfCurrentWeek);
+    endOfCurrentWeek.setDate(startOfCurrentWeek.getDate() + 6);
+    endOfCurrentWeek.setHours(23, 59, 59, 999);
+    
+    return {
+      start: startOfCurrentWeek,
+      end: endOfCurrentWeek
+    };
+  };
+
+  const createUsersStats = (operations, stalkers, currentHistoryType = historyType, currentSelectedWeek = selectedWeek) => {
+    // Фильтруем операции по периоду
+    let filteredOperations = operations;
+    
+    if (currentHistoryType === 'week') {
+      const weekRange = getCurrentWeekRange();
+      filteredOperations = operations.filter(op => {
+        const operationDate = new Date(op.created_at);
+        return operationDate >= weekRange.start && operationDate <= weekRange.end;
+      });
+    } else if (currentHistoryType === 'custom' && currentSelectedWeek) {
+      filteredOperations = operations.filter(op => {
+        const operationDate = new Date(op.created_at);
+        return operationDate >= currentSelectedWeek.start && operationDate <= currentSelectedWeek.end;
+      });
+    }
+    
     // Группируем операции по пользователям
     const userOperations = {};
     
-    operations.forEach(op => {
+    filteredOperations.forEach(op => {
       const username = op.stalker_login;
       if (!userOperations[username]) {
         userOperations[username] = {
@@ -170,49 +214,6 @@ const Finances = () => {
     return filteredOps;
   };
 
-  // Моковые данные пользователей с общей статистикой
-  const [mockUsersStats] = useState([
-    {
-      id: 'all',
-      login: 'Все пользователи',
-      rubles: 12500,
-      dollars: 1200,
-      totalRubles: 15000,
-      totalDollars: 1500
-    },
-    {
-      id: 'sniper',
-      login: 'Снайпер',
-      rubles: 8500,
-      dollars: 800,
-      totalRubles: 10000,
-      totalDollars: 1000
-    },
-    {
-      id: 'wolf',
-      login: 'Волк',
-      rubles: 2000,
-      dollars: 200,
-      totalRubles: 3000,
-      totalDollars: 300
-    },
-    {
-      id: 'shadow',
-      login: 'Тень',
-      rubles: 1500,
-      dollars: 150,
-      totalRubles: 1500,
-      totalDollars: 150
-    },
-    {
-      id: 'hunter',
-      login: 'Охотник',
-      rubles: 500,
-      dollars: 50,
-      totalRubles: 500,
-      totalDollars: 50
-    }
-  ]);
 
   // Моковые данные всех операций
   const [allOperations] = useState([
@@ -267,7 +268,6 @@ const Finances = () => {
     setCurrentPage(1);
   };
 
-  const selectedUserStats = usersStats.find(user => user.id === selectedUser) || usersStats[0];
 
   return (
     <div className="finances">
@@ -284,7 +284,39 @@ const Finances = () => {
       )}
 
       <div className="users-overview">
-        <h3>Все пользователи</h3>
+        <div className="overview-header">
+          <h3>Все пользователи</h3>
+          <div className="period-selector">
+            <label>Период:</label>
+            <select 
+              value={historyType} 
+              onChange={(e) => setHistoryType(e.target.value)}
+              className="period-select"
+            >
+              <option value="all">Вся статистика</option>
+              <option value="week">Текущая неделя</option>
+              <option value="custom">Выбрать неделю</option>
+            </select>
+          </div>
+          
+          {historyType === 'custom' && availableWeeks.length > 0 && (
+            <div className="week-selector">
+              <label>Неделя:</label>
+              <select 
+                value={selectedWeek?.key || ''} 
+                onChange={(e) => handleWeekChange(e.target.value)}
+                className="week-select"
+              >
+                <option value="">Выберите неделю</option>
+                {availableWeeks.map(week => (
+                  <option key={week.key} value={week.key}>
+                    {week.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+        </div>
         <div className="users-stats">
           {loading ? (
             <div className="loading-message">

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { stalkersAPI } from '../../services/api';
+import Modal from '../Modal/Modal';
 import './AddStalker.scss';
 
 const AddStalker = () => {
@@ -16,6 +17,7 @@ const AddStalker = () => {
   const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [modal, setModal] = useState({ isOpen: false, title: '', message: '', type: 'info' });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -41,6 +43,14 @@ const AddStalker = () => {
     }
   };
 
+  const showModal = (title, message, type = 'info') => {
+    setModal({ isOpen: true, title, message, type });
+  };
+
+  const closeModal = () => {
+    setModal({ isOpen: false, title: '', message: '', type: 'info' });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -48,9 +58,12 @@ const AddStalker = () => {
 
     try {
       await stalkersAPI.create(stalkerData);
-      alert('Сталкер успешно добавлен в базу данных!');
-      // Переходим в архив сталкеров
-      navigate('/stalker-archive');
+      showModal('Успех', 'Сталкер успешно добавлен в базу данных!', 'success');
+      // Переходим в архив сталкеров после закрытия модального окна
+      setModal(prev => ({ 
+        ...prev, 
+        onConfirm: () => navigate('/stalker-archive') 
+      }));
     } catch (error) {
       setError('Ошибка добавления сталкера: ' + (error.response?.data?.message || error.message));
     } finally {
@@ -175,6 +188,16 @@ const AddStalker = () => {
           </button>
         </div>
       </form>
+
+      <Modal
+        isOpen={modal.isOpen}
+        onClose={closeModal}
+        title={modal.title}
+        message={modal.message}
+        type={modal.type}
+        onConfirm={modal.onConfirm}
+        showCancel={modal.type === 'confirm'}
+      />
     </div>
   );
 };

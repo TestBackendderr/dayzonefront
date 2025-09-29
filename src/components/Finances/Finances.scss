@@ -32,12 +32,94 @@
     border: 2px solid #ff6b6b;
     margin-bottom: 2rem;
 
-    h3 {
-      color: #ff6b6b;
-      font-size: 1.5rem;
+    .overview-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin-bottom: 1.5rem;
-      font-family: 'Courier New', monospace;
-      text-align: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+
+      h3 {
+        color: #ff6b6b;
+        font-size: 1.5rem;
+        margin: 0;
+        font-family: 'Courier New', monospace;
+      }
+
+      .period-selector {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        label {
+          color: #bdc3c7;
+          font-family: 'Courier New', monospace;
+          font-size: 0.9rem;
+          font-weight: 500;
+        }
+
+        .period-select {
+          background: rgba(44, 62, 80, 0.8);
+          border: 1px solid #ff6b6b;
+          border-radius: 6px;
+          color: #fff;
+          padding: 0.5rem 1rem;
+          font-family: 'Courier New', monospace;
+          font-size: 0.9rem;
+          cursor: pointer;
+          transition: all 0.3s ease;
+
+          &:hover {
+            background: rgba(44, 62, 80, 1);
+            border-color: #ff8a8a;
+          }
+
+          &:focus {
+            outline: none;
+            border-color: #ff8a8a;
+            box-shadow: 0 0 10px rgba(255, 107, 107, 0.3);
+          }
+        }
+      }
+
+      .week-selector {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 1rem;
+
+        label {
+          color: #bdc3c7;
+          font-family: 'Courier New', monospace;
+          font-size: 0.9rem;
+          font-weight: 500;
+        }
+
+        .week-select {
+          background: rgba(44, 62, 80, 0.8);
+          border: 1px solid #ff6b6b;
+          border-radius: 6px;
+          color: #fff;
+          padding: 0.5rem 1rem;
+          font-family: 'Courier New', monospace;
+          font-size: 0.9rem;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          min-width: 200px;
+
+          &:hover {
+            background: rgba(44, 62, 80, 1);
+            border-color: #ff8a8a;
+          }
+
+          &:focus {
+            outline: none;
+            border-color: #ff8a8a;
+            box-shadow: 0 0 10px rgba(255, 107, 107, 0.3);
+          }
+        }
+      }
     }
 
     .users-stats {

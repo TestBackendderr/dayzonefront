@@ -21,6 +21,11 @@ const Header = () => {
       <div className="header-actions">
         <span className="user-info">
           Добро пожаловать, {user.username || 'Пользователь'}
+          {user.role && (
+            <span className="user-role">
+              [{user.role}]
+            </span>
+          )}
         </span>
         <button className="logout-btn" onClick={handleLogout}>
           <span>🚪</span>

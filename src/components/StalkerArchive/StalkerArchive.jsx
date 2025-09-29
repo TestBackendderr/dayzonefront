@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { stalkersAPI } from '../../services/api';
+import Modal from '../Modal/Modal';
 import './StalkerArchive.scss';
 
 const StalkerArchive = () => {
@@ -8,6 +9,7 @@ const StalkerArchive = () => {
   const [stalkers, setStalkers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [modal, setModal] = useState({ isOpen: false, title: '', message: '', type: 'info' });
 
   // Загрузка сталкеров при монтировании компонента
   useEffect(() => {
@@ -46,18 +48,33 @@ const StalkerArchive = () => {
     setSearchTerm('');
   };
 
-  const handleDeleteStalker = async (id) => {
-    if (!window.confirm('Вы уверены, что хотите удалить этого сталкера?')) {
-      return;
-    }
+  const showModal = (title, message, type = 'info') => {
+    setModal({ isOpen: true, title, message, type });
+  };
 
+  const closeModal = () => {
+    setModal({ isOpen: false, title: '', message: '', type: 'info' });
+  };
+
+  const handleDeleteStalker = async (id) => {
+    showModal(
+      'Подтверждение удаления',
+      'Вы уверены, что хотите удалить этого сталкера?',
+      'confirm'
+    );
+    
+    // Сохраняем ID для последующего удаления
+    setModal(prev => ({ ...prev, onConfirm: () => performDelete(id) }));
+  };
+
+  const performDelete = async (id) => {
     try {
       await stalkersAPI.delete(id);
       // Обновляем список сталкеров
       loadStalkers();
-      alert('Сталкер успешно удален');
+      showModal('Успех', 'Сталкер успешно удален', 'success');
     } catch (error) {
-      alert('Ошибка удаления сталкера: ' + (error.response?.data?.message || error.message));
+      showModal('Ошибка', 'Ошибка удаления сталкера: ' + (error.response?.data?.message || error.message), 'error');
     }
   };
 
@@ -169,6 +186,16 @@ const StalkerArchive = () => {
           </div>
         )}
       </div>
+
+      <Modal
+        isOpen={modal.isOpen}
+        onClose={closeModal}
+        title={modal.title}
+        message={modal.message}
+        type={modal.type}
+        onConfirm={modal.onConfirm}
+        showCancel={modal.type === 'confirm'}
+      />
     </div>
   );
 };

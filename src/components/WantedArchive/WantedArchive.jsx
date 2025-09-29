@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { wantedAPI } from '../../services/api';
 import LeftSide from '../LeftSide/LeftSide';
+import Modal from '../Modal/Modal';
 import './WantedArchive.scss';
 
 const WantedArchive = () => {
@@ -9,6 +10,7 @@ const WantedArchive = () => {
   const [wantedStalkers, setWantedStalkers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [modal, setModal] = useState({ isOpen: false, title: '', message: '', type: 'info' });
 
   // Загрузка разыскиваемых сталкеров при монтировании компонента
   useEffect(() => {
@@ -47,18 +49,33 @@ const WantedArchive = () => {
     setSearchTerm('');
   };
 
-  const handleDeleteWanted = async (id) => {
-    if (!window.confirm('Вы уверены, что хотите удалить этого разыскиваемого сталкера?')) {
-      return;
-    }
+  const showModal = (title, message, type = 'info') => {
+    setModal({ isOpen: true, title, message, type });
+  };
 
+  const closeModal = () => {
+    setModal({ isOpen: false, title: '', message: '', type: 'info' });
+  };
+
+  const handleDeleteWanted = async (id) => {
+    showModal(
+      'Подтверждение удаления',
+      'Вы уверены, что хотите удалить этого разыскиваемого сталкера?',
+      'confirm'
+    );
+    
+    // Сохраняем ID для последующего удаления
+    setModal(prev => ({ ...prev, onConfirm: () => performDelete(id) }));
+  };
+
+  const performDelete = async (id) => {
     try {
       await wantedAPI.delete(id);
       // Обновляем список разыскиваемых сталкеров
       loadWantedStalkers();
-      alert('Разыскиваемый сталкер успешно удален');
+      showModal('Успех', 'Разыскиваемый сталкер успешно удален', 'success');
     } catch (error) {
-      alert('Ошибка удаления: ' + (error.response?.data?.message || error.message));
+      showModal('Ошибка', 'Ошибка удаления: ' + (error.response?.data?.message || error.message), 'error');
     }
   };
 
@@ -182,6 +199,16 @@ const WantedArchive = () => {
           </div>
         )}
       </div>
+
+      <Modal
+        isOpen={modal.isOpen}
+        onClose={closeModal}
+        title={modal.title}
+        message={modal.message}
+        type={modal.type}
+        onConfirm={modal.onConfirm}
+        showCancel={modal.type === 'confirm'}
+      />
     </div>
   );
 };
