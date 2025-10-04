@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './LeftSide.scss';
 
 const LeftSide = () => {
   const navigate = useNavigate();
+  const [user, setUser] = useState(null);
 
   const handleAddStalker = () => {
     navigate('/add-stalker');
@@ -29,6 +30,22 @@ const LeftSide = () => {
     navigate('/wanted-archive');
   };
 
+  const handleUserManagement = () => {
+    navigate('/user-management');
+  };
+
+  useEffect(() => {
+    // Получаем информацию о пользователе из localStorage
+    const token = localStorage.getItem('token');
+    if (token) {
+      try {
+        const tokenData = JSON.parse(atob(token.split('.')[1]));
+        setUser(tokenData);
+      } catch (error) {
+        console.error('Ошибка парсинга токена:', error);
+      }
+    }
+  }, []);
 
   return (
     <div className="left-side">
@@ -74,6 +91,16 @@ const LeftSide = () => {
             </div>
             <span className="btn-text">База розыска</span>
           </button>
+          
+          {user && user.role === 'Admin' && (
+            <button className="stalker-btn user-management-btn" onClick={handleUserManagement}>
+              <div className="btn-icon">
+                <span className="user-management-icon">👥</span>
+                <span className="radiation-icon">☢</span>
+              </div>
+              <span className="btn-text">Добавить пользователя</span>
+            </button>
+          )}
           
           <button className="stalker-btn finances-btn" onClick={handleFinances}>
             <div className="btn-icon">

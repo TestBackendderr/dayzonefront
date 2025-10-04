@@ -1,0 +1,82 @@
+.role-wanted-archive {
+  padding: 2rem;
+  margin-left: 20%; // Adjust for LeftSide component
+
+  .role-wanted-archive-header {
+    text-align: center;
+    margin-bottom: 3rem;
+
+    h2 {
+      color: #ff6b6b; // Consistent with wanted theme
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
+      font-family: 'Courier New', monospace;
+      font-weight: 700;
+    }
+
+    p {
+      color: #bdc3c7;
+      font-size: 1.2rem;
+      line-height: 1.6;
+      font-family: 'Courier New', monospace;
+    }
+  }
+
+  .error-message {
+    background: rgba(231, 76, 60, 0.1);
+    border: 2px solid #e74c3c;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    color: #e74c3c;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Courier New', monospace;
+
+    .error-icon {
+      font-size: 1.2rem;
+    }
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #7f8c8d;
+
+    .empty-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+
+    h3 {
+      color: #bdc3c7;
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      font-family: 'Courier New', monospace;
+    }
+
+    p {
+      font-size: 1rem;
+      font-family: 'Courier New', monospace;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .role-wanted-archive {
+    margin-left: 0;
+    padding: 1rem;
+
+    .role-wanted-archive-header {
+      h2 {
+        font-size: 2rem;
+      }
+      p {
+        font-size: 1rem;
+      }
+    }
+  }
+}

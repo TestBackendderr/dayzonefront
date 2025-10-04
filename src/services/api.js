@@ -73,6 +73,17 @@ export const stalkersAPI = {
     const response = await api.get('/stalkers', { params });
     return response.data;
   },
+
+  // Получить сталкеров конкретной роли
+  getByRole: async (role, searchBy = '', searchTerm = '') => {
+    const params = {};
+    if (searchBy && searchTerm) {
+      params.searchBy = searchBy;
+      params.searchTerm = searchTerm;
+    }
+    const response = await api.get(`/stalkers/role/${role}`, { params });
+    return response.data;
+  },
   
   getById: async (id) => {
     const response = await api.get(`/stalkers/${id}`);
@@ -119,6 +130,12 @@ export const stalkersAPI = {
   
   delete: async (id) => {
     const response = await api.delete(`/stalkers/${id}`);
+    return response.data;
+  },
+
+  // Получить все доступные роли
+  getRoles: async () => {
+    const response = await api.get('/stalkers/roles/list');
     return response.data;
   }
 };
@@ -178,6 +195,17 @@ export const wantedAPI = {
     const response = await api.get('/wanted', { params });
     return response.data;
   },
+
+  // Получить разыскиваемых конкретной роли
+  getByRole: async (role, searchBy = '', searchTerm = '') => {
+    const params = {};
+    if (searchBy && searchTerm) {
+      params.searchBy = searchBy;
+      params.searchTerm = searchTerm;
+    }
+    const response = await api.get(`/wanted/role/${role}`, { params });
+    return response.data;
+  },
   
   getById: async (id) => {
     const response = await api.get(`/wanted/${id}`);
@@ -228,6 +256,35 @@ export const wantedAPI = {
   
   delete: async (id) => {
     const response = await api.delete(`/wanted/${id}`);
+    return response.data;
+  },
+
+  // Получить все доступные роли
+  getRoles: async () => {
+    const response = await api.get('/wanted/roles/list');
+    return response.data;
+  }
+};
+
+// API для управления пользователями (только для админов)
+export const usersAPI = {
+  getAll: async () => {
+    const response = await api.get('/auth/users');
+    return response.data;
+  },
+
+  create: async (userData) => {
+    const response = await api.post('/auth/users', userData);
+    return response.data;
+  },
+
+  update: async (id, userData) => {
+    const response = await api.put(`/auth/users/${id}`, userData);
+    return response.data;
+  },
+
+  delete: async (id) => {
+    const response = await api.delete(`/auth/users/${id}`);
     return response.data;
   }
 };

@@ -1,0 +1,83 @@
+.wanted-role-navigation {
+  margin-bottom: 2rem;
+  background: rgba(26, 37, 47, 0.9);
+  border-radius: 15px;
+  padding: 1rem 0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  border: 1px solid #ff6b6b;
+
+  .role-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 1rem;
+
+    .role-item {
+      .role-link {
+        display: block;
+        padding: 0.8rem 1.5rem;
+        border-radius: 10px;
+        text-decoration: none;
+        color: #bdc3c7;
+        font-family: 'Courier New', monospace;
+        font-weight: 600;
+        font-size: 1rem;
+        background: rgba(44, 62, 80, 0.7);
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
+        text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+
+        &:hover {
+          background: var(--role-color, #ff6b6b);
+          color: #fff;
+          border-color: var(--role-color, #ff6b6b);
+          box-shadow: 0 0 15px rgba(var(--role-color-rgb, 255, 107, 107), 0.5);
+          transform: translateY(-3px);
+        }
+
+        &.active {
+          background: var(--role-color, #ff6b6b);
+          color: #1a252f;
+          border-color: var(--role-color, #ff6b6b);
+          box-shadow: 0 0 20px rgba(var(--role-color-rgb, 255, 107, 107), 0.7);
+          transform: translateY(-2px);
+        }
+      }
+    }
+  }
+}
+
+.wanted-role-navigation-loading,
+.wanted-role-navigation-error {
+  text-align: center;
+  padding: 1rem;
+  background: rgba(26, 37, 47, 0.9);
+  border-radius: 15px;
+  color: #bdc3c7;
+  font-family: 'Courier New', monospace;
+}
+
+.wanted-role-navigation-error {
+  color: #ff6b6b;
+  border: 1px solid #ff6b6b;
+}
+
+@media (max-width: 768px) {
+  .wanted-role-navigation {
+    padding: 0.5rem;
+
+    .role-list {
+      gap: 0.5rem;
+
+      .role-item {
+        .role-link {
+          padding: 0.6rem 1rem;
+          font-size: 0.9rem;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,219 @@
+.role-stalker-archive {
+  padding: 2rem;
+  margin-left: 20%;
+  min-height: 100vh;
+
+  .archive-header {
+    background: rgba(26, 37, 47, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border: 2px solid var(--role-color, #ff6b6b);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--role-color, #ff6b6b), transparent);
+    }
+
+    .header-content {
+      flex: 1;
+
+      .archive-title {
+        color: #bdc3c7;
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+        font-family: 'Courier New', monospace;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        .role-icon {
+          color: var(--role-color, #ff6b6b);
+          text-shadow: 0 0 10px var(--role-color, #ff6b6b);
+          animation: pulse 2s infinite;
+        }
+      }
+
+      .archive-description {
+        color: #7f8c8d;
+        font-size: 1.1rem;
+        margin: 0;
+        font-family: 'Courier New', monospace;
+      }
+    }
+
+    .add-stalker-btn {
+      background: linear-gradient(135deg, var(--role-color, #ff6b6b), #ee5a24);
+      color: #1a252f;
+      border: 2px solid var(--role-color, #ff6b6b);
+      border-radius: 12px;
+      padding: 1rem 2rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Courier New', monospace;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      .btn-icon {
+        font-size: 1.2rem;
+      }
+
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+      }
+    }
+  }
+
+  .error-message {
+    background: rgba(231, 76, 60, 0.1);
+    border: 2px solid #e74c3c;
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    color: #e74c3c;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Courier New', monospace;
+
+    .error-icon {
+      font-size: 1.2rem;
+    }
+  }
+
+  .archive-content {
+    background: rgba(26, 37, 47, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 2rem;
+    border: 2px solid #34495e;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: rgba(26, 37, 47, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border: 2px solid #34495e;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+
+    .empty-icon {
+      font-size: 4rem;
+      color: #7f8c8d;
+      margin-bottom: 1rem;
+      animation: pulse 2s infinite;
+    }
+
+    h3 {
+      color: #bdc3c7;
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      font-family: 'Courier New', monospace;
+    }
+
+    p {
+      color: #7f8c8d;
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      font-family: 'Courier New', monospace;
+    }
+
+    .add-first-btn {
+      background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+      color: #1a252f;
+      border: 2px solid #ff6b6b;
+      border-radius: 12px;
+      padding: 1rem 2rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Courier New', monospace;
+      font-size: 1rem;
+
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+      }
+    }
+  }
+
+  .loading {
+    text-align: center;
+    color: #bdc3c7;
+    font-size: 1.5rem;
+    padding: 4rem;
+    font-family: 'Courier New', monospace;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .role-stalker-archive {
+    margin-left: 0;
+    padding: 1rem;
+
+    .archive-header {
+      flex-direction: column;
+      gap: 1.5rem;
+      text-align: center;
+
+      .archive-title {
+        font-size: 2rem;
+      }
+
+      .add-stalker-btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    .archive-content {
+      padding: 1.5rem;
+    }
+
+    .empty-state {
+      padding: 2rem 1rem;
+
+      .empty-icon {
+        font-size: 3rem;
+      }
+
+      h3 {
+        font-size: 1.5rem;
+      }
+    }
+  }
+}

@@ -12,6 +12,7 @@ import AddWantedPage from './pages/AddWanted/index';
 import WantedArchivePage from './pages/WantedArchive/index';
 import IncomeExpensePage from './pages/IncomeExpense/index';
 import FinancesPage from './pages/Finances/index';
+import UserManagement from './components/UserManagement/UserManagement';
 
 function App() {
   return (
@@ -80,6 +81,14 @@ function App() {
               <Header />
               <main className="main-content">
                 <FinancesPage />
+              </main>
+            </ProtectedRoute>
+          } />
+          <Route path="/user-management" element={
+            <ProtectedRoute>
+              <Header />
+              <main className="main-content">
+                <UserManagement />
               </main>
             </ProtectedRoute>
           } />

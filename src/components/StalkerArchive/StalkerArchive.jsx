@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { stalkersAPI } from '../../services/api';
-import Modal from '../Modal/Modal';
+import StalkerGrid from '../StalkerGrid/StalkerGrid';
+import '../StalkerGrid/StalkerGrid.scss';
 import './StalkerArchive.scss';
 
 const StalkerArchive = () => {
@@ -9,7 +10,6 @@ const StalkerArchive = () => {
   const [stalkers, setStalkers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [modal, setModal] = useState({ isOpen: false, title: '', message: '', type: 'info' });
 
   // Загрузка сталкеров при монтировании компонента
   useEffect(() => {
@@ -39,43 +39,9 @@ const StalkerArchive = () => {
     }
   };
 
-  const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value);
-  };
-
-  const handleSearchTypeChange = (e) => {
-    setSearchBy(e.target.value);
-    setSearchTerm('');
-  };
-
-  const showModal = (title, message, type = 'info') => {
-    setModal({ isOpen: true, title, message, type });
-  };
-
-  const closeModal = () => {
-    setModal({ isOpen: false, title: '', message: '', type: 'info' });
-  };
-
-  const handleDeleteStalker = async (id) => {
-    showModal(
-      'Подтверждение удаления',
-      'Вы уверены, что хотите удалить этого сталкера?',
-      'confirm'
-    );
-    
-    // Сохраняем ID для последующего удаления
-    setModal(prev => ({ ...prev, onConfirm: () => performDelete(id) }));
-  };
-
-  const performDelete = async (id) => {
-    try {
-      await stalkersAPI.delete(id);
-      // Обновляем список сталкеров
-      loadStalkers();
-      showModal('Успех', 'Сталкер успешно удален', 'success');
-    } catch (error) {
-      showModal('Ошибка', 'Ошибка удаления сталкера: ' + (error.response?.data?.message || error.message), 'error');
-    }
+  const handleSearch = (newSearchBy, newSearchTerm) => {
+    setSearchBy(newSearchBy);
+    setSearchTerm(newSearchTerm);
   };
 
   return (
@@ -92,109 +58,14 @@ const StalkerArchive = () => {
         </div>
       )}
 
-      <div className="search-section">
-        <div className="search-controls">
-          <div className="search-type">
-            <label>Поиск по:</label>
-            <select value={searchBy} onChange={handleSearchTypeChange}>
-              <option value="callsign">Позывному</option>
-              <option value="faceId">ID лица</option>
-              <option value="fullName">ФИО</option>
-            </select>
-          </div>
-          
-          <div className="search-input">
-            <input
-              type="text"
-              placeholder={`Введите ${searchBy === 'callsign' ? 'позывной' : searchBy === 'faceId' ? 'ID лица' : 'ФИО'} для поиска`}
-              value={searchTerm}
-              onChange={handleSearchChange}
-            />
-            <span className="search-icon">🔍</span>
-          </div>
-        </div>
-      </div>
-
-      <div className="stalkers-grid">
-        {loading ? (
-          <div className="loading-message">
-            <div className="loading-spinner">☢</div>
-            <p>Загрузка сталкеров...</p>
-          </div>
-        ) : stalkers.length > 0 ? (
-          stalkers.map(stalker => (
-            <div key={stalker.id} className="stalker-card">
-              <div className="stalker-photo">
-                <img 
-                  src={stalker.photo ? `http://localhost:5000${stalker.photo}` : `data:image/svg+xml;charset=utf-8,${encodeURIComponent(`
-                    <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
-                      <rect width="200" height="200" fill="#ff6b6b"/>
-                      <text x="100" y="100" font-family="Arial" font-size="16" fill="white" text-anchor="middle" dominant-baseline="middle">${stalker.callsign}</text>
-                    </svg>
-                  `)}`} 
-                  alt={stalker.callsign} 
-                />
-                <div className="radiation-overlay">☢</div>
-              </div>
-              
-              <div className="stalker-info">
-                <div className="stalker-callsign">
-                  <span className="callsign-label">Позывной:</span>
-                  <span className="callsign-value">{stalker.callsign}</span>
-                </div>
-                
-                <div className="stalker-details">
-                  <div className="detail-row">
-                    <span className="detail-label">ФИО:</span>
-                    <span className="detail-value">{stalker.full_name}</span>
-                  </div>
-                  
-                  <div className="detail-row">
-                    <span className="detail-label">ID лица:</span>
-                    <span className="detail-value face-id">{stalker.face_id}</span>
-                  </div>
-                  
-                  {stalker.note && (
-                    <div className="detail-row note-row">
-                      <span className="detail-label">Заметка:</span>
-                      <span className="detail-value note-text">{stalker.note}</span>
-                    </div>
-                  )}
-                </div>
-              </div>
-              
-              <div className="stalker-actions">
-                <button className="action-btn edit-btn">
-                  <span>✏️</span>
-                  Редактировать
-                </button>
-                <button 
-                  className="action-btn delete-btn"
-                  onClick={() => handleDeleteStalker(stalker.id)}
-                >
-                  <span>🗑️</span>
-                  Удалить
-                </button>
-              </div>
-            </div>
-          ))
-        ) : (
-          <div className="no-results">
-            <div className="no-results-icon">☢</div>
-            <h3>Сталкеры не найдены</h3>
-            <p>Попробуйте изменить параметры поиска</p>
-          </div>
-        )}
-      </div>
-
-      <Modal
-        isOpen={modal.isOpen}
-        onClose={closeModal}
-        title={modal.title}
-        message={modal.message}
-        type={modal.type}
-        onConfirm={modal.onConfirm}
-        showCancel={modal.type === 'confirm'}
+      <StalkerGrid
+        stalkers={stalkers}
+        loading={loading}
+        onSearch={handleSearch}
+        searchBy={searchBy}
+        searchTerm={searchTerm}
+        onRefresh={loadStalkers}
+        showRoleFilter={true}
       />
     </div>
   );
