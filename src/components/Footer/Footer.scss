@@ -1,0 +1,118 @@
+.footer {
+  background: rgba(30, 30, 30, 0.85);
+  background-image: url('../../../public/3.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  backdrop-filter: blur(15px) saturate(1.2);
+  box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.8);
+  border-top: none;
+  position: sticky;
+  bottom: 0;
+  z-index: 100;
+
+  .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    height: 80px;
+
+    p {
+      color: #ffffff;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      margin: 0;
+    }
+
+    .footer-left {
+      p {
+        color: #666666;
+        font-weight: 700;
+        transform: translateY(16px);
+        text-shadow: 
+          0.5px 0.5px 0 #333333,
+          1px 1px 0 #222222,
+          1.5px 1.5px 0 #111111,
+          2px 2px 0 #000000,
+          -0.5px -0.5px 0 #888888,
+          -1px -1px 0 #999999,
+          -1.5px -1.5px 0 #aaaaaa;
+        letter-spacing: 1px;
+      }
+    }
+
+    .footer-center {
+      text-align: center;
+      transform: translateY(-26px);
+
+      .footer-navigation {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+
+        .footer-task {
+          color: #666666;
+          font-size: 0.8rem;
+          margin: 0;
+          flex: 0 0 auto;
+          
+          // Затемнение эмодзи
+          filter: grayscale(100%) brightness(0.7) contrast(1.2);
+        }
+
+        .footer-main {
+          color: #ffa500;
+          font-weight: 500;
+          margin: 0;
+          flex: 1;
+          text-align: center;
+          
+          // Затемнение только эмодзи
+          &::before {
+            content: '📄';
+            filter: grayscale(100%) brightness(0.7) contrast(1.2);
+          }
+        }
+
+        .footer-contacts {
+          color: #666666;
+          font-size: 0.8rem;
+          margin: 0;
+          flex: 0 0 auto;
+          
+          // Затемнение эмодзи
+          filter: grayscale(100%) brightness(0.7) contrast(1.2);
+        }
+      }
+    }
+
+    .footer-right {
+      text-align: right;
+      p {
+        color: #666666;
+        font-weight: 400;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .footer {
+    .footer-content {
+      flex-direction: column;
+      gap: 0.5rem;
+      padding: 1rem;
+      height: auto;
+
+      .footer-left,
+      .footer-center,
+      .footer-right {
+        text-align: center;
+      }
+    }
+  }
+}

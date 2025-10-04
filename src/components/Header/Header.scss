@@ -1,63 +1,66 @@
 .header {
   background: rgba(26, 37, 47, 0.95);
+  background-image: url('../../../public/1.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   backdrop-filter: blur(10px);
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
-  border-bottom: 2px solid #ff6b6b;
+  border-bottom: none;
   position: sticky;
   top: 0;
   z-index: 100;
 
-  .logo {
+  .header-content {
     max-width: 1200px;
     margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; // Три равные колонки
     align-items: center;
     padding: 1rem 2rem;
-
-    h1 {
-      color: #ff6b6b;
-      font-size: 1.8rem;
-      font-weight: 700;
-      text-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
-      font-family: 'Courier New', monospace;
-    }
   }
 
-  .header-actions {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-
-    .user-info {
+  .header-left {
+    .user-welcome {
       color: #bdc3c7;
       font-family: 'Courier New', monospace;
       font-size: 0.9rem;
       font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-
-      .user-role {
-        background: rgba(255, 107, 107, 0.2);
-        color: #ff6b6b;
-        padding: 0.2rem 0.5rem;
-        border-radius: 4px;
-        font-size: 0.8rem;
-        font-weight: 600;
-        border: 1px solid rgba(255, 107, 107, 0.3);
-        text-shadow: 0 0 5px rgba(255, 107, 107, 0.3);
-      }
+      transform: translateY(25px) translateX(-50px); // Опускаем на 25px и перемещаем на 50px влево
     }
+  }
+
+  .header-center {
+    display: flex;
+    justify-content: center;
+    transform: translateY(10px); // Опускаем на 10px
+
+    .user-role {
+      background: rgba(255, 107, 107, 0.2);
+      color: #ff6b6b;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 1.2rem; // Увеличиваем в 1.5 раза (0.8rem * 1.5 = 1.2rem)
+      font-weight: 600;
+      border: 1px solid rgba(255, 107, 107, 0.3);
+      text-shadow: 0 0 5px rgba(255, 107, 107, 0.3);
+      font-family: 'Courier New', monospace;
+    }
+  }
+
+  .header-right {
+    display: flex;
+    justify-content: flex-end;
+    transform: translateY(10px); // Опускаем на 10px
 
     .logout-btn {
       display: flex;
       align-items: center;
       gap: 0.5rem;
       padding: 0.5rem 1rem;
-      background: rgba(231, 76, 60, 0.2);
-      color: #e74c3c;
-      border: 1px solid #e74c3c;
+      background: rgba(245, 245, 245, 0.4); // Ещё более прозрачный фон
+      color: #333; // Тёмный текст
+      border: 1px solid #ddd;
       border-radius: 6px;
       cursor: pointer;
       transition: all 0.3s ease;
@@ -66,13 +69,14 @@
       font-weight: 500;
 
       &:hover {
-        background: rgba(231, 76, 60, 0.3);
+        background: rgba(232, 232, 232, 0.5); // Немного темнее при hover
         transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       }
 
       span {
         font-size: 1rem;
+        filter: grayscale(100%) brightness(0.7); // Серая эмодзи
       }
     }
   }

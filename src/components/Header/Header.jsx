@@ -15,22 +15,25 @@ const Header = () => {
 
   return (
     <header className="header">
-      <div className="logo">
-        <h1>DayZone</h1>
-      </div>
-      <div className="header-actions">
-        <span className="user-info">
-          Добро пожаловать, {user.username || 'Пользователь'}
+      <div className="header-content">
+        <div className="header-left">
+          <span className="user-welcome">
+            Добро пожаловать, {user.username || 'Пользователь'}
+          </span>
+        </div>
+        <div className="header-center">
           {user.role && (
             <span className="user-role">
               [{user.role}]
             </span>
           )}
-        </span>
-        <button className="logout-btn" onClick={handleLogout}>
-          <span>🚪</span>
-          Выйти
-        </button>
+        </div>
+        <div className="header-right">
+          <button className="logout-btn" onClick={handleLogout}>
+            <span>🚪</span>
+            Выйти
+          </button>
+        </div>
       </div>
     </header>
   );

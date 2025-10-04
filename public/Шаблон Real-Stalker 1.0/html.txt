@@ -1,0 +1,109 @@
+<head>
+<title>[TITLE]</title>
+<link type="text/css" rel="StyleSheet" href="[CSS_URL]" />
+
+
+</head>
+
+<body>
+<div id="utbr8214" rel="s41"></div>
+
+ <!-- <header> -->
+<table cellpadding="10" cellspacing="0" border="0" class="dataBar" align="center">
+ <tr>
+ <td><b>$WDAY$, $DATE$</b></td>
+ <td align="right"> Вы находитесь групе - </b> <b>$USER_GROUP$</b></td>
+
+ </tr>
+</table>
+<center><img src="/img/shapka.png" width="944" height="215" alt=""></center>
+<center><table width="944" height="60" border="0" style="padding-left:6px;padding-right:6px;" background="/img/menu/br.png">
+  <tr>
+ 
+ <td>
+   <center><a href="/" target="_self">
+ <img src="/img/menu/1.png" onmouseover="this.src='/img/menu/1a.png'" onmouseout="this.src='/img/menu/1.png'" width="182" height="40" border="0"></a></td>
+ <td>
+ <a href="/forum" target="_self">
+ <img src="/img/menu/2.png" onmouseover="this.src='/img/menu/2a.png'" onmouseout="this.src='/img/menu/2.png'" width="182" height="40" border="0"></a></td>
+ <td>
+ <a href="/load" target="_self">
+ <img src="/img/menu/3.png" onmouseover="this.src='/img/menu/3a.png'" onmouseout="this.src='/img/menu/3.png'" width="182" height="40" border="0"></a></td>
+ <td>
+<a href="/photo" target="_self">
+ <img src="/img/menu/4.png" onmouseover="this.src='/img/menu/4a.png'" onmouseout="this.src='/img/menu/4.png'" width="182" height="40" border="0"></a></td>
+ <td>
+ <a href="/publ" target="_self">
+ <img src="/img/menu/5.png" onmouseover="this.src='/img/menu/5a.png'" onmouseout="this.src='/img/menu/5.png'" width="182" height="40" border="0"></a>
+  </td>
+  </center>
+  </tr>
+</table></center>
+<!--/U1AHEADER1Z-->
+<!-- </header> -->
+
+
+
+<table cellspacing="0" cellpadding="0" align="center" width="944" style="margin-bottom:5px;"> 
+<tr> 
+<td valign="top" width="944" height="15" style="background:url(/img/2.jpg)"></td></tr>
+<tr>
+<td style="background: url(/img/3.jpg);padding-left:12px;padding-right:12px;">
+<table border="0" cellpadding="0" cellspacing="0" width="920" align="center"> 
+<tr> 
+ <td valign="top" class="column">
+
+<!-- <container> -->
+
+<!-- <block> -->
+<table border="0" cellpadding="0" cellspacing="0" class="boxTable">
+<tr><td class="boxTitle"><b><center><!-- <bt> -->TITLE<!-- </bt> --><tr><td class="boxContent"><!-- <bc> -->
+<div align="center">CONTENT</div><!-- </bc> --></td></tr></table>
+<!-- </block> -->
+
+<!-- </container> -->
+
+
+ </td>
+ <td valign="top">
+ 
+
+ <div style="padding:10px;"><!-- <body> -->[BODY]<!-- </body> --></div>
+
+ </td>
+ <td valign="top" class="column">
+
+<!-- <container> -->
+
+<!-- <block> -->
+<table border="0" cellpadding="0" cellspacing="0" class="boxTable">
+<tr><td class="boxTitle"><b><center><!-- <bt> -->TITLE<!-- </bt> --><tr><td class="boxContent"><!-- <bc> -->
+<div align="center">CONTENT</div><!-- </bc> --></td></tr></table>
+<!-- </block> -->
+
+<!-- </container> --> 
+
+ </td>
+ </tr></table>
+</td></tr><tr><td><img src="/img/4.jpg" border="0"></td></tr></table>
+
+<!-- <footer> -->
+<a title="Дизайн сделал Пилигрим"><table align="center" border="0" cellpadding="0" height="100" cellspacing="0" width="944" style="padding-left:200px;padding-right:200px;" background="/img/12.png">
+ <tr>
+ <tr><td align="center">
+ <br><a href="http://real-stalker.at.ua/" title="Сайт дизайнера">Powered by Пилигрим</a>.
+ <br>$POWERED_BY$
+</td></tr>
+</table></a>
+<!-- </footer> -->
+
+</body>
+
+</html>
+
+
+<!-- <popup> --><table align="center" border="0" cellpadding="0" cellspacing="0" width="770" ><tr><td style="background:;padding:0px;">
+ <tr><td align="center" height="42" style="background:url('/img/pda/1.jpg') ;color:#FFFFFF;padding-bottom:5px;font-size:10px;"></td></tr>
+<tr><td style="background:url('/img/pda/2.jpg');padding:0 20px 0 20px;"><center><!-- <body> -->[BODY]<!-- </body> --></center></td></tr>
+<tr><td><img src="/img/pda/3.jpg" border="0"></td></tr>
+</table><!-- </popup> -->

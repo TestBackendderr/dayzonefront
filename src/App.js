@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './styles/App.scss';
 import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import LoginPage from './pages/Login/index';
 import MainPage from './pages/MainPage/MainPage';
@@ -26,6 +27,7 @@ function App() {
               <main className="main-content">
                 <MainPage />
               </main>
+              <Footer />
             </ProtectedRoute>
           } />
           <Route path="/dashboard" element={
@@ -34,6 +36,7 @@ function App() {
               <main className="main-content">
                 <Dashboard />
               </main>
+              <Footer />
             </ProtectedRoute>
           } />
           <Route path="/add-stalker" element={
@@ -42,6 +45,7 @@ function App() {
               <main className="main-content">
                 <AddStalkerPage />
               </main>
+              <Footer />
             </ProtectedRoute>
           } />
           <Route path="/stalker-archive" element={
@@ -50,6 +54,7 @@ function App() {
               <main className="main-content">
                 <StalkerArchivePage />
               </main>
+              <Footer />
             </ProtectedRoute>
           } />
           <Route path="/add-wanted" element={
@@ -58,6 +63,7 @@ function App() {
               <main className="main-content">
                 <AddWantedPage />
               </main>
+              <Footer />
             </ProtectedRoute>
           } />
           <Route path="/wanted-archive" element={
@@ -66,6 +72,7 @@ function App() {
               <main className="main-content">
                 <WantedArchivePage />
               </main>
+              <Footer />
             </ProtectedRoute>
           } />
           <Route path="/income-expense" element={
@@ -74,6 +81,7 @@ function App() {
               <main className="main-content">
                 <IncomeExpensePage />
               </main>
+              <Footer />
             </ProtectedRoute>
           } />
           <Route path="/finances" element={
@@ -82,6 +90,7 @@ function App() {
               <main className="main-content">
                 <FinancesPage />
               </main>
+              <Footer />
             </ProtectedRoute>
           } />
           <Route path="/user-management" element={
@@ -90,6 +99,7 @@ function App() {
               <main className="main-content">
                 <UserManagement />
               </main>
+              <Footer />
             </ProtectedRoute>
           } />
         </Routes>

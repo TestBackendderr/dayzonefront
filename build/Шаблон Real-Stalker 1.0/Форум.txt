@@ -1,0 +1,58 @@
+<head>
+<title>$MODULE_NAME$</title>
+<link type="text/css" rel="StyleSheet" href="/_st/my.css" />
+
+
+</head>
+
+<body>
+<div id="utbr8214" rel="s41"></div>
+
+ $GLOBAL_AHEADER$
+<!--/U1AHEADER1Z-->
+
+
+
+<table cellspacing="0" cellpadding="0" align="center" width="944" style="margin-bottom:5px;"> 
+<tr> 
+<td valign="top" width="944" height="15" style="background:url(/img/2.jpg)"></td></tr>
+<tr>
+<td style="background: url(/img/3.jpg);padding-left:12px;padding-right:12px;">
+<table border="0" cellpadding="0" cellspacing="0" width="920" align="center"> 
+<tr> 
+ <td valign="top" class="column">
+
+$GLOBAL_CLEFTER$
+
+
+ </td>
+ <td valign="top">
+ 
+
+ <div style="padding:5px;"><!-- <body> --><!-- <body> --><div class="forumContent"><table border="0" cellpadding="0" height="30" cellspacing="0" width="100%">
+<tr>
+<td align="right">[<?if($USER_LOGGED_IN$)?>
+<a href="javascript://" rel="nofollow" id="upml" class="fNavLink" onclick="window.open('$PM_URL$','pmw','scrollbars=1,top=0,left=0,resizable=1,width=680,height=350');return false;"><!--<s3065>-->Личные сообщения<!--</s>-->($UNREAD_PM$)</a> &middot;
+<?if($IS_NEW_PM$)?><script type="text/javascript">function flashit(id,cl){var c=document.getElementById(id);if (c.style.color=='red'){c.style.color=cl;}else {c.style.color='red';}}setInterval("flashit('upml','')",500)</script><bgsound src="http://s70.ucoz.net/img/fr/pm.wav" loop="1" volume="0" balance="0">
+<?endif?><?endif?>
+<a class="fNavLink" href="$RECENT_POSTS_LINK$" rel="nofollow"><!--<s5209>-->Новые сообщения<!--</s>--></a> &middot; 
+<a class="fNavLink" href="$MEMBERS_LIST_LINK$" rel="nofollow"><!--<s5216>-->Участники<!--</s>--></a> &middot; 
+<a class="fNavLink" href="$BOARD_RULES_LINK$" rel="nofollow"><!--<s5166>-->Правила форума<!--</s>--></a> &middot; 
+<a class="fNavLink" href="$SEARCH_PAGE_LINK$" rel="nofollow"><!--<s3163>-->Поиск<!--</s>--></a> &middot; 
+<a class="fNavLink" href="$RSS_LINK$" rel="nofollow">RSS</a> ]</td>
+</tr>
+</table>
+$BODY$</div><!-- </body> --><!-- </body> --></div>
+
+ </td>
+ 
+ </tr></table>
+</td></tr><tr><td><img src="/img/4.jpg" border="0"></td></tr></table>
+
+$GLOBAL_BFOOTER$
+
+</body>
+
+</html>
+
+
