@@ -89,7 +89,7 @@ const WantedGrid = ({
             <div key={person.id} className="wanted-card">
               <div className="wanted-photo">
                 <img 
-                  src={person.photo ? `http://localhost:5000${person.photo}` : `data:image/svg+xml;charset=utf-8,${encodeURIComponent(`
+                  src={person.photo ? `https://dayzone2-backend-gobqh3-cf2a4b-85-215-53-87.traefik.me${person.photo}` : `data:image/svg+xml;charset=utf-8,${encodeURIComponent(`
                     <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
                       <rect width="200" height="200" fill="#ff6b6b"/>
                       <text x="100" y="100" font-family="Arial" font-size="16" fill="white" text-anchor="middle" dominant-baseline="middle">${person.callsign}</text>

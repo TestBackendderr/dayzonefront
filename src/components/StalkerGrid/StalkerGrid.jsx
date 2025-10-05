@@ -97,7 +97,7 @@ const StalkerGrid = ({
             <div key={stalker.id} className="stalker-card">
               <div className="stalker-photo">
                 <img 
-                  src={stalker.photo ? `http://localhost:5000${stalker.photo}` : `data:image/svg+xml;charset=utf-8,${encodeURIComponent(`
+                  src={stalker.photo ? `https://dayzone2-backend-gobqh3-cf2a4b-85-215-53-87.traefik.me${stalker.photo}` : `data:image/svg+xml;charset=utf-8,${encodeURIComponent(`
                     <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
                       <rect width="200" height="200" fill="#ff6b6b"/>
                       <text x="100" y="100" font-family="Arial" font-size="16" fill="white" text-anchor="middle" dominant-baseline="middle">${stalker.callsign}</text>
