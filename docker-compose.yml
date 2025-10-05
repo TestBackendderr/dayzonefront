@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  frontend:
+    build: .
+    container_name: dayzone-frontend
+    restart: unless-stopped
+    environment:
+      - REACT_APP_API_URL=http://85.215.53.87:5000/api
+      - GENERATE_SOURCEMAP=false
+      - CI=false
+    ports:
+      - "3000:80"
+    networks:
+      - dayzone_network
+
+networks:
+  dayzone_network:
+    driver: bridge
