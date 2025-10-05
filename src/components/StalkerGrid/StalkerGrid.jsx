@@ -80,7 +80,7 @@ const StalkerGrid = ({
                 value={searchTerm}
                 onChange={(e) => onSearch(searchBy, e.target.value)}
               />
-              <span className="search-icon">🔍</span>
+              {/* <span className="search-icon">🔍</span> */}
             </div>
           </div>
         </div>
@@ -127,7 +127,7 @@ const StalkerGrid = ({
                   
                   {stalker.role && (
                     <div className="detail-row">
-                      <span className="detail-label">Фракция:</span>
+                      <span className="detail-label">Бд фракции :</span>
                       <span className="detail-value role-value">{stalker.role}</span>
                     </div>
                   )}

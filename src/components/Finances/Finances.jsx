@@ -272,7 +272,10 @@ const Finances = () => {
   return (
     <div className="finances">
       <div className="finances-header">
-        <h2>Финансы</h2>
+        <h2>
+          <span className="radiation-icon">☢</span>
+          Финансы
+        </h2>
         <p>Общая финансовая статистика и детальный просмотр операций</p>
       </div>
 

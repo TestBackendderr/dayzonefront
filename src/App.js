@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './styles/App.scss';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
+import LeftSide from './components/LeftSide/LeftSide';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import LoginPage from './pages/Login/index';
 import MainPage from './pages/MainPage/MainPage';
@@ -96,6 +97,7 @@ function App() {
           <Route path="/user-management" element={
             <ProtectedRoute>
               <Header />
+              <LeftSide />
               <main className="main-content">
                 <UserManagement />
               </main>

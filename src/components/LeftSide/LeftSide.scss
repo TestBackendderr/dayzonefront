@@ -45,7 +45,7 @@
           gap: 0.5rem;
           font-size: 1.4rem; // Увеличиваем размер иконок
 
-          .list-icon, .plus-icon, .money-icon, .add-search-icon, .search-icon, .chart-icon, .wanted-archive-icon, .add-wanted-icon {
+          .list-icon, .plus-icon, .money-icon, .add-search-icon, .search-icon, .chart-icon, .wanted-archive-icon, .add-wanted-icon, .user-management-icon {
             font-size: 1.8rem; // Увеличиваем размер эмодзи
             font-weight: bold;
             filter: grayscale(100%) brightness(1.5); // Бело-серые эмодзи
@@ -195,6 +195,7 @@
             color: #90EE90;
           }
         }
+
       }
     }
   }

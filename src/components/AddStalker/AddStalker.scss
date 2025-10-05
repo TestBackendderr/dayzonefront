@@ -7,63 +7,109 @@
     margin-bottom: 3rem;
 
     h2 {
-      color: #ff6b6b;
-      font-size: 2.5rem;
+      color: #90EE90; // Зеленый цвет как в LeftSide
+      font-size: 2rem;
       margin-bottom: 1rem;
-      text-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
       font-family: 'Courier New', monospace;
       font-weight: 700;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      
+      // Добавляем иконку радиации
+      &::before {
+        content: '☢';
+        color: #ff8c00; // Оранжевый цвет радиации
+        font-size: 2.5rem;
+        animation: pulse 2s infinite;
+      }
+      
+      // Добавляем подчеркивание
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #90EE90, transparent);
+      }
     }
 
     p {
-      color: #bdc3c7;
-      font-size: 1.2rem;
+      color: #90EE90; // Зеленый цвет как в LeftSide
+      font-size: 1.1rem;
       line-height: 1.6;
       font-family: 'Courier New', monospace;
+      margin-top: 2rem;
     }
   }
 
   .stalker-form {
-    background: rgba(26, 37, 47, 0.95);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    padding: 3rem;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-    border: 2px solid #ff6b6b;
-    max-width: 600px;
+    background: rgba(40, 40, 40, 0.85); // Тёмно-серый фон как у PDA
+    backdrop-filter: blur(8px);
+    border-radius: 15px; // Более округлая форма как у PDA
+    padding: 2.5rem;
+    box-shadow: 
+      0 4px 20px rgba(0, 0, 0, 0.6),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1); // Объёмная тень и внутренняя подсветка
+    border: 2px solid #666; // Серая граница как у PDA
+    max-width: 700px;
     margin: 0 auto;
+    position: relative;
+    overflow: hidden;
 
     .form-group {
-      margin-bottom: 2rem;
+      margin-bottom: 1.8rem;
 
       label {
         display: block;
-        color: #ff6b6b;
+        color: #90EE90; // Зеленый цвет как в LeftSide
         font-weight: 600;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.8rem;
         font-family: 'Courier New', monospace;
-        font-size: 1.1rem;
+        font-size: 1rem;
+        position: relative;
+        
+        // Добавляем звездочку для обязательных полей
+        &::after {
+          content: ' *';
+          color: #ff8c00; // Оранжевый цвет как радиация
+          font-weight: 700;
+        }
       }
 
       input, textarea {
         width: 100%;
-        padding: 1rem;
-        border: 2px solid #34495e;
-        border-radius: 8px;
-        background: rgba(44, 62, 80, 0.8);
-        color: #bdc3c7;
+        padding: 1.2rem 1rem;
+        border: 2px solid #666; // Серая граница как у PDA
+        border-radius: 10px;
+        background: rgba(60, 60, 60, 0.8); // Тёмный фон как у PDA
+        color: #90EE90; // Зеленый текст как в LeftSide
         font-family: 'Courier New', monospace;
         font-size: 1rem;
         transition: all 0.3s ease;
+        position: relative;
 
         &:focus {
           outline: none;
-          border-color: #ff6b6b;
-          box-shadow: 0 0 10px rgba(255, 107, 107, 0.3);
+          border-color: #90EE90; // Зеленая граница при фокусе
+          background: rgba(60, 60, 60, 1);
+          box-shadow: 0 0 15px rgba(144, 238, 144, 0.3);
+          transform: translateY(-2px);
+        }
+
+        &:hover:not(:focus) {
+          border-color: #888;
+          background: rgba(60, 60, 60, 0.9);
         }
 
         &::placeholder {
-          color: #7f8c8d;
+          color: #999;
+          font-style: italic;
         }
       }
 
@@ -81,15 +127,17 @@
           .photo-label {
             display: block;
             cursor: pointer;
-            border: 2px dashed #34495e;
-            border-radius: 8px;
+            border: 2px dashed #666;
+            border-radius: 10px;
             padding: 2rem;
             text-align: center;
             transition: all 0.3s ease;
+            background: rgba(60, 60, 60, 0.8);
 
             &:hover {
-              border-color: #ff6b6b;
-              background: rgba(255, 107, 107, 0.1);
+              border-color: #90EE90;
+              background: rgba(144, 238, 144, 0.1);
+              transform: translateY(-2px);
             }
 
             .photo-placeholder {
@@ -97,18 +145,21 @@
               flex-direction: column;
               align-items: center;
               gap: 1rem;
-              color: #7f8c8d;
+              color: #90EE90;
 
               .photo-icon {
                 font-size: 3rem;
+                filter: grayscale(100%) brightness(1.5);
+                color: #cccccc;
               }
             }
 
             .photo-preview {
               max-width: 200px;
               max-height: 200px;
-              border-radius: 8px;
+              border-radius: 10px;
               object-fit: cover;
+              border: 2px solid #666;
             }
           }
         }
@@ -117,49 +168,123 @@
 
     .form-actions {
       display: flex;
-      gap: 1rem;
-      justify-content: flex-end;
-      margin-top: 2rem;
+      gap: 1.5rem;
+      justify-content: center;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
 
       .btn-cancel, .btn-submit {
-        padding: 1rem 2rem;
+        padding: 1.2rem 2.5rem;
         border: none;
-        border-radius: 8px;
+        border-radius: 10px;
         font-weight: 600;
         cursor: pointer;
         transition: all 0.3s ease;
         font-family: 'Courier New', monospace;
         font-size: 1rem;
+        position: relative;
+        overflow: hidden;
+        min-width: 150px;
+
+        // Добавляем эффект блеска
+        &::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+          transition: left 0.5s;
+        }
+
+        &:hover::before {
+          left: 100%;
+        }
       }
 
       .btn-cancel {
         background: rgba(108, 117, 125, 0.8);
-        color: #bdc3c7;
+        color: #ffffff;
         border: 2px solid #6c757d;
 
         &:hover {
           background: rgba(108, 117, 125, 1);
-          transform: translateY(-2px);
+          border-color: #8a9199;
+          transform: translateY(-3px) scale(1.05);
+          box-shadow: 0 8px 20px rgba(108, 117, 125, 0.4);
+        }
+
+        &:active {
+          transform: translateY(-1px) scale(1.02);
         }
       }
 
       .btn-submit {
-        background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+        background: linear-gradient(135deg, #90EE90, #7CCD7C); // Зеленый градиент
         color: #1a252f;
-        border: 2px solid #ff6b6b;
+        border: 2px solid #90EE90;
         display: flex;
         align-items: center;
+        justify-content: center;
         gap: 0.5rem;
 
-        &:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+        &:hover:not(:disabled) {
+          transform: translateY(-3px) scale(1.05);
+          box-shadow: 0 10px 30px rgba(144, 238, 144, 0.5);
+        }
+
+        &:active:not(:disabled) {
+          transform: translateY(-1px) scale(1.02);
+        }
+
+        &:disabled {
+          background: #666;
+          border-color: #666;
+          cursor: not-allowed;
+          transform: none;
+          box-shadow: none;
+          color: #999;
         }
 
         .btn-icon {
           animation: pulse 2s infinite;
+          color: #ff8c00; // Оранжевый цвет радиации
         }
       }
+    }
+  }
+
+  .error-message {
+    color: #ff6b6b;
+    background: rgba(255, 107, 107, 0.1);
+    border: 2px solid #ff6b6b;
+    padding: 1.2rem;
+    border-radius: 10px;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+    position: relative;
+    
+    // Добавляем иконку ошибки
+    &::before {
+      content: '⚠️';
+      margin-right: 0.5rem;
+      font-size: 1.2rem;
+    }
+    
+    // Добавляем анимацию пульсации
+    animation: error-pulse 2s infinite;
+  }
+  
+  @keyframes error-pulse {
+    0%, 100% {
+      box-shadow: 0 0 5px rgba(255, 107, 107, 0.3);
+    }
+    50% {
+      box-shadow: 0 0 20px rgba(255, 107, 107, 0.6);
     }
   }
 }
@@ -184,8 +309,83 @@
     margin-left: 0;
     padding: 1rem;
 
+    .add-stalker-header {
+      h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+        
+        &::before {
+          font-size: 2rem;
+        }
+      }
+      
+      p {
+        font-size: 1rem;
+        margin-top: 1.5rem;
+      }
+    }
+
     .stalker-form {
       padding: 2rem;
+      margin: 0 0.5rem;
+      border-radius: 12px;
+      
+      .form-group {
+        margin-bottom: 1.5rem;
+
+        label {
+          font-size: 0.9rem;
+          margin-bottom: 0.6rem;
+        }
+
+        input, textarea {
+          padding: 1rem 0.8rem;
+          font-size: 0.9rem;
+        }
+      }
+
+      .form-actions {
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: 2rem;
+        padding-top: 1.5rem;
+        
+        .btn-cancel, .btn-submit {
+          width: 100%;
+          padding: 1rem 1.5rem;
+          font-size: 0.9rem;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .add-stalker {
+    padding: 0.5rem;
+
+    .stalker-form {
+      padding: 1.5rem;
+      margin: 0;
+    }
+
+    .add-stalker-header {
+      h2 {
+        font-size: 1.3rem;
+        
+        &::before {
+          font-size: 1.8rem;
+        }
+      }
+    }
+
+    .stalker-form {
+      .form-group {
+        input, textarea {
+          padding: 0.8rem;
+          font-size: 0.85rem;
+        }
+      }
     }
   }
 }

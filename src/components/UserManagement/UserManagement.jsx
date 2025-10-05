@@ -5,6 +5,8 @@ import './UserManagement.scss';
 
 const UserManagement = () => {
   const [users, setUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [selectedRole, setSelectedRole] = useState('all');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [modal, setModal] = useState({ isOpen: false, title: '', message: '', type: 'info' });
@@ -26,6 +28,15 @@ const UserManagement = () => {
   useEffect(() => {
     loadUsers();
   }, []);
+
+  useEffect(() => {
+    // Фильтрация пользователей по роли
+    if (selectedRole === 'all') {
+      setFilteredUsers(users);
+    } else {
+      setFilteredUsers(users.filter(user => user.role === selectedRole));
+    }
+  }, [users, selectedRole]);
 
   const loadUsers = async () => {
     try {
@@ -98,13 +109,52 @@ const UserManagement = () => {
     });
   };
 
+  const handleRoleFilter = (role) => {
+    setSelectedRole(role);
+  };
+
   return (
     <div className="user-management">
       <div className="management-header">
-        <h2>Управление пользователями</h2>
+        <h2>
+          <span className="radiation-icon">☢</span>
+          Управление пользователями
+        </h2>
         <p>Создание и управление пользователями системы</p>
+      </div>
+
+      {/* Фильтр по ролям */}
+      <div className="role-filter-section">
+        <div className="filter-header">
+          <span className="filter-icon">🏛️</span>
+          <span className="filter-title">Группировки:</span>
+        </div>
+        <div className="role-filters">
+          <button 
+            className={`role-filter-btn ${selectedRole === 'all' ? 'active' : ''}`}
+            onClick={() => handleRoleFilter('all')}
+          >
+            <span className="role-icon">👥</span>
+            Все пользователи
+          </button>
+          {roles.map(role => (
+            <button
+              key={role.value}
+              className={`role-filter-btn ${selectedRole === role.value ? 'active' : ''}`}
+              onClick={() => handleRoleFilter(role.value)}
+              style={{ borderColor: role.color }}
+            >
+              <span className="role-icon" style={{ color: role.color }}>☢</span>
+              {role.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="add-user-section">
         <button className="btn-create-user" onClick={handleCreateUser}>
-          <span>👤</span>
+          <span className="btn-icon">👤</span>
+          <span className="radiation-icon">☢</span>
           Добавить пользователя
         </button>
       </div>
@@ -122,7 +172,7 @@ const UserManagement = () => {
             <div className="loading-spinner">☢</div>
             <p>Загрузка пользователей...</p>
           </div>
-        ) : users.length > 0 ? (
+        ) : filteredUsers.length > 0 ? (
           <table>
             <thead>
               <tr>
@@ -133,7 +183,7 @@ const UserManagement = () => {
               </tr>
             </thead>
             <tbody>
-              {users.map(user => {
+              {filteredUsers.map(user => {
                 const roleInfo = getRoleInfo(user.role);
                 return (
                   <tr key={user.id}>

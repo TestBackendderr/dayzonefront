@@ -47,8 +47,11 @@ const StalkerArchive = () => {
   return (
     <div className="stalker-archive">
       <div className="archive-header">
-        <h2>Архив сталкеров</h2>
-        <p>База данных   всех зарегистрированных сталкеров зоны</p>
+        <h2>
+          <span className="radiation-icon">☢</span>
+          Архив сталкеров
+        </h2>
+        <p>База данных всех зарегистрированных сталкеров зоны</p>
       </div>
 
       {error && (

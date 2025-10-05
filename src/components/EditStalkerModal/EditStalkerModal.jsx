@@ -61,7 +61,10 @@ const EditStalkerModal = ({ isOpen, onClose, stalker, onUpdate }) => {
     <div className="edit-stalker-modal-overlay">
       <div className="edit-stalker-modal">
         <div className="modal-header">
-          <h2>Редактировать сталкера</h2>
+          <h2>
+            <span className="radiation-icon">☢</span>
+            Редактировать сталкера
+          </h2>
           <button 
             className="close-btn" 
             onClick={handleClose}

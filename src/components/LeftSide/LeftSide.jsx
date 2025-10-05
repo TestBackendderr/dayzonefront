@@ -43,6 +43,20 @@ const LeftSide = () => {
   useEffect(() => {
     // Получаем информацию о пользователе из localStorage
     const token = localStorage.getItem('token');
+    
+    // Также проверяем, есть ли сохраненный пользователь напрямую
+    const savedUser = localStorage.getItem('user');
+    
+    if (savedUser) {
+      try {
+        const userData = JSON.parse(savedUser);
+        setUser(userData);
+        return;
+      } catch (error) {
+        console.error('Ошибка парсинга пользователя:', error);
+      }
+    }
+    
     if (token) {
       try {
         const tokenData = JSON.parse(atob(token.split('.')[1]));
@@ -98,7 +112,9 @@ const LeftSide = () => {
             <span className="btn-text">База розыска</span>
           </button>
           
-          {user && user.role === 'Admin' && (
+          
+          {/* Кнопка для админов - более гибкая проверка роли */}
+          {user && (user.role === 'Admin' || user.role === 'admin' || user.role === 'ADMIN') && (
             <button className={`stalker-btn user-management-btn ${isActive('/user-management') ? 'active' : ''}`} onClick={handleUserManagement}>
               <div className="btn-icon">
                 <span className="user-management-icon">👥</span>

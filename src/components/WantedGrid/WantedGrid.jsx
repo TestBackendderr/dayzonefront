@@ -72,7 +72,7 @@ const WantedGrid = ({
                 value={searchTerm}
                 onChange={(e) => onSearch(searchBy, e.target.value)}
               />
-              <span className="search-icon">🔍</span>
+              {/* <span className="search-icon">🔍</span> */}
             </div>
           </div>
         </div>

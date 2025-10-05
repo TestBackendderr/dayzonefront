@@ -49,7 +49,10 @@ const WantedArchive = () => {
     <div className="wanted-archive">
       <LeftSide />
       <div className="archive-header">
-        <h2>База розыска</h2>
+        <h2>
+          <span className="radiation-icon">☢</span>
+          База розыска
+        </h2>
         <p>База данных всех разыскиваемых сталкеров зоны</p>
       </div>
 

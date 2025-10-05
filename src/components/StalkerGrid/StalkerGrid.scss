@@ -219,48 +219,73 @@
     padding: 1rem 1.5rem 1.5rem;
     display: flex;
     gap: 1rem;
-    border-top: 1px solid rgba(255, 107, 107, 0.1);
+    border-top: 1px solid rgba(144, 238, 144, 0.2); // Зеленая граница
 
     .action-btn {
       flex: 1;
       padding: 0.8rem 1rem;
-      border: none;
+      border: 1px solid #555; // Тонкая серая граница
       border-radius: 8px;
-      font-weight: 600;
+      font-weight: 500;
       cursor: pointer;
       transition: all 0.3s ease;
       font-family: 'Courier New', monospace;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.5rem;
+      gap: 0.6rem;
+      background: rgba(40, 40, 40, 0.6); // Более прозрачный фон
+      color: #cccccc; // Серый текст как в LeftSide
+      position: relative;
+      overflow: hidden;
+
+      // Добавляем тонкую внутреннюю тень
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+        pointer-events: none;
+      }
 
       span {
         font-size: 1rem;
+        filter: grayscale(100%) brightness(1.2); // Более мягкие бело-серые эмодзи
+        color: #aaaaaa;
+        transition: all 0.3s ease;
+      }
+
+      &:hover {
+        background: rgba(144, 238, 144, 0.08); // Очень тонкий зеленый hover
+        border-color: #90EE90;
+        color: #90EE90;
+        transform: translateY(-1px);
+        
+        span {
+          filter: grayscale(100%) brightness(1.5);
+          color: #90EE90;
+        }
       }
 
       &.edit-btn {
-        background: rgba(52, 152, 219, 0.8);
-        color: #ecf0f1;
-        border: 2px solid #3498db;
-
         &:hover {
-          background: rgba(52, 152, 219, 1);
-          transform: translateY(-2px);
-          box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+          background: rgba(144, 238, 144, 0.1);
         }
       }
 
       &.delete-btn {
-        background: rgba(231, 76, 60, 0.8);
-        color: #ecf0f1;
-        border: 2px solid #e74c3c;
-
         &:hover {
-          background: rgba(231, 76, 60, 1);
-          transform: translateY(-2px);
-          box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+          background: rgba(144, 238, 144, 0.1); // Зеленый hover как у всех остальных
+          border-color: #90EE90;
+          color: #90EE90;
+          
+          span {
+            color: #90EE90;
+          }
         }
       }
     }

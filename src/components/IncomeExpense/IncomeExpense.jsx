@@ -157,8 +157,11 @@ const IncomeExpense = () => {
   return (
     <div className="income-expense">
       <div className="income-expense-header">
-        <h2>Приход-расход</h2>
-        <p>Управление финансовыми операциями сталкеров</p>
+        <h2>
+          <span className="radiation-icon">☢</span>
+          Приход-расход
+        </h2>
+        <p>Управление финансовыми операциями группировки</p>
       </div>
 
       {error && (
