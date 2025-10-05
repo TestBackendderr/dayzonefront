@@ -18,7 +18,7 @@
 
 ### 3. Environment Variables
 ```
-REACT_APP_API_URL=http://85.215.53.87:5000/api
+REACT_APP_API_URL=https://dayzone2-backend-gobqh3-cf2a4b-85-215-53-87.traefik.me/api
 GENERATE_SOURCEMAP=false
 CI=false
 ESLINT_NO_DEV_ERRORS=true
@@ -50,4 +50,4 @@ docker run -p 3000:80 dayzone-frontend
 
 После деплоя приложение будет доступно по адресу:
 - **Frontend**: `https://dayzone-frontend.traefik.me`
-- **API**: `http://85.215.53.87:5000/api`
+- **API**: `https://dayzone2-backend-gobqh3-cf2a4b-85-215-53-87.traefik.me/api`
