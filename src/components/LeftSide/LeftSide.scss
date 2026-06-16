@@ -1,227 +1,57 @@
+@import '../../styles/theme';
+
 .left-side {
-  width: 40%;
-  min-height: calc(100vh - 185px); // Учитываем header (80px) + footer (80px) + отступы (25px)
-  background: rgba(40, 40, 40, 0.85); // Полупрозрачный серый фон как у PDA
-  backdrop-filter: blur(8px);
-  border: 2px solid #666; // Серая граница как у PDA
-  border-radius: 15px; // Закругления как у PDA
+  width: $sidebar-width;
   position: fixed;
-  left: 55px; // Перемещаем левую границу на 55px вправо
-  top: 100px; // На 20px ниже navbar для видимости верхней границы
-  z-index: 5; // Ниже navbar (z-index: 100)
-  padding: 2rem 1rem;
-  box-shadow: 
-    0 4px 20px rgba(0, 0, 0, 0.6),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1); // Объёмная тень и внутренняя подсветка
+  left: calc(50% - var(--frame-width, 98vw) / 2 + var(--sidebar-inset, 2.45vw));
+  top: 61px;
+  bottom: 80px;
+  z-index: 5;
+  @include panel;
+  padding: 0.75rem 0.5rem;
+  overflow-y: auto;
 
   .left-side-content {
+    .nav-section-label {
+      color: $text-muted;
+      font-size: 0.68rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.25rem 0.5rem 0.6rem;
+    }
+
     .stalker-buttons {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
-      margin-left: 25px;
+      gap: 0.15rem;
 
       .stalker-btn {
-        display: flex;
-        align-items: center;
-        gap: 0.8rem; // Увеличиваем расстояние между иконкой и текстом
-        padding: 1rem 1rem; // Увеличиваем высоту и отступы
-        margin: 0.2rem 0; // Увеличиваем отступы между кнопками
-        border: none;
-        border-radius: 0;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        font-weight: 500;
-        font-size: 1.1rem; // Увеличиваем размер текста
-        font-family: 'Courier New', monospace;
-        text-align: left;
-        width: 100%;
-        background: transparent;
-        color: #90EE90; // Светло-зелёный как на PDA
+        @include nav-item;
+        padding: 0.45rem 0.5rem;
+        font-size: 0.8rem;
 
         .btn-icon {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          font-size: 1.4rem; // Увеличиваем размер иконок
-
-          .list-icon, .plus-icon, .money-icon, .add-search-icon, .search-icon, .chart-icon, .wanted-archive-icon, .add-wanted-icon, .user-management-icon {
-            font-size: 1.8rem; // Увеличиваем размер эмодзи
-            font-weight: bold;
-            filter: grayscale(100%) brightness(1.5); // Бело-серые эмодзи
-            color: #cccccc;
-          }
-
-          .radiation-icon {
-            color: #ff8c00; // Оранжевый цвет
-            font-size: 1.6rem; // Увеличиваем размер радиации
-            animation: pulse 2s infinite;
-            filter: none; // Убираем серый фильтр для оранжевого цвета
-          }
+          display: none;
         }
 
         .btn-text {
           flex: 1;
-          color: #90EE90;
+          text-align: left;
         }
-
-        &:hover {
-          background: rgba(90, 238, 144, 0.1);
-          transform: translateX(3px);
-        }
-
-        &.active {
-          background: rgba(90, 238, 144, 0.15); // Постоянная подсветка как при hover
-          color: #90EE90;
-          font-weight: 600;
-          border-left: 3px solid #90EE90; // Зелёная левая граница для активной кнопки
-          box-shadow: inset 0 0 10px rgba(144, 238, 144, 0.2); // Внутренняя подсветка
-          transform: translateX(3px); // Небольшой сдвиг вправо как при hover
-        }
-
-        &.archive-btn {
-          color: #90EE90;
-
-          &:hover {
-            background: rgba(90, 238, 144, 0.1);
-            transform: translateX(3px);
-          }
-
-          .btn-text {
-            color: #90EE90;
-          }
-        }
-
-        &.add-btn {
-          color: #90EE90;
-
-          &:hover {
-            background: rgba(90, 238, 144, 0.1);
-            transform: translateX(3px);
-          }
-
-          .btn-text {
-            color: #90EE90;
-          }
-        }
-
-        &.income-expense-btn {
-          color: #90EE90;
-
-          &:hover {
-            background: rgba(90, 238, 144, 0.1);
-            transform: translateX(3px);
-          }
-
-          .btn-text {
-            color: #90EE90;
-          }
-        }
-
-        &.add-search-btn {
-          color: #90EE90;
-
-          &:hover {
-            background: rgba(90, 238, 144, 0.1);
-            transform: translateX(3px);
-          }
-
-          .btn-text {
-            color: #90EE90;
-          }
-        }
-
-        &.search-btn {
-          color: #90EE90;
-
-          &:hover {
-            background: rgba(90, 238, 144, 0.1);
-            transform: translateX(3px);
-          }
-
-          .btn-text {
-            color: #90EE90;
-          }
-        }
-
-        &.add-wanted-btn {
-          color: #90EE90;
-
-          &:hover {
-            background: rgba(90, 238, 144, 0.1);
-            transform: translateX(3px);
-          }
-
-          .btn-text {
-            color: #90EE90;
-          }
-        }
-
-        &.wanted-archive-btn {
-          color: #90EE90;
-
-          &:hover {
-            background: rgba(90, 238, 144, 0.1);
-            transform: translateX(3px);
-          }
-
-          .btn-text {
-            color: #90EE90;
-          }
-        }
-
-        &.user-management-btn {
-          color: #90EE90;
-
-          &:hover {
-            background: rgba(90, 238, 144, 0.1);
-            transform: translateX(3px);
-          }
-
-          .btn-text {
-            color: #90EE90;
-          }
-        }
-
-        &.finances-btn {
-          color: #90EE90;
-
-          &:hover {
-            background: rgba(90, 238, 144, 0.1);
-            transform: translateX(3px);
-          }
-
-          .btn-text {
-            color: #90EE90;
-          }
-        }
-
       }
     }
   }
 }
 
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.1);
-    opacity: 0.7;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-@media (max-width: 768px) {
+@media (max-width: 860px) {
   .left-side {
-    width: 100%;
     position: relative;
-    min-height: auto;
-    border-right: none;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    left: auto;
+    top: auto;
+    bottom: auto;
+    width: 100%;
+    margin: 0 0 1rem;
+    max-height: none;
   }
 }

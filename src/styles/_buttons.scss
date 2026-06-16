@@ -1,0 +1,137 @@
+@import './theme';
+
+// Глобальные стили кнопок
+button {
+  font-family: $font-ui;
+}
+
+.btn,
+.btn-primary,
+.btn-submit,
+.btn-save,
+.btn-create-user,
+.btn-create-group,
+.add-operation-btn,
+.add-stalker-btn,
+.add-first-btn,
+.login-button,
+.modal-btn-primary,
+.modal-btn.modal-btn-confirm {
+  @include btn-primary;
+  padding: 0.55rem 1rem;
+  font-size: 0.875rem;
+}
+
+.btn-secondary,
+.btn-cancel,
+.btn-assign-group,
+.logout-btn,
+.modal-btn-cancel,
+.modal-btn.modal-btn-cancel,
+.page-btn,
+.ie-page-btn,
+.f-page-btn,
+.filter-btn,
+.nav-btn,
+.close-btn {
+  @include btn-secondary;
+  padding: 0.55rem 1rem;
+  font-size: 0.875rem;
+}
+
+.close-btn {
+  padding: 0.25rem 0.5rem;
+  min-width: auto;
+}
+
+.role-filter-btn,
+.type-btn,
+.history-type-btn,
+.role-card,
+.role-link {
+  @include btn-secondary;
+  padding: 0.45rem 0.85rem;
+  font-size: 0.8rem;
+
+  &.active {
+    background: $accent-soft;
+    border-color: $accent;
+    color: $text-primary;
+  }
+}
+
+.btn-edit,
+.action-btn.edit-btn,
+.action-btn.primary {
+  @include btn-secondary;
+  padding: 0.45rem 0.75rem;
+  font-size: 0.8rem;
+}
+
+.btn-delete,
+.btn-delete-group,
+.action-btn.delete-btn,
+.delete-btn {
+  @include btn-secondary;
+  padding: 0.45rem 0.75rem;
+  font-size: 0.8rem;
+  color: #d4a0a0;
+  border-color: rgba(180, 84, 84, 0.35);
+
+  &:hover:not(:disabled) {
+    background: $danger-soft;
+    color: #e8b4b4;
+  }
+}
+
+.action-btn.secondary {
+  @include btn-secondary;
+  padding: 0.5rem 1rem;
+}
+
+.stalker-btn {
+  @include nav-item;
+}
+
+.form-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid $border-subtle;
+}
+
+.stalker-actions,
+.wanted-actions,
+.card-actions {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0 1rem 1rem;
+
+  .action-btn {
+    @include btn-secondary;
+    flex: 1;
+    padding: 0.45rem 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .delete-btn {
+    color: #d4a0a0;
+    border-color: rgba(180, 84, 84, 0.35);
+
+    &:hover:not(:disabled) {
+      background: $danger-soft;
+    }
+  }
+}
+
+.add-btn {
+  @include btn-primary;
+  padding: 0.5rem 1rem;
+}
+
+.modal-footer .modal-btn {
+  min-width: 88px;
+}

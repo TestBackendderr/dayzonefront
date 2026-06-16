@@ -97,8 +97,8 @@ function App() {
           <Route path="/user-management" element={
             <ProtectedRoute>
               <Header />
-              <LeftSide />
               <main className="main-content">
+                <LeftSide />
                 <UserManagement />
               </main>
               <Footer />

@@ -84,11 +84,10 @@ const RoleStalkerArchive = () => {
         >
           <div className="header-content">
             <h1 className="archive-title">
-              <span className="role-icon">☢</span>
-              Архив сталкеров: {roleInfo.label}
+              Архив: {roleInfo.label}
             </h1>
             <p className="archive-description">
-              Управление базой данных сталкеров фракции {roleInfo.label}
+              База сталкеров группы {roleInfo.label}
             </p>
           </div>
           <button 
@@ -120,7 +119,7 @@ const RoleStalkerArchive = () => {
 
       {stalkers.length === 0 && !loading && (
         <div className="empty-state">
-          <div className="empty-icon">☢</div>
+          <div className="empty-icon" />
           <h3>Архив пуст</h3>
           <p>В архиве фракции {roleInfo?.label || role} пока нет сталкеров</p>
           <button 

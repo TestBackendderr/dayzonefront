@@ -174,17 +174,7 @@ const AddStalker = () => {
             className={`btn-submit ${loading ? 'loading' : ''}`}
             disabled={loading}
           >
-            {loading ? (
-              <>
-                <span className="loading-spinner">☢</span>
-                Добавление...
-              </>
-            ) : (
-              <>
-                <span className="btn-icon">☢</span>
-                Добавить сталкера
-              </>
-            )}
+              {loading ? 'Добавление...' : 'Добавить сталкера'}
           </button>
         </div>
       </form>

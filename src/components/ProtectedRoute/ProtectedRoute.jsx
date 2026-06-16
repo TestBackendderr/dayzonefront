@@ -45,7 +45,7 @@ const ProtectedRoute = ({ children }) => {
         height: '100vh',
         fontSize: '18px'
       }}>
-        <div>☢ Проверка авторизации...</div>
+        <div>Проверка авторизации...</div>
       </div>
     );
   }

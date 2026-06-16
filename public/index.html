@@ -6,6 +6,43 @@
     <meta name="theme-color" content="#000000" />
     <meta name="description" content="DayZone - приложение для управления временем" />
     <title>DayZone</title>
+    <script>
+      (function () {
+        function isInjectedError(message, source) {
+          var text = String(message || '');
+          if (/a0_0x|_0x[a-f0-9]{3,}/i.test(text)) return true;
+          if (!source || source === '<anonymous>' || source === 'undefined') {
+            return /is not defined/i.test(text);
+          }
+          return /^(chrome|moz|safari)-extension:/.test(source);
+        }
+
+        window.addEventListener('error', function (event) {
+          var message = event.message || (event.error && event.error.message) || '';
+          if (isInjectedError(message, event.filename)) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            return true;
+          }
+        }, true);
+
+        window.addEventListener('unhandledrejection', function (event) {
+          var reason = event.reason;
+          var message = reason && reason.message ? reason.message : reason;
+          if (isInjectedError(message, '')) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+          }
+        }, true);
+
+        var originalConsoleError = console.error;
+        console.error = function () {
+          var message = Array.prototype.join.call(arguments, ' ');
+          if (isInjectedError(message, '')) return;
+          originalConsoleError.apply(console, arguments);
+        };
+      })();
+    </script>
   </head>
   <body>
     <noscript>Вам нужно включить JavaScript для работы этого приложения.</noscript>

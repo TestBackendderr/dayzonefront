@@ -63,7 +63,7 @@ const RoleWantedArchive = () => {
 
       {wanted.length === 0 && !loading && !error && (
         <div className="empty-state">
-          <div className="empty-icon">☢</div>
+          <div className="empty-icon" />
           <h3>База розыска пуста</h3>
           <p>Разыскиваемые фракции "{role}" не найдены</p>
         </div>

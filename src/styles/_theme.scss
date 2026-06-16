@@ -1,0 +1,185 @@
+// Mercenary / Stalker design system
+$bg-base: #0c1017;
+$bg-elevated: #141b26;
+$bg-panel: #1a2330;
+$bg-panel-hover: #222d3d;
+$bg-input: #121820;
+
+$border-subtle: #2a3647;
+$border-default: #334155;
+$border-focus: #4a6d8f;
+
+$text-primary: #e2e8f0;
+$text-secondary: #94a3b8;
+$text-muted: #64748b;
+
+$accent: #4a6fa5;
+$accent-hover: #5a82b8;
+$accent-soft: rgba(74, 111, 165, 0.12);
+
+$danger: #b45454;
+$danger-soft: rgba(180, 84, 84, 0.12);
+$success: #5a8f72;
+
+$shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
+$shadow-md: 0 4px 20px rgba(0, 0, 0, 0.4);
+$shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.5);
+
+$radius-sm: 6px;
+$radius-md: 8px;
+$radius-lg: 12px;
+
+$font-ui: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+$font-mono: 'Consolas', 'SF Mono', 'Cascadia Code', monospace;
+
+$frame-width-native: 770px;
+$frame-width-max: 100%;
+$frame-width: $frame-width-max;
+$sidebar-width: 240px;
+
+@mixin panel {
+  background: $bg-panel;
+  border: 1px solid $border-default;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-md;
+}
+
+@mixin btn-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: $font-ui;
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1.2;
+  border-radius: $radius-sm;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  border: 1px solid transparent;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+@mixin btn-primary {
+  @include btn-base;
+  background: $accent;
+  color: #fff;
+  border-color: darken($accent, 4%);
+
+  &:hover:not(:disabled) {
+    background: $accent-hover;
+  }
+}
+
+@mixin btn-secondary {
+  @include btn-base;
+  background: $bg-elevated;
+  color: $text-secondary;
+  border-color: $border-default;
+
+  &:hover:not(:disabled) {
+    background: $bg-panel-hover;
+    color: $text-primary;
+    border-color: $border-focus;
+  }
+}
+
+@mixin btn-ghost {
+  @include btn-base;
+  background: transparent;
+  color: $text-secondary;
+  border-color: transparent;
+
+  &:hover:not(:disabled) {
+    background: $accent-soft;
+    color: $text-primary;
+  }
+}
+
+@mixin input-field {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  background-color: $bg-input;
+  border: 1px solid $border-default;
+  border-radius: $radius-sm;
+  color: $text-primary;
+  font-family: $font-ui;
+  font-size: 0.9rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+  &:focus {
+    outline: none;
+    border-color: $accent;
+    box-shadow: 0 0 0 3px $accent-soft;
+  }
+
+  &::placeholder {
+    color: $text-muted;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+@mixin select-field {
+  @include input-field;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 2.25rem;
+  cursor: pointer;
+  background-color: $bg-input;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%2394a3b8' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.85rem center;
+  background-size: 12px 8px;
+
+  &:focus {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%234a6fa5' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  }
+
+  option {
+    background: $bg-panel;
+    color: $text-primary;
+  }
+}
+
+@mixin page-header {
+  margin-bottom: 1.75rem;
+
+  h1, h2 {
+    color: $text-primary;
+    font-size: 1.35rem;
+    font-weight: 600;
+    margin: 0 0 0.35rem;
+    letter-spacing: 0.02em;
+  }
+
+  p {
+    color: $text-secondary;
+    font-size: 0.9rem;
+    margin: 0;
+  }
+}
+
+@mixin nav-item {
+  @include btn-ghost;
+  width: 100%;
+  justify-content: flex-start;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.875rem;
+  border-radius: $radius-sm;
+  border-left: 2px solid transparent;
+
+  &.active {
+    background: $accent-soft;
+    color: $text-primary;
+    border-left-color: $accent;
+  }
+}

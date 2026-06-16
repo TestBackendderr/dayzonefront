@@ -1,0 +1,97 @@
+@import './theme';
+
+// Глобальные стили полей — работают на всех страницах (логин, модалки, формы)
+input:not([type='checkbox']):not([type='radio']):not([type='file']):not([type='button']):not([type='submit']):not([type='reset']):not([type='hidden']),
+textarea {
+  @include input-field;
+  box-sizing: border-box;
+}
+
+select {
+  @include select-field;
+  box-sizing: border-box;
+}
+
+textarea {
+  min-height: 96px;
+  resize: vertical;
+  line-height: 1.45;
+}
+
+input[type='file'] {
+  width: 100%;
+  padding: 0.55rem 0.75rem;
+  background-color: $bg-input;
+  border: 1px dashed $border-default;
+  border-radius: $radius-sm;
+  color: $text-secondary;
+  font-family: $font-ui;
+  font-size: 0.85rem;
+  cursor: pointer;
+  box-sizing: border-box;
+
+  &::file-selector-button {
+    @include btn-secondary;
+    margin-right: 0.75rem;
+    padding: 0.4rem 0.75rem;
+    font-size: 0.8rem;
+  }
+}
+
+input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+  accent-color: $accent;
+  cursor: pointer;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+label {
+  color: $text-secondary;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.form-group {
+  margin-bottom: 1.1rem;
+
+  > label {
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  .form-group {
+    flex: 1;
+    min-width: 180px;
+  }
+}
+
+.period-select,
+.week-select,
+.user-select,
+.period-selector select,
+.week-selector select,
+.user-selector select,
+.search-type select {
+  min-width: 160px;
+}
+
+.search-input input {
+  width: 100%;
+}

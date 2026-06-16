@@ -46,24 +46,11 @@ const Login = () => {
 
   return (
     <div className="login-container">
-      <div className="login-background">
-        <div className="radiation-overlay">
-          <div className="radiation-symbol">☢</div>
-          <div className="radiation-symbol">☢</div>
-          <div className="radiation-symbol">☢</div>
-          <div className="radiation-symbol">☢</div>
-        </div>
-      </div>
-
       <div className="login-content">
         <div className="login-card">
           <div className="login-header">
             <h1 className="login-title">DayZone</h1>
-            <div className="login-subtitle">
-              <span className="radiation-icon">☢</span>
-              <span>Система управления сталкерами</span>
-              <span className="radiation-icon">☢</span>
-            </div>
+            <div className="login-subtitle">Система учёта наёмников</div>
           </div>
 
           <form className="login-form" onSubmit={handleSubmit}>
@@ -136,7 +123,7 @@ const Login = () => {
             <div className="demo-credentials">
               <p>Демо доступ:</p>
               <p><strong>Логин:</strong> admin</p>
-              <p><strong>Пароль:</strong> password</p>
+              <p><strong>Пароль:</strong> admin</p>
             </div>
           </form>
         </div>

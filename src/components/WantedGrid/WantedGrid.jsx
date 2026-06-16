@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Modal from '../Modal/Modal';
+import { API_CONFIG } from '../../config/api';
 
 const WantedGrid = ({ 
   wanted, 
@@ -81,7 +82,7 @@ const WantedGrid = ({
       <div className="wanted-grid">
         {loading ? (
           <div className="loading-message">
-            <div className="loading-spinner">☢</div>
+            <div className="loading-spinner" />
             <p>Загрузка розыска...</p>
           </div>
         ) : wanted.length > 0 ? (
@@ -89,7 +90,7 @@ const WantedGrid = ({
             <div key={person.id} className="wanted-card">
               <div className="wanted-photo">
                 <img 
-                  src={person.photo ? `https://dayzone2-backend-gobqh3-cf2a4b-85-215-53-87.traefik.me${person.photo}` : `data:image/svg+xml;charset=utf-8,${encodeURIComponent(`
+                  src={person.photo ? `${API_CONFIG.FILE_BASE_URL}${person.photo}` : `data:image/svg+xml;charset=utf-8,${encodeURIComponent(`
                     <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
                       <rect width="200" height="200" fill="#ff6b6b"/>
                       <text x="100" y="100" font-family="Arial" font-size="16" fill="white" text-anchor="middle" dominant-baseline="middle">${person.callsign}</text>
@@ -97,7 +98,6 @@ const WantedGrid = ({
                   `)}`} 
                   alt={person.callsign} 
                 />
-                <div className="radiation-overlay">☢</div>
                 <div className="reward-badge">
                   {formatReward(person.reward)}
                 </div>
@@ -154,7 +154,7 @@ const WantedGrid = ({
           ))
         ) : (
           <div className="no-results">
-            <div className="no-results-icon">☢</div>
+            <div className="no-results-icon" />
             <h3>Разыскиваемые не найдены</h3>
             <p>Попробуйте изменить параметры поиска</p>
           </div>

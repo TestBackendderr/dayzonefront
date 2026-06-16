@@ -1,11 +1,13 @@
 // Конфигурация API
 const getApiBaseUrl = () => {
-  // Сначала проверяем переменную окружения
   if (process.env.REACT_APP_API_URL) {
     return process.env.REACT_APP_API_URL;
   }
-  
-  // Fallback на Traefik домен
+
+  if (process.env.NODE_ENV === 'development') {
+    return 'http://localhost:5000/api';
+  }
+
   return 'https://dayzone2-backend-gobqh3-cf2a4b-85-215-53-87.traefik.me/api';
 };
 

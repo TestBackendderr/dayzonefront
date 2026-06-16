@@ -1,36 +1,55 @@
-// Импорт общих стилей
-@import './common.scss';
+@import './theme';
+@import './common';
+@import './buttons';
+@import './shared-pages';
 
 .App {
+  --frame-width: 98vw;
+  --sidebar-inset: calc(var(--frame-width) * 0.025);
+
   min-height: 100vh;
-  background-image: url('../../public/background.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  font-family: 'Courier New', 'Monaco', monospace;
+  background-color: #0a0a0a;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  position: relative;
+
+  // Фон масштабируется по ширине рамки — края видны, без обрезки
+  &::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: var(--frame-width);
+    background-image: url('../../public/background.png');
+    background-repeat: repeat-y;
+    background-position: center top;
+    background-size: 100% auto;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  > * {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: var(--frame-width);
+  }
 
   .main-content {
-    padding: 20px;
-    width: 60%;
-    margin-left: 30%; // Смещаем на 10% левее от left-side
-    margin-right: 0;
     flex: 1;
-    padding-bottom: 100px; // Отступ для footer
+    padding: 1rem 14px 5rem;
+
+    &:has(.left-side) {
+      padding-left: calc(#{$sidebar-width} + 18px + var(--sidebar-inset));
+    }
   }
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'Courier New', 'Monaco', monospace;
-  line-height: 1.6;
-  color: #ffffff;
-  background: transparent;
+@media (max-width: 860px) {
+  .App .main-content:has(.left-side) {
+    padding-left: 14px;
+  }
 }

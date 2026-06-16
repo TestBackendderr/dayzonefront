@@ -30,7 +30,6 @@ const Header = () => {
         </div>
         <div className="header-right">
           <button className="logout-btn" onClick={handleLogout}>
-            <span>🚪</span>
             Выйти
           </button>
         </div>

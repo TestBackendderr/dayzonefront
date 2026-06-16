@@ -2,135 +2,70 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './LeftSide.scss';
 
+const NAV_ITEMS = [
+  { path: '/stalker-archive', label: 'Архив сталкеров' },
+  { path: '/add-stalker', label: 'Добавить сталкера' },
+  { path: '/income-expense', label: 'Приход-расход' },
+  { path: '/add-wanted', label: 'Добавить в розыск' },
+  { path: '/wanted-archive', label: 'База розыска' },
+  { path: '/finances', label: 'Финансы' },
+];
+
 const LeftSide = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [user, setUser] = useState(null);
 
-  // Функция для определения активной кнопки
-  const isActive = (path) => {
-    return location.pathname === path;
-  };
-
-  const handleAddStalker = () => {
-    navigate('/add-stalker');
-  };
-
-  const handleArchiveStalkers = () => {
-    navigate('/stalker-archive');
-  };
-
-  const handleIncomeExpense = () => {
-    navigate('/income-expense');
-  };
-
-  const handleFinances = () => {
-    navigate('/finances');
-  };
-
-  const handleAddWanted = () => {
-    navigate('/add-wanted');
-  };
-
-  const handleWantedArchive = () => {
-    navigate('/wanted-archive');
-  };
-
-  const handleUserManagement = () => {
-    navigate('/user-management');
-  };
+  const isActive = (path) => location.pathname === path;
 
   useEffect(() => {
-    // Получаем информацию о пользователе из localStorage
-    const token = localStorage.getItem('token');
-    
-    // Также проверяем, есть ли сохраненный пользователь напрямую
     const savedUser = localStorage.getItem('user');
-    
     if (savedUser) {
       try {
-        const userData = JSON.parse(savedUser);
-        setUser(userData);
+        setUser(JSON.parse(savedUser));
         return;
       } catch (error) {
         console.error('Ошибка парсинга пользователя:', error);
       }
     }
-    
+
+    const token = localStorage.getItem('token');
     if (token) {
       try {
-        const tokenData = JSON.parse(atob(token.split('.')[1]));
-        setUser(tokenData);
+        setUser(JSON.parse(atob(token.split('.')[1])));
       } catch (error) {
         console.error('Ошибка парсинга токена:', error);
       }
     }
   }, []);
 
+  const isAdmin = user && ['Admin', 'admin', 'ADMIN'].includes(user.role);
+
   return (
     <div className="left-side">
       <div className="left-side-content">
+        <div className="nav-section-label">Наёмники</div>
         <div className="stalker-buttons">
-          <button className={`stalker-btn archive-btn ${isActive('/stalker-archive') ? 'active' : ''}`} onClick={handleArchiveStalkers}>
-            <div className="btn-icon">
-              <span className="list-icon">☰</span>
-              <span className="radiation-icon">☢</span>
-            </div>
-            <span className="btn-text">Архив сталкеров</span>
-          </button>
-          
-          <button className={`stalker-btn add-btn ${isActive('/add-stalker') ? 'active' : ''}`} onClick={handleAddStalker}>
-            <div className="btn-icon">
-              <span className="plus-icon">+</span>
-              <span className="radiation-icon">☢</span>
-            </div>
-            <span className="btn-text">Добавь сталкеров</span>
-          </button>
-          
-          <button className={`stalker-btn income-expense-btn ${isActive('/income-expense') ? 'active' : ''}`} onClick={handleIncomeExpense}>
-            <div className="btn-icon">
-              <span className="money-icon">💰</span>
-              <span className="radiation-icon">☢</span>
-            </div>
-            <span className="btn-text">Приход-расход</span>
-          </button>
-          
-          
-          <button className={`stalker-btn add-wanted-btn ${isActive('/add-wanted') ? 'active' : ''}`} onClick={handleAddWanted}>
-            <div className="btn-icon">
-              <span className="add-wanted-icon">🎯</span>
-              <span className="radiation-icon">☢</span>
-            </div>
-            <span className="btn-text">Добавь в розыск</span>
-          </button>
-          
-          <button className={`stalker-btn wanted-archive-btn ${isActive('/wanted-archive') ? 'active' : ''}`} onClick={handleWantedArchive}>
-            <div className="btn-icon">
-              <span className="wanted-archive-icon">📋</span>
-              <span className="radiation-icon">☢</span>
-            </div>
-            <span className="btn-text">База розыска</span>
-          </button>
-          
-          
-          {/* Кнопка для админов - более гибкая проверка роли */}
-          {user && (user.role === 'Admin' || user.role === 'admin' || user.role === 'ADMIN') && (
-            <button className={`stalker-btn user-management-btn ${isActive('/user-management') ? 'active' : ''}`} onClick={handleUserManagement}>
-              <div className="btn-icon">
-                <span className="user-management-icon">👥</span>
-                <span className="radiation-icon">☢</span>
-              </div>
-              <span className="btn-text">Добавить пользователя</span>
+          {NAV_ITEMS.map((item) => (
+            <button
+              key={item.path}
+              type="button"
+              className={`stalker-btn ${isActive(item.path) ? 'active' : ''}`}
+              onClick={() => navigate(item.path)}
+            >
+              <span className="btn-text">{item.label}</span>
+            </button>
+          ))}
+
+          {isAdmin && (
+            <button
+              type="button"
+              className={`stalker-btn ${isActive('/user-management') ? 'active' : ''}`}
+              onClick={() => navigate('/user-management')}
+            >
+              <span className="btn-text">Управление группами</span>
             </button>
           )}
-          
-          <button className={`stalker-btn finances-btn ${isActive('/finances') ? 'active' : ''}`} onClick={handleFinances}>
-            <div className="btn-icon">
-              <span className="chart-icon">📊</span>
-              <span className="radiation-icon">☢</span>
-            </div>
-            <span className="btn-text">Финансы</span>
-          </button>
         </div>
       </div>
     </div>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import EditStalkerModal from '../EditStalkerModal/EditStalkerModal';
 import Modal from '../Modal/Modal';
+import { API_CONFIG } from '../../config/api';
 
 const StalkerGrid = ({ 
   stalkers, 
@@ -89,7 +90,7 @@ const StalkerGrid = ({
       <div className="stalkers-grid">
         {loading ? (
           <div className="loading-message">
-            <div className="loading-spinner">☢</div>
+            <div className="loading-spinner" />
             <p>Загрузка сталкеров...</p>
           </div>
         ) : stalkers.length > 0 ? (
@@ -97,7 +98,7 @@ const StalkerGrid = ({
             <div key={stalker.id} className="stalker-card">
               <div className="stalker-photo">
                 <img 
-                  src={stalker.photo ? `https://dayzone2-backend-gobqh3-cf2a4b-85-215-53-87.traefik.me${stalker.photo}` : `data:image/svg+xml;charset=utf-8,${encodeURIComponent(`
+                  src={stalker.photo ? `${API_CONFIG.FILE_BASE_URL}${stalker.photo}` : `data:image/svg+xml;charset=utf-8,${encodeURIComponent(`
                     <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
                       <rect width="200" height="200" fill="#ff6b6b"/>
                       <text x="100" y="100" font-family="Arial" font-size="16" fill="white" text-anchor="middle" dominant-baseline="middle">${stalker.callsign}</text>
@@ -105,7 +106,6 @@ const StalkerGrid = ({
                   `)}`} 
                   alt={stalker.callsign} 
                 />
-                <div className="radiation-overlay">☢</div>
               </div>
               
               <div className="stalker-info">
@@ -161,7 +161,7 @@ const StalkerGrid = ({
           ))
         ) : (
           <div className="no-results">
-            <div className="no-results-icon">☢</div>
+            <div className="no-results-icon" />
             <h3>Сталкеры не найдены</h3>
             <p>Попробуйте изменить параметры поиска</p>
           </div>

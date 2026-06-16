@@ -290,4 +290,32 @@ export const usersAPI = {
   }
 };
 
+// API для группировок
+export const groupingsAPI = {
+  getAll: async () => {
+    const response = await api.get('/groupings');
+    return response.data;
+  },
+
+  create: async (groupData) => {
+    const response = await api.post('/groupings', groupData);
+    return response.data;
+  },
+
+  update: async (id, groupData) => {
+    const response = await api.put(`/groupings/${id}`, groupData);
+    return response.data;
+  },
+
+  delete: async (id) => {
+    const response = await api.delete(`/groupings/${id}`);
+    return response.data;
+  },
+
+  assignUsers: async (id, userIds) => {
+    const response = await api.post(`/groupings/${id}/assign-users`, { userIds });
+    return response.data;
+  },
+};
+
 export default api;

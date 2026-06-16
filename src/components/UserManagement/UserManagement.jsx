@@ -1,51 +1,64 @@
-import React, { useState, useEffect } from 'react';
-import { usersAPI } from '../../services/api';
+import React, { useState, useEffect, useMemo } from 'react';
+import { usersAPI, groupingsAPI } from '../../services/api';
 import Modal from '../Modal/Modal';
 import './UserManagement.scss';
 
+const ADMIN_ROLE = {
+  value: 'Admin',
+  label: 'Администратор',
+  color: '#ff6b6b',
+};
+
 const UserManagement = () => {
   const [users, setUsers] = useState([]);
-  const [filteredUsers, setFilteredUsers] = useState([]);
-  const [selectedRole, setSelectedRole] = useState('all');
+  const [groups, setGroups] = useState([]);
+  const [selectedGroup, setSelectedGroup] = useState('all');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [modal, setModal] = useState({ isOpen: false, title: '', message: '', type: 'info' });
   const [editModal, setEditModal] = useState({ isOpen: false, user: null });
   const [createModal, setCreateModal] = useState({ isOpen: false });
+  const [createGroupModal, setCreateGroupModal] = useState({ isOpen: false });
+  const [assignModal, setAssignModal] = useState({ isOpen: false, group: null });
 
-  const roles = [
-    { value: 'Admin', label: 'Администратор', color: '#ff6b6b' },
-    { value: 'Duty', label: 'Долг', color: '#ff0000' },
-    { value: 'Freedom', label: 'Свобода', color: '#00ff00' },
-    { value: 'Neutral', label: 'Нейтральный', color: '#ffff00' },
-    { value: 'Mercenary', label: 'Наемник', color: '#ff6600' },
-    { value: 'Bandit', label: 'Бандит', color: '#ff0066' },
-    { value: 'Monolith', label: 'Монолит', color: '#6600ff' },
-    { value: 'ClearSky', label: 'Чистое небо', color: '#00ffff' },
-    { value: 'Loner', label: 'Одиночка', color: '#666666' }
-  ];
+  const roleOptions = useMemo(
+    () => [
+      ADMIN_ROLE,
+      ...groups.map((group) => ({
+        value: group.code,
+        label: group.name,
+        color: group.color,
+      })),
+    ],
+    [groups]
+  );
+
+  const filteredUsers = useMemo(() => {
+    if (selectedGroup === 'all') {
+      return users;
+    }
+    if (selectedGroup === 'Admin') {
+      return users.filter((user) => user.role === 'Admin');
+    }
+    return users.filter((user) => user.role === selectedGroup);
+  }, [users, selectedGroup]);
 
   useEffect(() => {
-    loadUsers();
+    loadData();
   }, []);
 
-  useEffect(() => {
-    // Фильтрация пользователей по роли
-    if (selectedRole === 'all') {
-      setFilteredUsers(users);
-    } else {
-      setFilteredUsers(users.filter(user => user.role === selectedRole));
-    }
-  }, [users, selectedRole]);
-
-  const loadUsers = async () => {
+  const loadData = async () => {
     try {
       setLoading(true);
       setError('');
-      const response = await usersAPI.getAll();
-      setUsers(response.users);
-    } catch (error) {
-      setError('Ошибка загрузки пользователей: ' + (error.response?.data?.message || error.message));
+      const [usersResponse, groupsResponse] = await Promise.all([
+        usersAPI.getAll(),
+        groupingsAPI.getAll(),
+      ]);
+      setUsers(usersResponse.users);
+      setGroups(groupsResponse.groups);
+    } catch (err) {
+      setError('Ошибка загрузки данных: ' + (err.response?.data?.message || err.message));
     } finally {
       setLoading(false);
     }
@@ -59,44 +72,15 @@ const UserManagement = () => {
     setModal({ isOpen: false, title: '', message: '', type: 'info' });
   };
 
-  const handleDeleteUser = async (id, username) => {
-    showModal(
-      'Подтверждение удаления',
-      `Вы уверены, что хотите удалить пользователя "${username}"?`,
-      'confirm'
-    );
-    
-    setModal(prev => ({ ...prev, onConfirm: () => performDelete(id) }));
-  };
-
-  const performDelete = async (id) => {
-    try {
-      await usersAPI.delete(id);
-      loadUsers();
-      showModal('Успех', 'Пользователь успешно удален', 'success');
-    } catch (error) {
-      showModal('Ошибка', 'Ошибка удаления пользователя: ' + (error.response?.data?.message || error.message), 'error');
-    }
-  };
-
-  const handleEditUser = (user) => {
-    setEditModal({ isOpen: true, user });
-  };
-
-  const closeEditModal = () => {
-    setEditModal({ isOpen: false, user: null });
-  };
-
-  const handleCreateUser = () => {
-    setCreateModal({ isOpen: true });
-  };
-
-  const closeCreateModal = () => {
-    setCreateModal({ isOpen: false });
-  };
-
   const getRoleInfo = (role) => {
-    return roles.find(r => r.value === role) || { label: role, color: '#666666' };
+    if (role === ADMIN_ROLE.value) {
+      return ADMIN_ROLE;
+    }
+    const group = groups.find((item) => item.code === role);
+    if (group) {
+      return { label: group.name, color: group.color };
+    }
+    return { label: role || 'Без группы', color: '#666666' };
   };
 
   const formatDate = (dateString) => {
@@ -105,57 +89,116 @@ const UserManagement = () => {
       month: 'long',
       day: 'numeric',
       hour: '2-digit',
-      minute: '2-digit'
+      minute: '2-digit',
     });
   };
 
-  const handleRoleFilter = (role) => {
-    setSelectedRole(role);
+  const handleDeleteUser = (id, username) => {
+    showModal(
+      'Подтверждение удаления',
+      `Вы уверены, что хотите удалить пользователя "${username}"?`,
+      'confirm'
+    );
+    setModal((prev) => ({ ...prev, onConfirm: () => performDelete(id) }));
+  };
+
+  const performDelete = async (id) => {
+    try {
+      await usersAPI.delete(id);
+      await loadData();
+      showModal('Успех', 'Пользователь успешно удален', 'success');
+    } catch (err) {
+      showModal('Ошибка', 'Ошибка удаления пользователя: ' + (err.response?.data?.message || err.message), 'error');
+    }
+  };
+
+  const handleDeleteGroup = (group) => {
+    showModal(
+      'Подтверждение удаления',
+      `Удалить группу "${group.name}"?`,
+      'confirm'
+    );
+    setModal((prev) => ({
+      ...prev,
+      onConfirm: async () => {
+        try {
+          await groupingsAPI.delete(group.id);
+          if (selectedGroup === group.code) {
+            setSelectedGroup('all');
+          }
+          await loadData();
+          showModal('Успех', 'Группа удалена', 'success');
+        } catch (err) {
+          showModal('Ошибка', err.response?.data?.message || err.message, 'error');
+        }
+      },
+    }));
   };
 
   return (
     <div className="user-management">
       <div className="management-header">
-        <h2>
-          <span className="radiation-icon">☢</span>
-          Управление пользователями
-        </h2>
-        <p>Создание и управление пользователями системы</p>
+        <h2>Управление пользователями</h2>
+        <p>Создание групп и назначение пользователей</p>
       </div>
 
-      {/* Фильтр по ролям */}
       <div className="role-filter-section">
         <div className="filter-header">
-          <span className="filter-icon">🏛️</span>
+          <span className="filter-icon">▣</span>
           <span className="filter-title">Группировки:</span>
+          <button className="btn-create-group" onClick={() => setCreateGroupModal({ isOpen: true })}>
+            + Добавить группу
+          </button>
         </div>
         <div className="role-filters">
-          <button 
-            className={`role-filter-btn ${selectedRole === 'all' ? 'active' : ''}`}
-            onClick={() => handleRoleFilter('all')}
+          <button
+            className={`role-filter-btn ${selectedGroup === 'all' ? 'active' : ''}`}
+            onClick={() => setSelectedGroup('all')}
           >
-            <span className="role-icon">👥</span>
+            <span className="role-icon">●</span>
             Все пользователи
           </button>
-          {roles.map(role => (
-            <button
-              key={role.value}
-              className={`role-filter-btn ${selectedRole === role.value ? 'active' : ''}`}
-              onClick={() => handleRoleFilter(role.value)}
-              style={{ borderColor: role.color }}
-            >
-              <span className="role-icon" style={{ color: role.color }}>☢</span>
-              {role.label}
-            </button>
+          <button
+            className={`role-filter-btn ${selectedGroup === 'Admin' ? 'active' : ''}`}
+            onClick={() => setSelectedGroup('Admin')}
+            style={{ borderColor: ADMIN_ROLE.color }}
+          >
+            <span className="role-icon" style={{ color: ADMIN_ROLE.color }}>●</span>
+            {ADMIN_ROLE.label}
+          </button>
+          {groups.map((group) => (
+            <div key={group.id} className="group-filter-item">
+              <button
+                className={`role-filter-btn ${selectedGroup === group.code ? 'active' : ''}`}
+                onClick={() => setSelectedGroup(group.code)}
+                style={{ borderColor: group.color }}
+              >
+                <span className="role-icon" style={{ color: group.color }}>●</span>
+                {group.name}
+                <span className="group-code">({group.code})</span>
+              </button>
+              <button
+                className="btn-assign-group"
+                title="Добавить пользователей в группу"
+                onClick={() => setAssignModal({ isOpen: true, group })}
+              >
+                +
+              </button>
+              <button
+                className="btn-delete-group"
+                title="Удалить группу"
+                onClick={() => handleDeleteGroup(group)}
+              >
+                ×
+              </button>
+            </div>
           ))}
         </div>
       </div>
 
       <div className="add-user-section">
-        <button className="btn-create-user" onClick={handleCreateUser}>
+        <button className="btn-create-user" onClick={() => setCreateModal({ isOpen: true })}>
           <span className="btn-icon">👤</span>
-          <span className="radiation-icon">☢</span>
-          Добавить пользователя
         </button>
       </div>
 
@@ -169,7 +212,7 @@ const UserManagement = () => {
       <div className="users-table">
         {loading ? (
           <div className="loading-message">
-            <div className="loading-spinner">☢</div>
+            <div className="loading-spinner" />
             <p>Загрузка пользователей...</p>
           </div>
         ) : filteredUsers.length > 0 ? (
@@ -177,13 +220,13 @@ const UserManagement = () => {
             <thead>
               <tr>
                 <th>Позывной</th>
-                <th>Роль</th>
+                <th>Группа</th>
                 <th>Дата создания</th>
                 <th>Действия</th>
               </tr>
             </thead>
             <tbody>
-              {filteredUsers.map(user => {
+              {filteredUsers.map((user) => {
                 const roleInfo = getRoleInfo(user.role);
                 return (
                   <tr key={user.id}>
@@ -192,27 +235,16 @@ const UserManagement = () => {
                       {user.username}
                     </td>
                     <td className="role-cell">
-                      <span 
-                        className="role-badge" 
-                        style={{ backgroundColor: roleInfo.color }}
-                      >
+                      <span className="role-badge" style={{ backgroundColor: roleInfo.color }}>
                         {roleInfo.label}
                       </span>
                     </td>
-                    <td className="date-cell">
-                      {formatDate(user.created_at)}
-                    </td>
+                    <td className="date-cell">{formatDate(user.created_at)}</td>
                     <td className="actions-cell">
-                      <button 
-                        className="btn-edit"
-                        onClick={() => handleEditUser(user)}
-                      >
+                      <button className="btn-edit" onClick={() => setEditModal({ isOpen: true, user })}>
                         ✏️
                       </button>
-                      <button 
-                        className="btn-delete"
-                        onClick={() => handleDeleteUser(user.id, user.username)}
-                      >
+                      <button className="btn-delete" onClick={() => handleDeleteUser(user.id, user.username)}>
                         🗑️
                       </button>
                     </td>
@@ -223,9 +255,9 @@ const UserManagement = () => {
           </table>
         ) : (
           <div className="no-users">
-            <div className="no-users-icon">👥</div>
+            <div className="no-users-icon" />
             <h3>Пользователи не найдены</h3>
-            <p>Создайте первого пользователя</p>
+            <p>Создайте группу и добавьте пользователя</p>
           </div>
         )}
       </div>
@@ -240,48 +272,209 @@ const UserManagement = () => {
         showCancel={modal.type === 'confirm'}
       />
 
+      <CreateGroupModal
+        isOpen={createGroupModal.isOpen}
+        onClose={() => setCreateGroupModal({ isOpen: false })}
+        onCreated={loadData}
+      />
+
+      <AssignUsersModal
+        isOpen={assignModal.isOpen}
+        group={assignModal.group}
+        users={users}
+        onClose={() => setAssignModal({ isOpen: false, group: null })}
+        onAssigned={loadData}
+      />
+
       <CreateUserModal
         isOpen={createModal.isOpen}
-        onClose={closeCreateModal}
-        onUserCreated={loadUsers}
-        roles={roles}
+        onClose={() => setCreateModal({ isOpen: false })}
+        onUserCreated={loadData}
+        roleOptions={roleOptions}
+        groups={groups}
       />
 
       <EditUserModal
         isOpen={editModal.isOpen}
-        onClose={closeEditModal}
+        onClose={() => setEditModal({ isOpen: false, user: null })}
         user={editModal.user}
-        onUserUpdated={loadUsers}
-        roles={roles}
+        onUserUpdated={loadData}
+        roleOptions={roleOptions}
       />
     </div>
   );
 };
 
-// Компонент для создания пользователя
-const CreateUserModal = ({ isOpen, onClose, onUserCreated, roles }) => {
-  const [formData, setFormData] = useState({
-    username: '',
-    password: '',
-    role: 'Duty'
-  });
+const CreateGroupModal = ({ isOpen, onClose, onCreated }) => {
+  const [formData, setFormData] = useState({ name: '', code: '' });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
   useEffect(() => {
     if (isOpen) {
-      setFormData({ username: '', password: '', role: 'Duty' });
+      setFormData({ name: '', code: '' });
       setError('');
     }
   }, [isOpen]);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+
+    try {
+      await groupingsAPI.create(formData);
+      onCreated();
+      onClose();
+    } catch (err) {
+      setError(err.response?.data?.message || 'Ошибка при создании группы');
+    } finally {
+      setLoading(false);
+    }
   };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="modal-overlay">
+      <div className="modal">
+        <div className="modal-header">
+          <h2>Добавить группу</h2>
+          <button className="close-btn" onClick={onClose} disabled={loading}>×</button>
+        </div>
+        <form onSubmit={handleSubmit} className="user-form">
+          <div className="form-group">
+            <label htmlFor="group-name">Название группы *</label>
+            <input
+              id="group-name"
+              name="name"
+              value={formData.name}
+              onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
+              required
+              disabled={loading}
+              placeholder="Например: Альфа"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="group-code">ID группы *</label>
+            <input
+              id="group-code"
+              name="code"
+              value={formData.code}
+              onChange={(e) => setFormData((prev) => ({ ...prev, code: e.target.value }))}
+              required
+              disabled={loading}
+              placeholder="Например: alpha"
+            />
+          </div>
+          {error && <div className="error-message"><span className="error-icon">⚠️</span>{error}</div>}
+          <div className="form-actions">
+            <button type="button" className="btn-cancel" onClick={onClose} disabled={loading}>Отмена</button>
+            <button type="submit" className="btn-save" disabled={loading}>Создать группу</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+const AssignUsersModal = ({ isOpen, group, users, onClose, onAssigned }) => {
+  const [selectedUserIds, setSelectedUserIds] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (isOpen && group) {
+      setSelectedUserIds(
+        users.filter((user) => user.role === group.code).map((user) => user.id)
+      );
+      setError('');
+    }
+  }, [isOpen, group, users]);
+
+  const toggleUser = (userId) => {
+    setSelectedUserIds((prev) =>
+      prev.includes(userId) ? prev.filter((id) => id !== userId) : [...prev, userId]
+    );
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!group) return;
+
+    setLoading(true);
+    setError('');
+
+    try {
+      await groupingsAPI.assignUsers(group.id, selectedUserIds);
+      onAssigned();
+      onClose();
+    } catch (err) {
+      setError(err.response?.data?.message || 'Ошибка назначения пользователей');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (!isOpen || !group) return null;
+
+  const availableUsers = users.filter((user) => user.role !== 'Admin');
+
+  return (
+    <div className="modal-overlay">
+      <div className="modal">
+        <div className="modal-header">
+          <h2>Добавить в группу: {group.name}</h2>
+          <button className="close-btn" onClick={onClose} disabled={loading}>×</button>
+        </div>
+        <form onSubmit={handleSubmit} className="user-form">
+          <p className="form-hint">Выберите пользователей, которых нужно включить в группу</p>
+          <div className="users-checklist">
+            {availableUsers.length > 0 ? (
+              availableUsers.map((user) => (
+                <label key={user.id} className="checkbox-item">
+                  <input
+                    type="checkbox"
+                    checked={selectedUserIds.includes(user.id)}
+                    onChange={() => toggleUser(user.id)}
+                    disabled={loading}
+                  />
+                  <span>{user.username}</span>
+                  <span className="user-current-group">{user.role || 'без группы'}</span>
+                </label>
+              ))
+            ) : (
+              <p>Нет пользователей для назначения</p>
+            )}
+          </div>
+          {error && <div className="error-message"><span className="error-icon">⚠️</span>{error}</div>}
+          <div className="form-actions">
+            <button type="button" className="btn-cancel" onClick={onClose} disabled={loading}>Отмена</button>
+            <button type="submit" className="btn-save" disabled={loading || availableUsers.length === 0}>
+              Сохранить
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+const CreateUserModal = ({ isOpen, onClose, onUserCreated, roleOptions, groups }) => {
+  const [formData, setFormData] = useState({ username: '', password: '', role: '' });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (isOpen) {
+      setFormData({
+        username: '',
+        password: '',
+        role: groups[0]?.code || ADMIN_ROLE.value,
+      });
+      setError('');
+    }
+  }, [isOpen, groups]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -292,17 +485,10 @@ const CreateUserModal = ({ isOpen, onClose, onUserCreated, roles }) => {
       await usersAPI.create(formData);
       onUserCreated();
       onClose();
-    } catch (error) {
-      setError(error.response?.data?.message || 'Ошибка при создании пользователя');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Ошибка при создании пользователя');
     } finally {
       setLoading(false);
-    }
-  };
-
-  const handleClose = () => {
-    if (!loading) {
-      setError('');
-      onClose();
     }
   };
 
@@ -313,80 +499,51 @@ const CreateUserModal = ({ isOpen, onClose, onUserCreated, roles }) => {
       <div className="modal">
         <div className="modal-header">
           <h2>Добавить пользователя</h2>
-          <button className="close-btn" onClick={handleClose} disabled={loading}>×</button>
+          <button className="close-btn" onClick={onClose} disabled={loading}>×</button>
         </div>
-
         <form onSubmit={handleSubmit} className="user-form">
           <div className="form-group">
             <label htmlFor="username">Позывной *</label>
             <input
-              type="text"
               id="username"
               name="username"
               value={formData.username}
-              onChange={handleInputChange}
+              onChange={(e) => setFormData((prev) => ({ ...prev, username: e.target.value }))}
               required
               disabled={loading}
-              placeholder="Введите позывной"
             />
           </div>
-
           <div className="form-group">
             <label htmlFor="password">Пароль *</label>
             <input
-              type="password"
               id="password"
               name="password"
+              type="password"
               value={formData.password}
-              onChange={handleInputChange}
+              onChange={(e) => setFormData((prev) => ({ ...prev, password: e.target.value }))}
               required
               disabled={loading}
-              placeholder="Введите пароль"
             />
           </div>
-
           <div className="form-group">
-            <label htmlFor="role">Роль *</label>
+            <label htmlFor="role">Группа *</label>
             <select
               id="role"
               name="role"
               value={formData.role}
-              onChange={handleInputChange}
+              onChange={(e) => setFormData((prev) => ({ ...prev, role: e.target.value }))}
               required
               disabled={loading}
             >
-              {roles.map(role => (
-                <option key={role.value} value={role.value}>
-                  {role.label}
-                </option>
+              {roleOptions.map((role) => (
+                <option key={role.value} value={role.value}>{role.label}</option>
               ))}
             </select>
           </div>
-
-          {error && (
-            <div className="error-message">
-              <span className="error-icon">⚠️</span>
-              {error}
-            </div>
-          )}
-
+          {error && <div className="error-message"><span className="error-icon">⚠️</span>{error}</div>}
           <div className="form-actions">
-            <button type="button" className="btn-cancel" onClick={handleClose} disabled={loading}>
-              Отмена
-            </button>
-            <button type="submit" className={`btn-save ${loading ? 'loading' : ''}`} disabled={loading}>
-              {loading ? (
-                <>
-                  <span className="loading-spinner">☢</span>
-                  Создание...
-                </>
-              ) : (
-                <>
-                  <span className="btn-icon">👤</span>
-                  Создать
-                </>
-              )}
-            </button>
+            <button type="button" className="btn-cancel" onClick={onClose} disabled={loading}>Отмена</button>
+            <button type="submit" className="btn-save" disabled={loading}>Создать</button>
           </div>
         </form>
       </div>
@@ -394,13 +551,8 @@ const CreateUserModal = ({ isOpen, onClose, onUserCreated, roles }) => {
   );
 };
 
-// Компонент для редактирования пользователя
-const EditUserModal = ({ isOpen, onClose, user, onUserUpdated, roles }) => {
-  const [formData, setFormData] = useState({
-    username: '',
-    password: '',
-    role: 'Duty'
-  });
+const EditUserModal = ({ isOpen, onClose, user, onUserUpdated, roleOptions }) => {
+  const [formData, setFormData] = useState({ username: '', password: '', role: '' });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -409,19 +561,11 @@ const EditUserModal = ({ isOpen, onClose, user, onUserUpdated, roles }) => {
       setFormData({
         username: user.username || '',
         password: '',
-        role: user.role || 'Duty'
+        role: user.role || roleOptions[0]?.value || '',
       });
       setError('');
     }
-  }, [user, isOpen]);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
+  }, [user, isOpen, roleOptions]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -429,30 +573,17 @@ const EditUserModal = ({ isOpen, onClose, user, onUserUpdated, roles }) => {
     setError('');
 
     try {
-      const updateData = {
-        username: formData.username,
-        role: formData.role
-      };
-      
-      // Добавляем пароль только если он указан
+      const updateData = { username: formData.username, role: formData.role };
       if (formData.password.trim()) {
         updateData.password = formData.password;
       }
-
       await usersAPI.update(user.id, updateData);
       onUserUpdated();
       onClose();
-    } catch (error) {
-      setError(error.response?.data?.message || 'Ошибка при обновлении пользователя');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Ошибка при обновлении пользователя');
     } finally {
       setLoading(false);
-    }
-  };
-
-  const handleClose = () => {
-    if (!loading) {
-      setError('');
-      onClose();
     }
   };
 
@@ -463,78 +594,51 @@ const EditUserModal = ({ isOpen, onClose, user, onUserUpdated, roles }) => {
       <div className="modal">
         <div className="modal-header">
           <h2>Редактировать пользователя</h2>
-          <button className="close-btn" onClick={handleClose} disabled={loading}>×</button>
+          <button className="close-btn" onClick={onClose} disabled={loading}>×</button>
         </div>
-
         <form onSubmit={handleSubmit} className="user-form">
           <div className="form-group">
             <label htmlFor="username">Позывной *</label>
             <input
-              type="text"
               id="username"
               name="username"
               value={formData.username}
-              onChange={handleInputChange}
+              onChange={(e) => setFormData((prev) => ({ ...prev, username: e.target.value }))}
               required
               disabled={loading}
             />
           </div>
-
           <div className="form-group">
             <label htmlFor="password">Новый пароль</label>
             <input
-              type="password"
               id="password"
               name="password"
+              type="password"
               value={formData.password}
-              onChange={handleInputChange}
+              onChange={(e) => setFormData((prev) => ({ ...prev, password: e.target.value }))}
               disabled={loading}
               placeholder="Оставьте пустым, чтобы не изменять"
             />
           </div>
-
           <div className="form-group">
-            <label htmlFor="role">Роль *</label>
+            <label htmlFor="role">Группа *</label>
             <select
               id="role"
               name="role"
               value={formData.role}
-              onChange={handleInputChange}
+              onChange={(e) => setFormData((prev) => ({ ...prev, role: e.target.value }))}
               required
               disabled={loading}
             >
-              {roles.map(role => (
-                <option key={role.value} value={role.value}>
-                  {role.label}
-                </option>
+              {roleOptions.map((role) => (
+                <option key={role.value} value={role.value}>{role.label}</option>
               ))}
             </select>
           </div>
-
-          {error && (
-            <div className="error-message">
-              <span className="error-icon">⚠️</span>
-              {error}
-            </div>
-          )}
-
+          {error && <div className="error-message"><span className="error-icon">⚠️</span>{error}</div>}
           <div className="form-actions">
-            <button type="button" className="btn-cancel" onClick={handleClose} disabled={loading}>
-              Отмена
-            </button>
-            <button type="submit" className={`btn-save ${loading ? 'loading' : ''}`} disabled={loading}>
-              {loading ? (
-                <>
-                  <span className="loading-spinner">☢</span>
-                  Сохранение...
-                </>
-              ) : (
-                <>
-                  <span className="btn-icon">💾</span>
-                  Сохранить
-                </>
-              )}
-            </button>
+            <button type="button" className="btn-cancel" onClick={onClose} disabled={loading}>Отмена</button>
+            <button type="submit" className="btn-save" disabled={loading}>Сохранить</button>
           </div>
         </form>
       </div>

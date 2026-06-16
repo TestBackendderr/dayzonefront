@@ -46,27 +46,19 @@ const RoleNavigation = () => {
 
   return (
     <div className="role-navigation">
-      <h3 className="navigation-title">Архивы сталкеров</h3>
+      <h3 className="navigation-title">Группы наёмников</h3>
       <div className="roles-grid">
         {roles.map((role) => {
           const isActive = getCurrentRole() === role.value.toLowerCase();
           return (
-            <div
+            <button
               key={role.value}
+              type="button"
               className={`role-card ${isActive ? 'active' : ''}`}
               onClick={() => handleRoleClick(role.value)}
-              style={{ '--role-color': role.color }}
             >
-              <div className="role-icon">
-                <span>☢</span>
-              </div>
-              <div className="role-info">
-                <h4 className="role-name">{role.label}</h4>
-                <p className="role-description">
-                  Архив сталкеров фракции {role.label}
-                </p>
-              </div>
-            </div>
+              {role.label}
+            </button>
           );
         })}
       </div>
