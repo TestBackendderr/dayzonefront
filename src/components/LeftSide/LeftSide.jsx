@@ -9,6 +9,13 @@ const NAV_ITEMS = [
   { path: '/add-wanted', label: 'Добавить в розыск' },
   { path: '/wanted-archive', label: 'База розыска' },
   { path: '/finances', label: 'Финансы' },
+  { path: '/contracts', label: 'Контракты общие' },
+  { path: '/group-contracts', label: 'Контракты группы' },
+  { path: '/group-kpk-chat', label: 'Чат КПК группы' },
+  { path: '/org-kpk-chat', label: 'Чат КПК организации' },
+  { path: '/alter-ego', label: 'Альтерэго' },
+  { path: '/group-maps', label: 'Карты' },
+  { path: '/group-info', label: 'Информация' },
 ];
 
 const LeftSide = () => {

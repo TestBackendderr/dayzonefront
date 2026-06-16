@@ -28,9 +28,12 @@
 
   .modal-title {
     margin: 0;
-    font-size: 1rem;
-    font-weight: 600;
-    color: $text-primary;
+    font-family: $font-pda;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: $pda-green;
     flex: 1;
   }
 
@@ -55,8 +58,9 @@
 
   .modal-message {
     margin: 0;
-    color: $text-secondary;
-    font-size: 0.9rem;
+    color: $text-body;
+    font-family: $font-pda;
+    font-size: 0.8rem;
     line-height: 1.5;
   }
 }

@@ -14,6 +14,13 @@ import AddWantedPage from './pages/AddWanted/index';
 import WantedArchivePage from './pages/WantedArchive/index';
 import IncomeExpensePage from './pages/IncomeExpense/index';
 import FinancesPage from './pages/Finances/index';
+import ContractsPage from './pages/Contracts/index';
+import GroupContractsPage from './pages/GroupContracts/index';
+import GroupKpkChatPage from './pages/GroupKpkChat/index';
+import OrgKpkChatPage from './pages/OrgKpkChat/index';
+import AlterEgoPage from './pages/AlterEgo/index';
+import GroupMapsPage from './pages/GroupMaps/index';
+import GroupInfoPage from './pages/GroupInfo/index';
 import UserManagement from './components/UserManagement/UserManagement';
 
 function App() {
@@ -90,6 +97,69 @@ function App() {
               <Header />
               <main className="main-content">
                 <FinancesPage />
+              </main>
+              <Footer />
+            </ProtectedRoute>
+          } />
+          <Route path="/contracts" element={
+            <ProtectedRoute>
+              <Header />
+              <main className="main-content">
+                <ContractsPage />
+              </main>
+              <Footer />
+            </ProtectedRoute>
+          } />
+          <Route path="/group-contracts" element={
+            <ProtectedRoute>
+              <Header />
+              <main className="main-content">
+                <GroupContractsPage />
+              </main>
+              <Footer />
+            </ProtectedRoute>
+          } />
+          <Route path="/group-kpk-chat" element={
+            <ProtectedRoute>
+              <Header />
+              <main className="main-content">
+                <GroupKpkChatPage />
+              </main>
+              <Footer />
+            </ProtectedRoute>
+          } />
+          <Route path="/org-kpk-chat" element={
+            <ProtectedRoute>
+              <Header />
+              <main className="main-content">
+                <OrgKpkChatPage />
+              </main>
+              <Footer />
+            </ProtectedRoute>
+          } />
+          <Route path="/alter-ego" element={
+            <ProtectedRoute>
+              <Header />
+              <main className="main-content">
+                <AlterEgoPage />
+              </main>
+              <Footer />
+            </ProtectedRoute>
+          } />
+          <Route path="/group-maps" element={
+            <ProtectedRoute>
+              <Header />
+              <main className="main-content">
+                <GroupMapsPage />
+              </main>
+              <Footer />
+            </ProtectedRoute>
+          } />
+          <Route path="/group-info" element={
+            <ProtectedRoute>
+              <Header />
+              <main className="main-content">
+                <GroupInfoPage />
               </main>
               <Footer />
             </ProtectedRoute>

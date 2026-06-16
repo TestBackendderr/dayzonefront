@@ -1,10 +1,8 @@
 @import '../../styles/theme';
 
 .header {
-  background-color: #0a0a0a;
-  background-image:
-    linear-gradient(rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.72)),
-    url('../../../public/1.jpg');
+  background-color: transparent;
+  background-image: url('../../../public/1.jpg');
   background-size: 100% 61px;
   background-position: center top;
   background-repeat: no-repeat;
@@ -29,8 +27,9 @@
 
   .header-left {
     .user-welcome {
-      color: #b8c0cc;
-      font-size: 0.875rem;
+      color: $pda-silver;
+      font-family: $font-pda;
+      font-size: 0.78rem;
     }
   }
 
@@ -39,35 +38,20 @@
 
     .user-role {
       display: inline-block;
-      padding: 0.3rem 0.7rem;
-      background: rgba(0, 0, 0, 0.45);
-      color: #c5d4e8;
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 0.25rem 0.6rem;
+      background: rgba(0, 0, 0, 0.55);
+      color: $pda-green;
+      border: 1px solid $border-default;
       border-radius: $radius-sm;
-      font-size: 0.8rem;
-      font-weight: 500;
-      font-family: $font-mono;
+      font-size: 0.75rem;
+      font-weight: 700;
+      font-family: $font-pda;
+      text-shadow: 0 0 6px rgba(144, 238, 144, 0.25);
     }
   }
 
   .header-right {
     justify-self: end;
-
-    .logout-btn {
-      background: rgba(255, 255, 255, 0.08);
-      color: #d0d6de;
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      padding: 0.45rem 0.9rem;
-      font-size: 0.85rem;
-      border-radius: $radius-sm;
-      cursor: pointer;
-      transition: background 0.15s ease;
-
-      &:hover {
-        background: rgba(255, 255, 255, 0.14);
-        color: #fff;
-      }
-    }
   }
 }
 

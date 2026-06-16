@@ -318,4 +318,290 @@ export const groupingsAPI = {
   },
 };
 
+// API для общих контрактов
+export const contractsAPI = {
+  getAll: async (status) => {
+    const params = status && status !== 'all' ? { status } : {};
+    const response = await api.get('/contracts', { params });
+    return response.data;
+  },
+
+  getById: async (id) => {
+    const response = await api.get(`/contracts/${id}`);
+    return response.data;
+  },
+
+  create: async (data) => {
+    const response = await api.post('/contracts', data);
+    return response.data;
+  },
+
+  update: async (id, data) => {
+    const response = await api.put(`/contracts/${id}`, data);
+    return response.data;
+  },
+
+  take: async (id) => {
+    const response = await api.post(`/contracts/${id}/take`);
+    return response.data;
+  },
+
+  complete: async (id) => {
+    const response = await api.post(`/contracts/${id}/complete`);
+    return response.data;
+  },
+
+  cancel: async (id) => {
+    const response = await api.post(`/contracts/${id}/cancel`);
+    return response.data;
+  },
+
+  delete: async (id) => {
+    const response = await api.delete(`/contracts/${id}`);
+    return response.data;
+  },
+};
+
+// API для контрактов группы
+export const groupContractsAPI = {
+  getAll: async (status) => {
+    const params = status ? { status } : {};
+    const response = await api.get('/group-contracts', { params });
+    return response.data;
+  },
+
+  getById: async (id) => {
+    const response = await api.get(`/group-contracts/${id}`);
+    return response.data;
+  },
+
+  create: async (data) => {
+    const formData = new FormData();
+    formData.append('title', data.title);
+    formData.append('amount', data.amount);
+    formData.append('goal', data.goal);
+    formData.append('details', data.details || '');
+    formData.append('docxLink', data.docxLink || '');
+    if (data.photo) {
+      formData.append('photo', data.photo);
+    }
+    const response = await api.post('/group-contracts', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    return response.data;
+  },
+
+  update: async (id, data) => {
+    const formData = new FormData();
+    formData.append('title', data.title);
+    formData.append('amount', data.amount);
+    formData.append('goal', data.goal);
+    formData.append('details', data.details || '');
+    formData.append('docxLink', data.docxLink || '');
+    if (data.photo) {
+      formData.append('photo', data.photo);
+    }
+    if (data.removePhoto) {
+      formData.append('removePhoto', 'true');
+    }
+    const response = await api.put(`/group-contracts/${id}`, formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    return response.data;
+  },
+
+  addNote: async (id, message) => {
+    const response = await api.post(`/group-contracts/${id}/notes`, { message });
+    return response.data;
+  },
+
+  complete: async (id) => {
+    const response = await api.post(`/group-contracts/${id}/complete`);
+    return response.data;
+  },
+
+  cancel: async (id) => {
+    const response = await api.post(`/group-contracts/${id}/cancel`);
+    return response.data;
+  },
+
+  delete: async (id) => {
+    const response = await api.delete(`/group-contracts/${id}`);
+    return response.data;
+  },
+};
+
+// API чата КПК группы
+export const groupChatAPI = {
+  getMessages: async (groupCode, after) => {
+    const params = {};
+    if (groupCode) params.groupCode = groupCode;
+    if (after) params.after = after;
+    const response = await api.get('/group-chat', { params });
+    return response.data;
+  },
+
+  sendMessage: async (message, groupCode, photo) => {
+    const formData = new FormData();
+    formData.append('message', message || '');
+    if (groupCode) formData.append('groupCode', groupCode);
+    if (photo) formData.append('photo', photo);
+
+    const response = await api.post('/group-chat', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    return response.data;
+  },
+};
+
+// API общего чата КПК организации
+export const orgChatAPI = {
+  getMessages: async (after) => {
+    const params = {};
+    if (after) params.after = after;
+    const response = await api.get('/org-chat', { params });
+    return response.data;
+  },
+
+  sendMessage: async (message, photo) => {
+    const formData = new FormData();
+    formData.append('message', message || '');
+    if (photo) formData.append('photo', photo);
+
+    const response = await api.post('/org-chat', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    return response.data;
+  },
+};
+
+// API альтерэго группы
+export const alterEgosAPI = {
+  getAll: async (searchBy = '', searchTerm = '', status = '') => {
+    const params = {};
+    if (searchBy && searchTerm) {
+      params.searchBy = searchBy;
+      params.searchTerm = searchTerm;
+    }
+    if (status && status !== 'all') params.status = status;
+    const response = await api.get('/alter-egos', { params });
+    return response.data;
+  },
+
+  getById: async (id) => {
+    const response = await api.get(`/alter-egos/${id}`);
+    return response.data;
+  },
+
+  create: async (data) => {
+    const response = await api.post('/alter-egos', data);
+    return response.data;
+  },
+
+  update: async (id, data) => {
+    const response = await api.put(`/alter-egos/${id}`, data);
+    return response.data;
+  },
+
+  delete: async (id) => {
+    const response = await api.delete(`/alter-egos/${id}`);
+    return response.data;
+  },
+};
+
+// API карт группы
+export const groupMapsAPI = {
+  getAll: async (searchTerm = '') => {
+    const params = {};
+    if (searchTerm) params.searchTerm = searchTerm;
+    const response = await api.get('/group-maps', { params });
+    return response.data;
+  },
+
+  getById: async (id) => {
+    const response = await api.get(`/group-maps/${id}`);
+    return response.data;
+  },
+
+  create: async (data) => {
+    const formData = new FormData();
+    formData.append('title', data.title);
+    if (data.initialNote) formData.append('initialNote', data.initialNote);
+    if (data.photo) formData.append('photo', data.photo);
+    const response = await api.post('/group-maps', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    return response.data;
+  },
+
+  update: async (id, data) => {
+    const formData = new FormData();
+    formData.append('title', data.title);
+    if (data.photo) formData.append('photo', data.photo);
+    if (data.removePhoto) formData.append('removePhoto', 'true');
+    const response = await api.put(`/group-maps/${id}`, formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    return response.data;
+  },
+
+  addNote: async (id, message) => {
+    const response = await api.post(`/group-maps/${id}/notes`, { message });
+    return response.data;
+  },
+
+  delete: async (id) => {
+    const response = await api.delete(`/group-maps/${id}`);
+    return response.data;
+  },
+};
+
+// API информации группы
+export const groupInfoAPI = {
+  getAll: async (searchTerm = '') => {
+    const params = {};
+    if (searchTerm) params.searchTerm = searchTerm;
+    const response = await api.get('/group-info', { params });
+    return response.data;
+  },
+
+  getById: async (id) => {
+    const response = await api.get(`/group-info/${id}`);
+    return response.data;
+  },
+
+  create: async (data) => {
+    const formData = new FormData();
+    formData.append('title', data.title);
+    formData.append('body', data.body);
+    if (data.photo) formData.append('photo', data.photo);
+    const response = await api.post('/group-info', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    return response.data;
+  },
+
+  update: async (id, data) => {
+    const formData = new FormData();
+    formData.append('title', data.title);
+    formData.append('body', data.body);
+    if (data.photo) formData.append('photo', data.photo);
+    if (data.removePhoto) formData.append('removePhoto', 'true');
+    const response = await api.put(`/group-info/${id}`, formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    return response.data;
+  },
+
+  addNote: async (id, message) => {
+    const response = await api.post(`/group-info/${id}/notes`, { message });
+    return response.data;
+  },
+
+  delete: async (id) => {
+    const response = await api.delete(`/group-info/${id}`);
+    return response.data;
+  },
+};
+
 export default api;

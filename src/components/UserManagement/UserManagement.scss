@@ -5,6 +5,8 @@
     @include panel;
     padding: 1.25rem;
     margin-bottom: 1.25rem;
+    width: 98%;
+    max-width: 98%;
 
     .filter-header {
       display: flex;
@@ -14,9 +16,12 @@
       flex-wrap: wrap;
 
       .filter-title {
-        color: $text-primary;
-        font-size: 0.95rem;
-        font-weight: 600;
+        color: $pda-green;
+        font-family: $font-pda;
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
       }
 
       .btn-create-group {
@@ -95,29 +100,11 @@
   .users-table {
     @include panel;
     overflow: hidden;
+    width: 98%;
+    max-width: 98%;
 
     table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.875rem;
-
-      th {
-        text-align: left;
-        padding: 0.75rem 1rem;
-        background: $bg-elevated;
-        color: $text-muted;
-        font-weight: 500;
-        font-size: 0.75rem;
-        text-transform: uppercase;
-        letter-spacing: 0.04em;
-        border-bottom: 1px solid $border-subtle;
-      }
-
-      td {
-        padding: 0.75rem 1rem;
-        border-bottom: 1px solid $border-subtle;
-        color: $text-secondary;
-      }
+      @include pda-table;
 
       .role-badge {
         display: inline-block;

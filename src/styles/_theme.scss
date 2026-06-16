@@ -1,36 +1,51 @@
-// Mercenary / Stalker design system
-$bg-base: #0c1017;
-$bg-elevated: #141b26;
-$bg-panel: #1a2330;
-$bg-panel-hover: #222d3d;
-$bg-input: #121820;
+// S.T.A.L.K.E.R. PDA — стиль ~2010 (Real-Stalker / КПК)
+$bg-base: #0a0a0a;
+$bg-elevated: #161616;
+$bg-panel: rgba(38, 38, 38, 0.92);
+$bg-panel-hover: rgba(48, 48, 48, 0.95);
+$bg-input: #0c0c0c;
 
-$border-subtle: #2a3647;
-$border-default: #334155;
-$border-focus: #4a6d8f;
+$pda-green: #90ee90;
+$pda-green-dim: #6ec86e;
+$pda-green-glow: #b8ffb8;
+$pda-amber: #cbbe97;
+$pda-orange: #e8943a;
+$pda-gray: #8f8f8f;
+$pda-silver: #9da4ad;
+$pda-cream: #d2cbc0;
 
-$text-primary: #e2e8f0;
-$text-secondary: #94a3b8;
-$text-muted: #64748b;
+$border-subtle: #3a3a3a;
+$border-default: #5a5a5a;
+$border-light: #7f9394;
+$border-focus: #6abf6a;
 
-$accent: #4a6fa5;
-$accent-hover: #5a82b8;
-$accent-soft: rgba(74, 111, 165, 0.12);
+$text-primary: $pda-green;
+$text-secondary: $pda-silver;
+$text-muted: $pda-gray;
+$text-body: #c8c8c8;
 
-$danger: #b45454;
-$danger-soft: rgba(180, 84, 84, 0.12);
-$success: #5a8f72;
+$accent: $pda-green-dim;
+$accent-hover: $pda-green;
+$accent-soft: rgba(144, 238, 144, 0.14);
 
-$shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
-$shadow-md: 0 4px 20px rgba(0, 0, 0, 0.4);
-$shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.5);
+$pda-income: $pda-green;
+$pda-expense: #c08080;
 
-$radius-sm: 6px;
-$radius-md: 8px;
-$radius-lg: 12px;
+$danger: #c07070;
+$danger-soft: rgba(192, 112, 112, 0.15);
+$success: $pda-green-dim;
 
-$font-ui: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-$font-mono: 'Consolas', 'SF Mono', 'Cascadia Code', monospace;
+$shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
+$shadow-md: 0 4px 18px rgba(0, 0, 0, 0.55);
+$shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+$radius-sm: 0;
+$radius-md: 2px;
+$radius-lg: 3px;
+
+$font-ui: Verdana, Arial, Helvetica, sans-serif;
+$font-pda: 'Courier New', Courier, monospace;
+$font-mono: 'Courier New', Courier, monospace;
 
 $frame-width-native: 770px;
 $frame-width-max: 100%;
@@ -39,90 +54,102 @@ $sidebar-width: 240px;
 
 @mixin panel {
   background: $bg-panel;
-  border: 1px solid $border-default;
+  border: 2px solid $border-default;
   border-radius: $radius-lg;
-  box-shadow: $shadow-md;
+  box-shadow: $shadow-inset, $shadow-md;
+  backdrop-filter: blur(6px);
 }
 
 @mixin btn-base {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  font-family: $font-ui;
-  font-size: 0.9rem;
-  font-weight: 500;
+  gap: 0.45rem;
+  font-family: $font-pda;
+  font-size: 0.78rem;
+  font-weight: 600;
   line-height: 1.2;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
   border-radius: $radius-sm;
   cursor: pointer;
-  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
-  border: 1px solid transparent;
+  transition: background 0.12s ease, border-color 0.12s ease, color 0.12s ease, box-shadow 0.12s ease;
+  border: 1px solid $border-light;
 
   &:disabled {
-    opacity: 0.5;
+    opacity: 0.45;
     cursor: not-allowed;
   }
 }
 
 @mixin btn-primary {
   @include btn-base;
-  background: $accent;
-  color: #fff;
-  border-color: darken($accent, 4%);
+  background: linear-gradient(180deg, #4a4a4a 0%, #353535 100%);
+  color: $pda-green;
+  border-color: $border-light;
+  border-bottom-width: 3px;
+  border-bottom-color: #2a2a2a;
+  text-shadow: 0 0 6px rgba(144, 238, 144, 0.2);
 
   &:hover:not(:disabled) {
-    background: $accent-hover;
+    background: linear-gradient(180deg, #525252 0%, #3d3d3d 100%);
+    color: $pda-green-glow;
+    border-color: $pda-green-dim;
+    box-shadow: 0 0 10px rgba(144, 238, 144, 0.15);
   }
 }
 
 @mixin btn-secondary {
   @include btn-base;
-  background: $bg-elevated;
-  color: $text-secondary;
+  background: rgba(30, 30, 30, 0.85);
+  color: $pda-silver;
   border-color: $border-default;
 
   &:hover:not(:disabled) {
-    background: $bg-panel-hover;
-    color: $text-primary;
-    border-color: $border-focus;
+    background: rgba(144, 238, 144, 0.08);
+    color: $pda-green;
+    border-color: $pda-green-dim;
   }
 }
 
 @mixin btn-ghost {
   @include btn-base;
   background: transparent;
-  color: $text-secondary;
+  color: $pda-silver;
   border-color: transparent;
+  text-transform: none;
+  font-weight: 500;
+  letter-spacing: 0.02em;
 
   &:hover:not(:disabled) {
-    background: $accent-soft;
-    color: $text-primary;
+    background: rgba(144, 238, 144, 0.08);
+    color: $pda-green;
   }
 }
 
 @mixin input-field {
   width: 100%;
-  padding: 0.7rem 0.9rem;
+  padding: 0.55rem 0.7rem;
   background-color: $bg-input;
   border: 1px solid $border-default;
   border-radius: $radius-sm;
-  color: $text-primary;
-  font-family: $font-ui;
-  font-size: 0.9rem;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  color: $pda-green;
+  font-family: $font-pda;
+  font-size: 0.82rem;
+  transition: border-color 0.12s ease, box-shadow 0.12s ease;
 
   &:focus {
     outline: none;
-    border-color: $accent;
-    box-shadow: 0 0 0 3px $accent-soft;
+    border-color: $pda-green-dim;
+    box-shadow: 0 0 8px rgba(144, 238, 144, 0.18);
   }
 
   &::placeholder {
-    color: $text-muted;
+    color: $pda-gray;
   }
 
   &:disabled {
-    opacity: 0.6;
+    opacity: 0.5;
     cursor: not-allowed;
   }
 }
@@ -132,38 +159,38 @@ $sidebar-width: 240px;
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  padding-right: 2.25rem;
+  padding-right: 2rem;
   cursor: pointer;
   background-color: $bg-input;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%2394a3b8' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%2390ee90' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right 0.85rem center;
-  background-size: 12px 8px;
-
-  &:focus {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%234a6fa5' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
-  }
+  background-position: right 0.65rem center;
+  background-size: 10px 7px;
 
   option {
-    background: $bg-panel;
-    color: $text-primary;
+    background: #1a1a1a;
+    color: $pda-green;
   }
 }
 
 @mixin page-header {
-  margin-bottom: 1.75rem;
+  margin-bottom: 1.5rem;
 
   h1, h2 {
-    color: $text-primary;
-    font-size: 1.35rem;
-    font-weight: 600;
+    color: $pda-green;
+    font-family: $font-pda;
+    font-size: 1.15rem;
+    font-weight: 700;
     margin: 0 0 0.35rem;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-shadow: 0 0 10px rgba(144, 238, 144, 0.22);
   }
 
   p {
-    color: $text-secondary;
-    font-size: 0.9rem;
+    color: $text-muted;
+    font-family: $font-ui;
+    font-size: 0.78rem;
     margin: 0;
   }
 }
@@ -172,14 +199,50 @@ $sidebar-width: 240px;
   @include btn-ghost;
   width: 100%;
   justify-content: flex-start;
-  padding: 0.65rem 0.85rem;
-  font-size: 0.875rem;
-  border-radius: $radius-sm;
-  border-left: 2px solid transparent;
+  padding: 0.55rem 0.65rem;
+  font-family: $font-pda;
+  font-size: 0.8rem;
+  color: $pda-green;
+  border-radius: 0;
+  border-left: 3px solid transparent;
+  text-transform: none;
+  letter-spacing: 0.02em;
+
+  &:hover:not(:disabled) {
+    background: rgba(144, 238, 144, 0.08);
+    transform: translateX(2px);
+  }
 
   &.active {
-    background: $accent-soft;
-    color: $text-primary;
-    border-left-color: $accent;
+    background: rgba(144, 238, 144, 0.14);
+    color: $pda-green-glow;
+    border-left-color: $pda-green;
+    box-shadow: inset 0 0 12px rgba(144, 238, 144, 0.12);
+    font-weight: 700;
+  }
+}
+
+@mixin pda-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: $font-pda;
+  font-size: 0.8rem;
+
+  th {
+    text-align: left;
+    padding: 0.55rem 0.7rem;
+    color: $pda-gray;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-bottom: 1px solid $border-default;
+    background: rgba(20, 20, 20, 0.9);
+  }
+
+  td {
+    padding: 0.6rem 0.7rem;
+    border-bottom: 1px solid $border-subtle;
+    color: $text-body;
   }
 }

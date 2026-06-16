@@ -1,6 +1,7 @@
 @import './theme';
 @import './common';
 @import './buttons';
+@import './pda-pages';
 @import './shared-pages';
 
 .App {
@@ -8,13 +9,14 @@
   --sidebar-inset: calc(var(--frame-width) * 0.025);
 
   min-height: 100vh;
-  background-color: #0a0a0a;
+  background-color: #050505;
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
+  font-family: $font-ui;
+  color: $text-body;
 
-  // Фон масштабируется по ширине рамки — края видны, без обрезки
   &::before {
     content: '';
     position: fixed;

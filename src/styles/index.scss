@@ -8,6 +8,7 @@
   --text-secondary: #{$text-secondary};
   --accent: #{$accent};
   --border-default: #{$border-default};
+  --pda-green: #{$pda-green};
 }
 
 *,
@@ -19,13 +20,29 @@
 body {
   margin: 0;
   font-family: $font-ui;
+  font-size: 13px;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background: #0a0a0a;
-  color: $text-primary;
-  line-height: 1.5;
+  background: #050505;
+  color: $text-body;
+  line-height: 1.45;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-pda;
+  color: $pda-green;
+  letter-spacing: 0.06em;
+}
+
+a {
+  color: $pda-silver;
+  text-decoration: none;
+
+  &:hover {
+    color: $pda-amber;
+  }
 }
 
 code {
   font-family: $font-mono;
+  color: $pda-green-dim;
 }

@@ -6,72 +6,69 @@
   align-items: center;
   justify-content: center;
   padding: 2rem 1rem;
-  background:
-    radial-gradient(ellipse at 30% 20%, rgba(74, 111, 165, 0.1) 0%, transparent 45%),
-    linear-gradient(160deg, #0a0e14 0%, #121820 50%, #0f1419 100%);
+  background: #050505;
 
   .login-content {
     width: 100%;
-    max-width: 400px;
+    max-width: 380px;
 
     .login-card {
       @include panel;
-      padding: 2rem 1.75rem;
+      padding: 1.75rem 1.5rem;
+      border-color: $border-light;
 
       .login-header {
         text-align: center;
-        margin-bottom: 1.75rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px dashed $border-subtle;
 
         .login-title {
-          color: $text-primary;
-          font-size: 1.5rem;
-          font-weight: 600;
+          color: $pda-green;
+          font-family: $font-pda;
+          font-size: 1.35rem;
+          font-weight: 700;
           margin: 0 0 0.35rem;
-          letter-spacing: 0.04em;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          text-shadow: 0 0 12px rgba(144, 238, 144, 0.25);
         }
 
         .login-subtitle {
-          color: $text-muted;
-          font-size: 0.85rem;
+          color: $pda-gray;
+          font-family: $font-ui;
+          font-size: 0.78rem;
         }
       }
 
       .login-form {
-        .form-group {
-          margin-bottom: 1.1rem;
-
-          label {
-            display: block;
-            margin-bottom: 0.35rem;
-          }
-
-          .input-wrapper input {
-            width: 100%;
-          }
-
-          .input-icon {
-            display: none;
-          }
+        .form-group label {
+          color: $pda-silver;
+          font-family: $font-pda;
+          font-size: 0.72rem;
+          text-transform: uppercase;
+          letter-spacing: 0.06em;
         }
 
         .form-options {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          margin-bottom: 1.25rem;
-          font-size: 0.8rem;
+          margin-bottom: 1.1rem;
+          font-size: 0.75rem;
 
           .checkbox-wrapper {
-            color: $text-muted;
-            cursor: pointer;
+            color: $pda-gray;
+            font-family: $font-pda;
           }
 
           .forgot-password {
-            color: $accent;
-            text-decoration: none;
+            color: $pda-amber;
+            font-family: $font-pda;
+            font-size: 0.72rem;
 
             &:hover {
-              text-decoration: underline;
+              color: $pda-green;
             }
           }
         }
@@ -79,22 +76,21 @@
         .login-button {
           @include btn-primary;
           width: 100%;
-          padding: 0.75rem 1rem;
-          font-size: 0.95rem;
+          padding: 0.65rem 1rem;
         }
 
         .demo-credentials {
-          margin-top: 1.25rem;
-          padding: 0.75rem;
-          background: $bg-elevated;
-          border: 1px solid $border-subtle;
-          border-radius: $radius-sm;
+          margin-top: 1.1rem;
+          padding: 0.65rem;
+          background: rgba(15, 15, 15, 0.9);
+          border: 1px dashed $border-subtle;
           text-align: center;
-          font-size: 0.8rem;
-          color: $text-muted;
+          font-family: $font-pda;
+          font-size: 0.72rem;
+          color: $pda-gray;
 
           strong {
-            color: $text-secondary;
+            color: $pda-green-dim;
           }
         }
       }

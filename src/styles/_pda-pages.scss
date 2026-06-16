@@ -1,0 +1,84 @@
+@import './theme';
+
+// Общие стили таблиц операций (финансы / приход-расход)
+.finances,
+.income-expense {
+  .operations-toolbar h3,
+  .overview-top h3 {
+    color: $pda-green;
+    font-family: $font-pda;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0 0 0.75rem;
+    text-shadow: 0 0 8px rgba(144, 238, 144, 0.2);
+  }
+
+  .operations-table-wrap {
+    overflow-x: auto;
+    border: 1px solid $border-default;
+  }
+
+  .operations-table {
+    @include pda-table;
+
+    tbody tr:hover {
+      background: rgba(144, 238, 144, 0.04);
+    }
+
+    .row-income {
+      border-left: 3px solid rgba(144, 238, 144, 0.45);
+    }
+
+    .row-expense {
+      border-left: 3px solid rgba(192, 112, 112, 0.45);
+    }
+
+    .col-date .date-text {
+      color: $pda-green-dim;
+      font-size: 0.78rem;
+    }
+
+    .col-date .time-text {
+      color: $pda-gray;
+      font-size: 0.68rem;
+    }
+
+    .col-who .who-name {
+      color: $pda-green;
+      font-weight: 600;
+    }
+
+    .col-amount .amount-value {
+      font-family: $font-mono;
+      font-weight: 700;
+
+      &.positive { color: $pda-income; }
+      &.negative { color: $pda-expense; }
+    }
+
+    .col-source {
+      color: $text-body;
+      font-family: $font-ui;
+    }
+  }
+
+  .finances-pagination,
+  .ie-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding-top: 0.9rem;
+    border-top: 1px dashed $border-subtle;
+
+    .f-page-info,
+    .ie-page-info {
+      color: $pda-gray;
+      font-family: $font-mono;
+      font-size: 0.78rem;
+    }
+  }
+}

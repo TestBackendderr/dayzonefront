@@ -1,10 +1,8 @@
 @import '../../styles/theme';
 
 .footer {
-  background-color: #0a0a0a;
-  background-image:
-    linear-gradient(rgba(0, 0, 0, 0.78), rgba(0, 0, 0, 0.78)),
-    url('../../../public/3.jpg');
+  background-color: transparent;
+  background-image: url('../../../public/3.jpg');
   background-size: 100% 80px;
   background-position: center bottom;
   background-repeat: no-repeat;
@@ -26,38 +24,41 @@
     min-height: 80px;
 
     p {
-      color: #8a9199;
-      font-size: 0.8rem;
+      color: $pda-gray;
+      font-family: $font-pda;
+      font-size: 0.72rem;
       margin: 0;
     }
 
     .footer-left p {
-      color: #6e737a;
+      color: $pda-silver;
       font-weight: 600;
-      letter-spacing: 0.03em;
+      letter-spacing: 0.04em;
     }
 
     .footer-center {
       .footer-navigation {
         display: flex;
-        gap: 1.5rem;
+        gap: 1.25rem;
         align-items: center;
 
         .footer-main {
-          color: #a8b0b8;
-          font-size: 0.85rem;
+          color: $pda-green-dim;
+          font-family: $font-pda;
+          font-size: 0.75rem;
         }
 
         .footer-task,
         .footer-contacts {
-          color: #6e737a;
-          font-size: 0.8rem;
+          color: $pda-gray;
+          font-family: $font-pda;
+          font-size: 0.72rem;
         }
       }
     }
 
     .footer-right p {
-      color: #6e737a;
+      color: $pda-gray;
     }
   }
 }

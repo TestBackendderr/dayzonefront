@@ -1,0 +1,267 @@
+@import '../../styles/theme';
+
+.group-info-page {
+  .info-header {
+    @include page-header;
+    padding-bottom: 1rem;
+    border-bottom: 1px dashed $border-subtle;
+    margin-bottom: 1.25rem;
+  }
+
+  .admin-hint {
+    @include panel;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    width: 98%;
+    color: $pda-gray;
+    font-family: $font-pda;
+    font-size: 0.75rem;
+  }
+
+  .info-toolbar {
+    @include panel;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    width: 98%;
+    max-width: 98%;
+
+    .search-input-wrap {
+      flex: 1;
+      min-width: 200px;
+
+      label {
+        display: block;
+        color: $pda-gray;
+        font-family: $font-pda;
+        font-size: 0.68rem;
+        text-transform: uppercase;
+        margin-bottom: 0.35rem;
+      }
+
+      input {
+        @include input-field;
+        width: 100%;
+        max-width: 320px;
+      }
+    }
+
+    .btn-add-info {
+      @include btn-primary;
+      padding: 0.5rem 1rem;
+      font-size: 0.75rem;
+    }
+  }
+
+  .info-form-panel {
+    @include panel;
+    padding: 1.1rem;
+    margin-bottom: 1rem;
+    width: 98%;
+    max-width: 98%;
+
+    h3 {
+      color: $pda-green;
+      font-family: $font-pda;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin: 0 0 1rem;
+    }
+
+    .photo-preview {
+      margin-top: 0.5rem;
+      max-width: 200px;
+      border: 1px solid $border-default;
+
+      img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+
+  .info-list-wrap {
+    @include panel;
+    padding: 1rem;
+    width: 98%;
+    max-width: 98%;
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .info-card {
+    @include panel;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 0;
+    transition: border-color 0.15s ease;
+
+    &:hover {
+      border-color: $pda-green-dim;
+    }
+
+    .info-photo-wrap {
+      aspect-ratio: 16/10;
+      background: $bg-elevated;
+      overflow: hidden;
+      border-bottom: 1px solid $border-default;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        cursor: pointer;
+      }
+    }
+
+    .info-card-body {
+      padding: 0.75rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .info-group-tag {
+      color: $pda-gray;
+      font-size: 0.62rem;
+      font-family: $font-pda;
+      text-transform: uppercase;
+    }
+
+    .info-title {
+      color: $pda-green;
+      font-family: $font-pda;
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+
+    .info-body {
+      color: $text-body;
+      font-family: $font-pda;
+      font-size: 0.84rem;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .info-chat {
+      border: 1px solid $border-default;
+      background: rgba(0, 0, 0, 0.35);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 280px;
+      margin-top: 0.35rem;
+
+      .info-chat-title {
+        padding: 0.55rem 0.75rem;
+        border-bottom: 1px dashed $border-subtle;
+        color: $pda-green;
+        font-family: $font-pda;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        flex-shrink: 0;
+      }
+
+      .info-chat-messages {
+        flex: 1;
+        min-height: 200px;
+        max-height: 320px;
+        overflow-y: auto;
+        padding: 0.75rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.65rem;
+      }
+
+      .info-chat-msg {
+        padding: 0.55rem 0.7rem;
+        border-left: 3px solid rgba(144, 238, 144, 0.4);
+        background: rgba(20, 20, 20, 0.55);
+
+        .info-chat-author {
+          color: $pda-amber;
+          font-size: 0.78rem;
+          font-weight: 600;
+          margin-bottom: 0.25rem;
+        }
+
+        .info-chat-text {
+          color: $text-body;
+          font-size: 0.84rem;
+          line-height: 1.5;
+          white-space: pre-wrap;
+          word-break: break-word;
+        }
+
+        .info-chat-time {
+          color: $pda-gray;
+          font-size: 0.68rem;
+          margin-top: 0.3rem;
+        }
+      }
+
+      .info-chat-empty {
+        color: $pda-gray;
+        font-size: 0.8rem;
+        font-style: italic;
+        padding: 0.5rem 0;
+      }
+
+      .info-chat-input {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 0.65rem 0.75rem;
+        border-top: 1px dashed $border-subtle;
+        flex-shrink: 0;
+
+        textarea {
+          width: 100%;
+          min-height: 72px;
+          font-size: 0.82rem;
+          line-height: 1.45;
+          resize: vertical;
+        }
+
+        button {
+          @include btn-primary;
+          align-self: flex-end;
+          padding: 0.45rem 1rem;
+          font-size: 0.75rem;
+        }
+      }
+    }
+
+    .info-actions {
+      display: flex;
+      gap: 0.35rem;
+      padding: 0 0.75rem 0.75rem;
+
+      .action-btn {
+        @include btn-ghost;
+        flex: 1;
+        padding: 0.35rem 0.5rem;
+        font-size: 0.68rem;
+      }
+
+      .delete-btn {
+        color: #c96;
+      }
+    }
+  }
+}

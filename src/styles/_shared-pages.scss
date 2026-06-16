@@ -140,7 +140,7 @@
     transition: border-color 0.15s ease;
 
     &:hover {
-      border-color: $border-focus;
+      border-color: $pda-green-dim;
     }
 
     .stalker-photo,
@@ -175,14 +175,15 @@
 
       .callsign-value,
       .detail-value {
-        color: $text-primary;
-        font-size: 0.9rem;
+        color: $pda-green;
+        font-family: $font-pda;
+        font-size: 0.85rem;
       }
 
       .face-id {
         font-family: $font-mono;
-        font-size: 0.8rem;
-        color: $accent;
+        font-size: 0.78rem;
+        color: $pda-amber;
       }
     }
   }
@@ -239,6 +240,13 @@
     @include panel;
     padding: 1.25rem;
     margin-bottom: 1rem;
+  }
+
+  .users-overview,
+  .operations-section,
+  .week-overview {
+    width: 98%;
+    max-width: 98%;
   }
 
   .add-operation-section {
@@ -339,26 +347,7 @@
   }
 
   table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.875rem;
-
-    th {
-      text-align: left;
-      padding: 0.6rem 0.75rem;
-      color: $text-muted;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      border-bottom: 1px solid $border-subtle;
-      background: $bg-elevated;
-    }
-
-    td {
-      padding: 0.6rem 0.75rem;
-      border-bottom: 1px solid $border-subtle;
-      color: $text-secondary;
-    }
+    @include pda-table;
   }
 
   .btn-add-operation,

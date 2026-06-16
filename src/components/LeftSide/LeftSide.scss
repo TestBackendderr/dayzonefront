@@ -7,33 +7,35 @@
   top: 61px;
   bottom: 80px;
   z-index: 5;
-  @include panel;
-  padding: 0.75rem 0.5rem;
+  background: rgba(32, 32, 32, 0.94);
+  border: 2px solid $border-default;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-inset, 0 4px 20px rgba(0, 0, 0, 0.55);
+  padding: 0.65rem 0.4rem;
   overflow-y: auto;
 
   .left-side-content {
     .nav-section-label {
-      color: $text-muted;
-      font-size: 0.68rem;
-      font-weight: 600;
+      color: $pda-gray;
+      font-family: $font-pda;
+      font-size: 0.65rem;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      padding: 0.25rem 0.5rem 0.6rem;
+      letter-spacing: 0.12em;
+      padding: 0.2rem 0.45rem 0.55rem;
+      border-bottom: 1px dashed $border-subtle;
+      margin-bottom: 0.35rem;
     }
 
     .stalker-buttons {
       display: flex;
       flex-direction: column;
-      gap: 0.15rem;
+      gap: 0.1rem;
 
       .stalker-btn {
         @include nav-item;
         padding: 0.45rem 0.5rem;
-        font-size: 0.8rem;
-
-        .btn-icon {
-          display: none;
-        }
+        font-size: 0.78rem;
 
         .btn-text {
           flex: 1;

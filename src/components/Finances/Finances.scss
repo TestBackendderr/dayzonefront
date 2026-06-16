@@ -1,286 +1,38 @@
 @import '../../styles/theme';
 
 .finances {
-  .finances-filters {
+  .finances-filters,
+  .toolbar-controls {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
     align-items: flex-end;
+    justify-content: space-between;
   }
 
   .users-stats {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 0.75rem;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 0.65rem;
   }
 
   .user-stat-card {
     @include panel;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
-    padding: 0.85rem 1rem;
+    gap: 0.4rem;
+    padding: 0.75rem 0.9rem;
     text-align: left;
     cursor: pointer;
-    border: 1px solid $border-subtle;
-    transition: border-color 0.15s ease, background 0.15s ease;
-
-    &:hover {
-      border-color: $border-default;
-      background: $bg-elevated;
-    }
-
-    &.selected {
-      border-color: $accent;
-      background: $accent-soft;
-    }
-
-    .user-login {
-      color: $text-primary;
-      font-size: 0.9rem;
-      font-weight: 600;
-    }
-
-    .user-balance {
-      display: flex;
-      flex-direction: column;
-      gap: 0.2rem;
-      width: 100%;
-    }
-
-    .balance-value {
-      font-family: $font-mono;
-      font-size: 0.8rem;
-
-      &.positive { color: #7eb89a; }
-      &.negative { color: #c99090; }
-    }
+    border-width: 1px;
   }
 
   .operations-toolbar {
-    margin-bottom: 1rem;
-
-    h3 {
-      color: $text-primary;
-      font-size: 1rem;
-      font-weight: 600;
-      margin: 0 0 0.85rem;
-    }
-  }
-
-  .toolbar-controls {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 1rem;
-    justify-content: space-between;
-  }
-
-  .toolbar-label {
-    display: block;
-    color: $text-muted;
-    font-size: 0.75rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.85rem;
   }
 
   .type-filter-buttons {
     display: flex;
-    gap: 0.4rem;
-  }
-
-  .type-filter-btn {
-    @include btn-secondary;
-    padding: 0.4rem 0.85rem;
-    font-size: 0.8rem;
-
-    &.active {
-      background: $accent-soft;
-      border-color: $accent;
-      color: $text-primary;
-    }
-
-    &.income.active {
-      background: rgba(94, 160, 120, 0.15);
-      border-color: #5ea078;
-      color: #9fd4b4;
-    }
-
-    &.expense.active {
-      background: rgba(180, 100, 100, 0.15);
-      border-color: #a06060;
-      color: #d4a0a0;
-    }
-  }
-
-  .operations-info {
-    color: $text-muted;
-    font-size: 0.85rem;
-  }
-
-  .operations-table-wrap {
-    overflow-x: auto;
-    border: 1px solid $border-subtle;
-    border-radius: $radius-sm;
-  }
-
-  .operations-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.875rem;
-
-    th {
-      text-align: left;
-      padding: 0.65rem 0.85rem;
-      color: $text-muted;
-      font-size: 0.72rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      background: $bg-elevated;
-      border-bottom: 1px solid $border-subtle;
-      white-space: nowrap;
-    }
-
-    td {
-      padding: 0.75rem 0.85rem;
-      border-bottom: 1px solid $border-subtle;
-      color: $text-secondary;
-      vertical-align: middle;
-    }
-
-    tbody tr:last-child td {
-      border-bottom: none;
-    }
-
-    tbody tr:hover {
-      background: rgba(255, 255, 255, 0.02);
-    }
-
-    .row-income {
-      border-left: 3px solid rgba(94, 160, 120, 0.5);
-    }
-
-    .row-expense {
-      border-left: 3px solid rgba(180, 100, 100, 0.5);
-    }
-  }
-
-  .col-date {
-    white-space: nowrap;
-
-    .date-text {
-      display: block;
-      color: $text-primary;
-      font-size: 0.85rem;
-    }
-
-    .time-text {
-      display: block;
-      color: $text-muted;
-      font-size: 0.75rem;
-      margin-top: 0.15rem;
-    }
-  }
-
-  .type-badge {
-    display: inline-block;
-    padding: 0.25rem 0.6rem;
-    border-radius: $radius-sm;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-
-    &.income {
-      background: rgba(94, 160, 120, 0.18);
-      color: #9fd4b4;
-      border: 1px solid rgba(94, 160, 120, 0.35);
-    }
-
-    &.expense {
-      background: rgba(180, 100, 100, 0.18);
-      color: #d4a0a0;
-      border: 1px solid rgba(180, 100, 100, 0.35);
-    }
-  }
-
-  .col-who {
-    .who-name {
-      display: block;
-      color: $text-primary;
-      font-weight: 500;
-    }
-
-    .who-recorded {
-      display: block;
-      margin-top: 0.2rem;
-      font-size: 0.75rem;
-      color: $text-muted;
-    }
-  }
-
-  .col-amount {
-    white-space: nowrap;
-
-    .amount-value {
-      font-family: $font-mono;
-      font-weight: 600;
-      font-size: 0.95rem;
-
-      &.positive { color: #9fd4b4; }
-      &.negative { color: #d4a0a0; }
-    }
-
-    .amount-currency {
-      margin-left: 0.35rem;
-      color: $text-muted;
-      font-size: 0.8rem;
-    }
-  }
-
-  .col-source {
-    color: $text-secondary;
-    max-width: 280px;
-    line-height: 1.4;
-  }
-
-  .finances-pagination {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid $border-subtle;
-
-    .f-page-btn {
-      @include btn-secondary;
-      padding: 0.45rem 0.9rem;
-      font-size: 0.85rem;
-    }
-
-    .f-page-info {
-      color: $text-muted;
-      font-size: 0.85rem;
-      font-family: $font-mono;
-    }
-  }
-
-  .no-operations {
-    text-align: center;
-    padding: 2.5rem 1rem;
-    color: $text-muted;
-
-    p {
-      margin: 0 0 0.35rem;
-      color: $text-secondary;
-    }
-
-    .no-operations-hint {
-      font-size: 0.85rem;
-    }
+    gap: 0.35rem;
   }
 }

@@ -1,0 +1,189 @@
+@import '../../styles/theme';
+
+.contracts {
+  .contracts-header {
+    @include page-header;
+    padding-bottom: 1rem;
+    border-bottom: 1px dashed $border-subtle;
+    margin-bottom: 1.25rem;
+  }
+
+  .contracts-toolbar {
+    @include panel;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    width: 98%;
+    max-width: 98%;
+
+    .toolbar-label {
+      display: block;
+      color: $pda-gray;
+      font-family: $font-pda;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.35rem;
+    }
+
+    .type-filter-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+
+    .btn-add-contract {
+      @include btn-primary;
+      padding: 0.5rem 1rem;
+      font-size: 0.75rem;
+    }
+  }
+
+  .contract-form-panel {
+    @include panel;
+    padding: 1.1rem;
+    margin-bottom: 1rem;
+    width: 98%;
+    max-width: 98%;
+
+    h3 {
+      color: $pda-green;
+      font-family: $font-pda;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin: 0 0 1rem;
+    }
+  }
+
+  .contracts-list-section {
+    @include panel;
+    padding: 1rem;
+    width: 98%;
+    max-width: 98%;
+  }
+
+  .contracts-table-wrap {
+    overflow-x: auto;
+    border: 1px solid $border-default;
+  }
+
+  .contracts-table {
+    @include pda-table;
+
+    .col-title {
+      color: $pda-green;
+      font-weight: 600;
+    }
+
+    .col-amount {
+      font-family: $font-mono;
+      color: $pda-amber;
+      white-space: nowrap;
+    }
+
+    .col-group {
+      color: $text-body;
+      font-family: $font-pda;
+      font-size: 0.78rem;
+    }
+
+    .col-actions {
+      white-space: nowrap;
+      display: flex;
+      gap: 0.35rem;
+      flex-wrap: wrap;
+    }
+
+    .expand-btn {
+      @include btn-ghost;
+      display: inline;
+      padding: 0 0.35rem;
+      margin-right: 0.35rem;
+      min-width: auto;
+      font-size: 0.65rem;
+      color: $pda-gray;
+    }
+
+    .btn-take {
+      @include btn-primary;
+      padding: 0.35rem 0.65rem;
+      font-size: 0.68rem;
+    }
+
+    .btn-complete {
+      @include btn-primary;
+      padding: 0.35rem 0.65rem;
+      font-size: 0.68rem;
+      background: rgba(144, 238, 144, 0.15);
+    }
+
+    .btn-cancel-contract {
+      @include btn-ghost;
+      padding: 0.35rem 0.65rem;
+      font-size: 0.68rem;
+      color: $pda-amber;
+      border-color: rgba(203, 190, 151, 0.45);
+    }
+
+    .contract-status {
+      display: inline-block;
+      padding: 0.2rem 0.5rem;
+      font-family: $font-pda;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border: 1px solid $border-default;
+
+      &.status-open {
+        color: $pda-green;
+        border-color: rgba(144, 238, 144, 0.4);
+        background: rgba(144, 238, 144, 0.08);
+      }
+
+      &.status-inwork {
+        color: $pda-amber;
+        border-color: rgba(203, 190, 151, 0.45);
+        background: rgba(203, 190, 151, 0.08);
+      }
+
+      &.status-closed {
+        color: $pda-gray;
+        background: rgba(80, 80, 80, 0.3);
+      }
+    }
+
+    .contract-details-row td {
+      background: rgba(10, 10, 10, 0.6);
+      padding: 0.75rem 1rem;
+    }
+
+    .contract-details {
+      font-family: $font-pda;
+      font-size: 0.78rem;
+      color: $text-body;
+      line-height: 1.5;
+
+      strong {
+        color: $pda-silver;
+      }
+
+      a {
+        color: $pda-green-dim;
+        word-break: break-all;
+      }
+
+      .contract-meta {
+        margin-top: 0.65rem;
+        padding-top: 0.5rem;
+        border-top: 1px dashed $border-subtle;
+        color: $pda-gray;
+        font-size: 0.68rem;
+      }
+    }
+  }
+}

@@ -1,0 +1,221 @@
+@import '../../styles/theme';
+
+.alter-ego-archive {
+  .archive-header {
+    @include page-header;
+    padding-bottom: 1rem;
+    border-bottom: 1px dashed $border-subtle;
+    margin-bottom: 1.25rem;
+  }
+
+  .admin-hint {
+    @include panel;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    width: 98%;
+    color: $pda-gray;
+    font-family: $font-pda;
+    font-size: 0.75rem;
+  }
+
+  .ae-toolbar {
+    @include panel;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    width: 98%;
+    max-width: 98%;
+
+    .toolbar-label {
+      display: block;
+      color: $pda-gray;
+      font-family: $font-pda;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.35rem;
+    }
+
+    .type-filter-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+
+    .btn-add-ae {
+      @include btn-primary;
+      padding: 0.5rem 1rem;
+      font-size: 0.75rem;
+    }
+  }
+
+  .search-section {
+    @include panel;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    width: 98%;
+    max-width: 98%;
+
+    .search-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: flex-end;
+    }
+
+    label {
+      color: $pda-gray;
+      font-family: $font-pda;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 0.35rem;
+    }
+
+    select,
+    input {
+      @include input-field;
+      min-width: 200px;
+    }
+  }
+
+  .ae-form-panel {
+    @include panel;
+    padding: 1.1rem;
+    margin-bottom: 1rem;
+    width: 98%;
+    max-width: 98%;
+
+    h3 {
+      color: $pda-green;
+      font-family: $font-pda;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin: 0 0 1rem;
+    }
+  }
+
+  .alter-ego-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+    width: 98%;
+    max-width: 98%;
+  }
+
+  .alter-ego-card {
+    @include panel;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    transition: border-color 0.15s ease;
+
+    &:hover {
+      border-color: $pda-green-dim;
+    }
+
+    .ae-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.65rem;
+      border-bottom: 1px dashed $border-subtle;
+    }
+
+    .ae-real-callsign {
+      color: $pda-green;
+      font-family: $font-pda;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .ae-alter-ego {
+      color: $pda-amber;
+      font-family: $font-mono;
+      font-size: 0.82rem;
+      margin-top: 0.2rem;
+    }
+
+    .ae-status {
+      display: inline-block;
+      padding: 0.2rem 0.5rem;
+      font-family: $font-pda;
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border: 1px solid $border-default;
+      white-space: nowrap;
+
+      &.status-active {
+        color: $pda-green;
+        border-color: rgba(144, 238, 144, 0.4);
+        background: rgba(144, 238, 144, 0.08);
+      }
+
+      &.status-inactive {
+        color: $pda-gray;
+        background: rgba(80, 80, 80, 0.3);
+      }
+    }
+
+    .ae-details {
+      flex: 1;
+      font-family: $font-pda;
+      font-size: 0.78rem;
+      color: $text-body;
+      line-height: 1.45;
+
+      .ae-detail-block {
+        margin-bottom: 0.65rem;
+
+        .ae-label {
+          display: block;
+          color: $pda-gray;
+          font-size: 0.65rem;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          margin-bottom: 0.2rem;
+        }
+      }
+    }
+
+    .ae-group-tag {
+      color: $pda-gray;
+      font-size: 0.65rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .ae-actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.85rem;
+      padding-top: 0.75rem;
+      border-top: 1px dashed $border-subtle;
+
+      .action-btn {
+        @include btn-ghost;
+        flex: 1;
+        padding: 0.4rem 0.6rem;
+        font-size: 0.72rem;
+      }
+
+      .delete-btn {
+        color: #c96;
+      }
+    }
+  }
+
+  .ae-list-wrap {
+    @include panel;
+    padding: 1rem;
+    width: 98%;
+    max-width: 98%;
+  }
+}
